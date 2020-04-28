@@ -18,7 +18,7 @@ const Header = () => (
         </div>
         <div className="header-right-block">
             <button className="gradient-btn">
-                <p>Стать Волонтером</p>
+                <h4>Стать Волонтером</h4>
             </button>
             <img src={auth_img} alt=""/>
             <div className="language-block">

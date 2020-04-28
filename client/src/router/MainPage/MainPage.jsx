@@ -5,7 +5,9 @@ import './MainPage.scss';
 const MainPage = () => (
     <div className="main-page">
         <div className="first-block">
-            hello
+            <button className="white-btn">
+                <h4>Стать волонтером</h4>
+            </button>
         </div>
     </div>
 )
