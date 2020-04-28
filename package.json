@@ -2,10 +2,38 @@
   "name": "volunteers-website",
   "version": "1.0.0",
   "description": "Volunteers diploma for Ann",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:client": "cd client && npm start",
-    "start:server": "cd server && node server.js"
+    "start:client": "cd client && react-scripts start",
+    "start:server": "cd server && node server.js",
+    "build:client": "cd client && react-scripts build",
+    "test:client": "cd client && react-scripts test",
+    "eject:client": "cd client && react-scripts eject"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "repository": {
     "type": "git",
@@ -16,9 +44,5 @@
   "bugs": {
     "url": "https://github.com/Mishawaka/volunteers-website/issues"
   },
-  "homepage": "https://github.com/Mishawaka/volunteers-website#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.9.10"
-  }
+  "homepage": "https://github.com/Mishawaka/volunteers-website#readme"
 }
