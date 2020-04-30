@@ -1,0 +1,25 @@
+.third-block {
+    position: relative;
+    height: 1200px;
+    width: 80%;
+    margin: 0 10%;
+}
+
+.third-line-left, .third-line-right {
+    height: 620px;
+    width: .2rem;
+    background-image: linear-gradient(to bottom, #F84646 0%, #FD7A42 100%);
+}
+
+.third-line-left {
+    position: absolute;
+    bottom: -75px;
+    left: 0;
+
+}
+
+.third-line-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
