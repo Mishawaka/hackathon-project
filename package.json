@@ -5,20 +5,27 @@
   "private": true,
   "scripts": {
     "start:client": "cd client && react-scripts start",
-    "start:server": "cd server && node server.js",
+    "start:server": "cd server && nodemon server.js",
     "build:client": "cd client && react-scripts build",
     "test:client": "cd client && react-scripts test",
     "eject:client": "cd client && react-scripts eject"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^5.9.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bcrypt": "^4.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.10",
+    "node-sass": "^4.14.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-scroll": "^1.7.16"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,5 +51,8 @@
   "bugs": {
     "url": "https://github.com/Mishawaka/volunteers-website/issues"
   },
-  "homepage": "https://github.com/Mishawaka/volunteers-website#readme"
+  "homepage": "https://github.com/Mishawaka/volunteers-website#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
 }

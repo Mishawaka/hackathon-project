@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const UserSchema = mongoose.Schema(
   {
-    username: String,
-    password: String,
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+    },
     createdAt: Date,
   },
   {
@@ -13,6 +20,12 @@ const UserSchema = mongoose.Schema(
   }
 );
 
-const user = mongoose.model('User', UserSchema);
+UserSchema.methods.isCorrectPassword = (password, callback) => {
+  bcrypt.compare(password, this.password, (err, same) => {
+    return err ? callback(err) : callback(err, same);
+  });
+};
 
-module.exports = user;
+const User = mongoose.model('User', UserSchema);
+
+module.exports = User;
