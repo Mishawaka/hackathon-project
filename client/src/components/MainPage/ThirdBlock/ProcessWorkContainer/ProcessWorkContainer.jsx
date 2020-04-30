@@ -1,9 +1,9 @@
 import React from 'react';
+import TextContainer from './TextContainer/TextContainer';
 
 import './ProcessWorkContainer.scss';
 import line_third from '../../../../img/line3.svg';
 import third_block_img from '../../../../img/Third-block-img.svg'
-import TextContainer from './TextContainer/TextContainer';
 
 const ProcessWorkContainer = () => (
     <div className="process-work-container">

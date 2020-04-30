@@ -7,6 +7,7 @@ import SecondBanner from '../../components/MainPage/SecondBanner/SecondBanner';
 import FIfthBlock from '../../components/MainPage/FIfthBlock/FIfthBlock';
 
 import './MainPage.scss';
+import SixthBlock from '../../components/MainPage/SixthBlock/SixthBlock';
 
 const MainPage = () => (
     <div className="main-page">
@@ -16,6 +17,7 @@ const MainPage = () => (
         <ForthBlock />
         <SecondBanner />
         <FIfthBlock />
+        <SixthBlock />
     </div>
 )
 
