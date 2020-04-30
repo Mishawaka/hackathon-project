@@ -13,9 +13,29 @@ code {
 
 // text
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: 'Roboto';
   font-style: normal;
+}
+
+h1 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 54px;
+  letter-spacing: 0.04em;
+}
+
+h3 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 27px;
 }
 
 p {
@@ -33,12 +53,13 @@ p {
 // btns
 
 .gradient-btn {
-  background: linear-gradient(90deg, #F84646 0%, #FD7A42 100%);
+  background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
   box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.25);
   border-radius: 4px;
   border: 0;
   cursor: pointer;
-  & > h4 {
+  & > h4,
+  & > a > h4 {
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -47,21 +68,21 @@ p {
     display: flex;
     align-items: center;
     text-align: center;
-    color: #FFFFFF;
+    color: #ffffff;
     text-transform: uppercase;
-    padding: .7rem;
+    padding: 0.7rem;
     margin: 0;
   }
 }
 
 .white-btn {
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   border: 0;
   position: absolute;
   top: 1165px;
-  padding: .4rem 5.5rem;
+  padding: 0.4rem 5.5rem;
   cursor: pointer;
   & > h4 {
     font-family: 'Roboto';
@@ -75,7 +96,7 @@ p {
     letter-spacing: 0.02em;
     font-variant: small-caps;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #F84646 0%, #FD7A42 100%);
+    background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
