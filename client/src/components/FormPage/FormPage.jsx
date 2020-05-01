@@ -9,7 +9,15 @@ const FormPage = ({ children, modal, setModal }) => (
     <div className="logo-block">
       <img src={formHeart} alt="heart" />
     </div>
-    <div className="form">{children}</div>
+    <div className="form">
+      {children}
+      <img
+        className="close"
+        onClick={() => setModal(!modal)}
+        src={close}
+        alt="close"
+      />
+    </div>
   </div>
 );
 

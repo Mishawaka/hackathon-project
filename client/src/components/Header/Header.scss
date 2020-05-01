@@ -65,25 +65,30 @@
 .language-block {
   display: flex;
   flex-direction: row;
-    & > h4 {
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: normal;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      letter-spacing: 0.02em;
-      color: #000000;
-      text-transform: uppercase;
-      margin: 0 1rem;
-    }
-    & > h4:first-child {
-      margin-right: 0;
-    }
+  & > h4 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #000000;
+    text-transform: uppercase;
+    margin: 0 1rem;
+  }
+  & > h4:first-child {
+    margin-right: 0;
+  }
 }
 
 .modal-class {
+  background: transparent;
   width: 100%;
-  max-width: 70vw;
+  max-width: 100%;
+}
+
+.react-responsive-modal-closeButton {
+  display: none;
 }

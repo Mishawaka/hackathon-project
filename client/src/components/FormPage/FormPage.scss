@@ -16,8 +16,9 @@
   }
   img.close {
     position: absolute;
-    top: 9rem;
+    top: 10rem;
     right: 20%;
+    width: 2rem;
     &:hover {
       cursor: pointer;
     }

@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
-import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import React, { useContext } from 'react';
+import { ModalContext } from '../../contexts/ModalContext';
 import { Modal } from 'react-responsive-modal';
-import 'react-responsive-modal/styles.css';
+import RegisterPage from '../../router/RegisterPage/RegisterPage';
+import AuthPage from '../../router/AuthPage/AuthPage';
 
+import 'react-responsive-modal/styles.css';
 import './Header.scss';
 import logo_img from '../../img/Subtract.svg';
 import auth_img from '../../img/Auth.svg';
-import RegisterPage from '../../router/RegisterPage/RegisterPage';
 
 const Header = () => {
-  const [modal, setModal] = useState(false);
+  const {
+    registerModal,
+    setRegisterModal,
+    authModal,
+    setAuthModal,
+  } = useContext(ModalContext);
 
   return (
-    <div className="header">
+    <div name="header" className="header">
       <Modal
         classNames={{ modal: 'modal-class' }}
-        open={modal}
-        onClose={() => setModal(false)}
+        open={registerModal}
+        onClose={() => setRegisterModal(false)}
         center
       >
-        <RegisterPage modal={modal} setModal={setModal} />
+        <RegisterPage
+          modal={registerModal}
+          setAuthModal={setAuthModal}
+          setModal={setRegisterModal}
+        />
+      </Modal>
+      <Modal
+        classNames={{ modal: 'modal-class' }}
+        open={authModal}
+        onClose={() => setAuthModal(false)}
+        center
+      >
+        <AuthPage modal={authModal} setModal={setAuthModal} />
       </Modal>
       <div className="logo-block">
         <img src={logo_img} alt="" />
@@ -32,19 +50,10 @@ const Header = () => {
         <h4>Контакты</h4>
       </div>
       <div className="header-right-block">
-        <button className="gradient-btn">
-          <ScrollLink
-            activeClass="active"
-            to="fifth-block"
-            spy={true}
-            smooth={true}
-            offset={-100}
-            duration={500}
-          >
-            <h4>Стать Волонтером</h4>
-          </ScrollLink>
+        <button onClick={() => setRegisterModal(true)} className="gradient-btn">
+          <h4>Стать Волонтером</h4>
         </button>
-        <img onClick={() => setModal(true)} src={auth_img} alt="" />
+        <img onClick={() => setAuthModal(true)} src={auth_img} alt="" />
         <div className="language-block">
           <h4>Укр</h4>
           <h4>Рус</h4>
