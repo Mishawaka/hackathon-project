@@ -8,7 +8,7 @@ import 'react-responsive-modal/styles.css';
 import './Header.scss';
 import logo_img from '../../img/Subtract.svg';
 import auth_img from '../../img/Auth.svg';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const {
@@ -49,44 +49,48 @@ const Header = () => {
         <h4>Helpers</h4>
       </div>
       <div className="menu">
-        <div 
+        <div
           className={
             window.location.pathname === '/'
               ? 'menu-item selected'
               : 'menu-item'
-          }>
-            <Link to='/'>
-              <h4 className='menu-text'>Главная</h4> 
-            </Link>
+          }
+        >
+          <Link to="/">
+            <h4 className="menu-text">Главная</h4>
+          </Link>
         </div>
-        <div 
+        <div
           className={
             window.location.pathname === '/projects'
               ? 'menu-item selected'
               : 'menu-item'
-          }>
-            <Link to='/projects'>
-              <h4 className='menu-text'>Проекты</h4>
-            </Link>
+          }
+        >
+          <Link to="/projects">
+            <h4 className="menu-text">Проекты</h4>
+          </Link>
         </div>
-        <div 
+        <div
           className={
             window.location.pathname === '/calendar'
               ? 'menu-item selected'
               : 'menu-item'
-          }>
-            <Link to='/calendar'>
-              <h4 className='menu-text'>Календарь</h4>
-            </Link>
+          }
+        >
+          <Link to="/calendar">
+            <h4 className="menu-text">Календарь</h4>
+          </Link>
         </div>
-        <div 
+        <div
           className={
             window.location.pathname === '/contacts'
               ? 'menu-item selected'
               : 'menu-item'
-          }>
-          <Link to='/contacts'>
-            <h4 className='menu-text'>Контакты</h4>
+          }
+        >
+          <Link to="/contacts">
+            <h4 className="menu-text">Контакты</h4>
           </Link>
         </div>
       </div>

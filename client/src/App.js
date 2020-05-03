@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
 import MainPage from './router/MainPage/MainPage';
+import ProjectsPage from './router/ProjectsPage/ProjectsPage';
+
 import { withLayout } from './layout/Layout';
 import { ModalProvider } from './contexts/ModalContext';
 
@@ -19,9 +22,10 @@ const App = () => (
   <BrowserRouter>
     <ModalProvider>
       <Switch>
+        <RouteWrapper path="/" component={MainPage} layout={withLayout} exact />
         <RouteWrapper
-          path="/"
-          component={MainPage}
+          path="/projects"
+          component={ProjectsPage}
           layout={withLayout}
           exact
         />
