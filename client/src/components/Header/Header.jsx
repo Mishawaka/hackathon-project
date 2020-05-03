@@ -37,7 +37,11 @@ const Header = () => {
         onClose={() => setAuthModal(false)}
         center
       >
-        <AuthPage modal={authModal} setModal={setAuthModal} />
+        <AuthPage
+          modal={authModal}
+          setRegisterModal={setRegisterModal}
+          setModal={setAuthModal}
+        />
       </Modal>
       <div className="logo-block">
         <img src={logo_img} alt="" />

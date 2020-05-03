@@ -6,7 +6,7 @@ import eye from '../../img/eye.svg';
 import activeEye from '../../img/active-eye.svg';
 import './AuthPage.scss';
 
-const AuthPage = ({ modal, setModal }) => {
+const AuthPage = ({ modal, setModal, setRegisterModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -56,6 +56,13 @@ const AuthPage = ({ modal, setModal }) => {
         setModal(false);
       })
       .catch((err) => console.log(err));
+  };
+
+  const changeToRegister = () => {
+    setModal(false);
+    setTimeout(() => {
+      setRegisterModal(true);
+    }, 500);
   };
 
   return (
@@ -118,6 +125,10 @@ const AuthPage = ({ modal, setModal }) => {
       >
         <h4>ВОЙТИ</h4>
       </button>
+      <div className="register-invite">
+        <p>Новый пользователь?</p>
+        <p onClick={changeToRegister}>Зарегистрироваться</p>
+      </div>
     </FormPage>
   );
 };
