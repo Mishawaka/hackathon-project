@@ -9,18 +9,28 @@ import FIfthBlock from '../../components/MainPage/FIfthBlock/FIfthBlock';
 import './MainPage.scss';
 import SixthBlock from '../../components/MainPage/SixthBlock/SixthBlock';
 import { ModalContext } from '../../contexts/ModalContext';
+import BannerBlock from '../../components/AuthMainPage/BannerBlock/BannerBlock';
+import EventBlock from '../../components/AuthMainPage/EventBlock/EventBlock';
+import ProjectBlock from '../../components/AuthMainPage/ProjectBlock/ProjectBlock';
+import RegProjectBlock from '../../components/AuthMainPage/RegProjectBlock/RegProjectBlock';
 
 const MainPage = () => {
   const { setRegisterModal } = useContext(ModalContext);
   return (
     <div className="main-page">
-      <FirstBlock setRegisterModal={setRegisterModal} />
+      {/* <FirstBlock setRegisterModal={setRegisterModal} />
       <SecondBlock />
       <ThirdBlock />
       <ForthBlock />
       <SecondBanner />
       <FIfthBlock />
-      <SixthBlock />
+      <SixthBlock /> */}
+
+      {/* AuthUser */}
+      <BannerBlock />
+      <EventBlock />
+      <ProjectBlock />
+      <RegProjectBlock />
     </div>
   );
 };
