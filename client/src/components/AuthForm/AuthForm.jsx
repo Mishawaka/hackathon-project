@@ -1,12 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { ModalContext } from '../../contexts/ModalContext';
+import React, { useState } from 'react';
 
-import FormPage from '../../components/FormPage/FormPage';
+import FormPage from '../FormPage/FormPage';
 import eye from '../../img/eye.svg';
 import activeEye from '../../img/active-eye.svg';
-import './AuthPage.scss';
+import './AuthForm.scss';
 
-const AuthPage = ({ modal, setModal, setRegisterModal }) => {
+const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -53,6 +52,7 @@ const AuthPage = ({ modal, setModal, setRegisterModal }) => {
       })
       .then((data) => {
         localStorage.setItem('jwt', data.jwt);
+        setAuth(true);
         setModal(false);
       })
       .catch((err) => console.log(err));
@@ -133,4 +133,4 @@ const AuthPage = ({ modal, setModal, setRegisterModal }) => {
   );
 };
 
-export default AuthPage;
+export default AuthForm;

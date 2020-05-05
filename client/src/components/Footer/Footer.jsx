@@ -1,5 +1,7 @@
-import React, { useContext } from 'react';
-import { ModalContext } from '../../contexts/ModalContext';
+import React, { useContext, useEffect } from 'react';
+import { Modal } from 'react-responsive-modal';
+import { Context } from '../../contexts/Context';
+import ProjectForm from '../ProjectForm/ProjectForm';
 
 import './Footer.scss';
 import footer_logo from '../../img/LogoFooter.svg';
@@ -8,9 +10,34 @@ import insta_img from '../../img/instagram.svg';
 import email_img from '../../img/email.svg';
 
 const Footer = () => {
-  const { setRegisterModal } = useContext(ModalContext);
+  const {
+    setRegisterModal,
+    setProjectModal,
+    projectModal,
+    auth,
+    setAuth,
+  } = useContext(Context);
+
+  useEffect(() => {
+    fetch('http://localhost:8000/checkToken', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+    })
+      .then((res) => (res.status === 200 ? setAuth(true) : setAuth(false)))
+      .catch((err) => console.log(err));
+  }, [auth]);
+
   return (
     <div className="footer">
+      <Modal
+        classNames={{ modal: 'modal-class' }}
+        open={projectModal}
+        onClose={() => setProjectModal(false)}
+        center
+      >
+        <ProjectForm modal={projectModal} setModal={setProjectModal} />
+      </Modal>
       <div className="footer-logo-block">
         <img src={footer_logo} alt="" />
         <h4>Helpers</h4>
@@ -32,8 +59,13 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-btn">
-        <button onClick={() => setRegisterModal(true)} className="gradient-btn">
-          <h4>Стать волонтером</h4>
+        <button
+          onClick={() =>
+            auth ? setProjectModal(true) : setRegisterModal(true)
+          }
+          className="gradient-btn"
+        >
+          <h4>{auth ? 'Регистрация проекта' : 'Стать волонтером'}</h4>
         </button>
       </div>
     </div>

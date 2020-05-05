@@ -27,7 +27,7 @@ app.get('/', withAuth, (req, res) => {
   res.send('HI, MAAARK');
 });
 
-app.get('/checkToken', withAuth, (req, res) => {
+app.post('/checkToken', withAuth, (req, res) => {
   res.sendStatus(200);
 });
 

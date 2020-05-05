@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
-import { ModalContext } from '../../contexts/ModalContext';
+import React, { useContext, useEffect } from 'react';
+import { Context } from '../../contexts/Context';
 import { Modal } from 'react-responsive-modal';
-import RegisterPage from '../../router/RegisterPage/RegisterPage';
-import AuthPage from '../../router/AuthPage/AuthPage';
+import RegisterForm from '../RegisterForm/RegisterForm';
+import AuthPage from '../AuthForm/AuthForm';
 
 import 'react-responsive-modal/styles.css';
 import './Header.scss';
 import logo_img from '../../img/Subtract.svg';
 import auth_img from '../../img/Auth.svg';
+import user_img from '../../img/person-1.svg';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
@@ -16,7 +17,20 @@ const Header = () => {
     setRegisterModal,
     authModal,
     setAuthModal,
-  } = useContext(ModalContext);
+    setAuth,
+    auth,
+  } = useContext(Context);
+
+  useEffect(() => {
+    console.log('useEffect');
+    fetch('http://localhost:8000/checkToken', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+    })
+      .then((res) => (res.status === 200 ? setAuth(true) : setAuth(false)))
+      .catch((err) => console.log(err));
+  }, [auth]);
 
   return (
     <div name="header" className="header">
@@ -26,7 +40,7 @@ const Header = () => {
         onClose={() => setRegisterModal(false)}
         center
       >
-        <RegisterPage
+        <RegisterForm
           modal={registerModal}
           setAuthModal={setAuthModal}
           setModal={setRegisterModal}
@@ -41,6 +55,7 @@ const Header = () => {
         <AuthPage
           modal={authModal}
           setRegisterModal={setRegisterModal}
+          setAuth={setAuth}
           setModal={setAuthModal}
         />
       </Modal>
@@ -95,10 +110,24 @@ const Header = () => {
         </div>
       </div>
       <div className="header-right-block">
-        <button onClick={() => setRegisterModal(true)} className="gradient-btn">
+        <button
+          style={{ display: auth ? 'none' : 'block' }}
+          onClick={() => setRegisterModal(true)}
+          className="gradient-btn"
+        >
           <h4>Стать Волонтером</h4>
         </button>
-        <img onClick={() => setAuthModal(true)} src={auth_img} alt="" />
+        <img
+          style={{ display: auth ? 'none' : 'block' }}
+          onClick={() => setAuthModal(true)}
+          src={auth_img}
+          alt="auth"
+        />
+        <img
+          style={{ display: auth ? 'block' : 'none' }}
+          src={user_img}
+          alt="user"
+        />
         <div className="language-block">
           <h4>Укр</h4>
           <h4>Рус</h4>

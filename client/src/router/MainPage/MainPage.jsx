@@ -8,10 +8,10 @@ import FIfthBlock from '../../components/MainPage/FIfthBlock/FIfthBlock';
 
 import './MainPage.scss';
 import SixthBlock from '../../components/MainPage/SixthBlock/SixthBlock';
-import { ModalContext } from '../../contexts/ModalContext';
+import { Context } from '../../contexts/Context';
 
 const MainPage = () => {
-  const { setRegisterModal } = useContext(ModalContext);
+  const { setRegisterModal } = useContext(Context);
   return (
     <div className="main-page">
       <FirstBlock setRegisterModal={setRegisterModal} />

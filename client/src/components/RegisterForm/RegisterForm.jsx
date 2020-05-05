@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 
-import FormPage from '../../components/FormPage/FormPage';
+import FormPage from '../FormPage/FormPage';
 import eye from '../../img/eye.svg';
 import activeEye from '../../img/active-eye.svg';
-import './RegisterPage.scss';
+import './RegisterForm.scss';
 
-const RegisterPage = ({ modal, setModal, setAuthModal }) => {
+const RegisterForm = ({ modal, setModal, setAuthModal }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
@@ -165,4 +165,4 @@ const RegisterPage = ({ modal, setModal, setAuthModal }) => {
   );
 };
 
-export default RegisterPage;
+export default RegisterForm;

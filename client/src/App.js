@@ -5,7 +5,7 @@ import MainPage from './router/MainPage/MainPage';
 import ProjectsPage from './router/ProjectsPage/ProjectsPage';
 
 import { withLayout } from './layout/Layout';
-import { ModalProvider } from './contexts/ModalContext';
+import { Provider } from './contexts/Context';
 
 const RouteWrapper = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -20,7 +20,7 @@ const RouteWrapper = ({ component: Component, layout: Layout, ...rest }) => (
 
 const App = () => (
   <BrowserRouter>
-    <ModalProvider>
+    <Provider>
       <Switch>
         <RouteWrapper path="/" component={MainPage} layout={withLayout} exact />
         <RouteWrapper
@@ -30,7 +30,7 @@ const App = () => (
           exact
         />
       </Switch>
-    </ModalProvider>
+    </Provider>
   </BrowserRouter>
 );
 
