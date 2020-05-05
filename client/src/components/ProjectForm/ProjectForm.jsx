@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import FormPage from '../FormPage/FormPage';
+import { Modal } from 'react-responsive-modal';
+
+import ImageCrop from '../ImageCrop/ImageCrop';
+import { ImageContext } from '../../contexts/ImageContext';
 
 const ProjectPage = ({ modal, setModal }) => {
   const [form, setForm] = useState({
@@ -20,10 +24,18 @@ const ProjectPage = ({ modal, setModal }) => {
     { name: 'org', label: 'Организация', value: form.org },
   ];
 
+  const { croppedImageUrl } = useContext(ImageContext);
+
   return (
     <FormPage modal={modal} setModal={setModal}>
       <h1>Регистрация проекта</h1>
       <h3>Заполните поля</h3>
+      <div className="form-group">
+        <ImageCrop />
+        <div className="background">
+          <img src={croppedImageUrl} alt="" />
+        </div>
+      </div>
       {fields.map((el, id) => (
         <div key={id} className="form-group">
           <input
@@ -52,14 +64,10 @@ const ProjectPage = ({ modal, setModal }) => {
       ))}
       <button
         onClick={() => console.log(form)}
-        // className={blocked ? 'blocked auth-button' : 'active auth-button'}
+        className={'active auth-button'}
       >
         <h4>ВОЙТИ</h4>
       </button>
-      <div className="register-invite">
-        <p>Новый пользователь?</p>
-        <p>Зарегистрироваться</p>
-      </div>
     </FormPage>
   );
 };
