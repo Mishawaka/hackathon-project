@@ -1,14 +1,31 @@
 .event-block {
     width: 80%;
     margin: 0 10%;
-    margin-top: 10rem;
+    margin-top: 5rem;
+    padding-bottom: 8rem;
     position: relative;
+    .link-event {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 21px;
+        line-height: 25px;
+        letter-spacing: 0.02em;
+        font-variant: small-caps;
+        background: linear-gradient(90deg, #F84646 0%, #FD7A42 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0px 4px 8px rgba(249, 74, 70, 0.35);
+        text-transform: uppercase;
+        padding: 2rem 0;
+        text-align: center;   
+    }
     & > .title-block {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 2rem 0;
+        padding: 10rem 0 2rem 0;
         & > h2 {
             font-family: 'Roboto';
             font-style: normal;

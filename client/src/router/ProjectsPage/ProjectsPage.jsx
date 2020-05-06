@@ -30,7 +30,7 @@ const ProjectsPage = () => {
   ];
 
   return (
-    <div className="projects-page">
+    <div className="projects-page animated fadeIn">
       <h2>Проекты</h2>
       <Sort toggleArrow={toggleArrow} />
       <div className="projects-content">
