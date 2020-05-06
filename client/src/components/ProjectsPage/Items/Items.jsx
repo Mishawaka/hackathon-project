@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import arrRight from '../../../img/arrow-right.svg';
 import rocket from '../../../img/rocket.svg';
 
+import './Items.scss';
+
 const Items = () => {
   const [users, setUsers] = useState([]);
 

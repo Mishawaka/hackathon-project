@@ -36,11 +36,11 @@
             justify-content: space-between;
             & > h4 {
               padding-top: 0.2rem;
-              font-family: Manjari;
+              font-family: 'Roboto';
               font-style: normal;
               font-weight: normal;
               font-size: 18px;
-              line-height: 17px;
+              line-height: 25px;
               text-align: center;
               letter-spacing: 0.04em;
               background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
@@ -102,7 +102,7 @@
           width: 60px;
         }
         & > h4 {
-          font-family: Open Sans;
+          font-family: 'Open Sans';
           font-style: normal;
           font-weight: 1000;
           font-size: 14px;
@@ -112,7 +112,7 @@
           text-align: center;
         }
         & > p {
-          font-family: Open Sans;
+          font-family: 'Open Sans';
           font-style: normal;
           font-weight: 300;
           font-size: 14px;
@@ -155,7 +155,7 @@ select {
   background-position-x: 96%;
   background-position-y: center;
 
-  font-family: Open Sans;
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

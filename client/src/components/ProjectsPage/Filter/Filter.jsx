@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import './Filter.scss';
+
 const Filter = ({ checks, cities, toggleArrow }) => {
   const [find, setFind] = useState('');
 

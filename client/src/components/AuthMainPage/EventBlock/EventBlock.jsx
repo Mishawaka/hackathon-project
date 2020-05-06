@@ -7,7 +7,7 @@ const EventBlock = () => (
     <div className="event-block">
         <div className="event-line-top" />
         <div className="title-block">
-            <h2>Ближайшие мерроприятия</h2>
+            <h2>Ближайшие мероприятия</h2>
             <img src={line_text} alt=""/>
         </div>
         <div className="event-line-bottom" />

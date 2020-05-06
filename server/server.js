@@ -16,8 +16,9 @@ const { DB_HOST, DB_USER, DB_PASS, DB_DATABASE, SECRET_KEY } = process.env;
 
 mongoose.connect(
   `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_DATABASE}`,
-  async (err) => await console.log('connected to db')
+  async (err) => await console.log('connected to db'),
 );
+mongoose.set('useCreateIndex', true)
 
 const app = express();
 

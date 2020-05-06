@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Sort.scss';
+
 const Sort = ({ toggleArrow }) => (
   <div className="projects-sort">
     <select onClick={toggleArrow} name="sort-projects" id="">
