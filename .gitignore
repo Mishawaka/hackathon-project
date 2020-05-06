@@ -5,3 +5,5 @@
 *-lock.json
 *.lock
 **/.env
+**/events/*.jpg
+**/projects/*.jpg

@@ -6,6 +6,7 @@ export const ImageProvider = ({ children }) => {
   const [src, setSrc] = useState(null);
   const [show, setShow] = useState(false);
   const [croppedImageUrl, setCroppedImageUrl] = useState();
+  const [file, setFile] = useState();
   return (
     <ImageContext.Provider
       value={{
@@ -15,6 +16,8 @@ export const ImageProvider = ({ children }) => {
         setCroppedImageUrl,
         show,
         setShow,
+        file,
+        setFile,
       }}
     >
       {children}

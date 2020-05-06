@@ -4,8 +4,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
 
 const User = require('./models/User');
+const Project = require('./models/Project');
 require('./config');
 const withAuth = require('./middleware');
 
@@ -27,8 +30,75 @@ app.get('/', withAuth, (req, res) => {
   res.send('HI, MAAARK');
 });
 
+app.get('/image/:folder/:file', (req, res) => {
+  const { folder, file } = req.params;
+  try {
+    res.sendFile(path.join(__dirname, 'uploads', folder, file));
+  } catch {
+    res.json({ found: false });
+  }
+});
+
 app.post('/checkToken', withAuth, (req, res) => {
   res.sendStatus(200);
+});
+
+app.post('/save-project', withAuth, (req, res) => {
+  const {
+    name,
+    theme,
+    descr,
+    email,
+    phone,
+    org,
+    imageUrl,
+    facebook,
+    inst,
+  } = req.body;
+  const project = new Project({
+    name,
+    theme,
+    descr,
+    email,
+    phone,
+    org,
+    imageUrl,
+    facebook,
+    inst,
+  });
+  project.save((err) => {
+    if (err) {
+      return res.status(500).json('Error saving to DB');
+    } else {
+      return res.json({ ok: true });
+    }
+  });
+});
+
+app.post('/save-project-image', (req, res) => {
+  const { image, name } = req.body;
+  const buf = new Buffer(image, 'base64'); // decode
+  fs.writeFile(
+    path.join(__dirname, `uploads/projects/${name}.jpg`),
+    buf,
+    (err) => {
+      if (err) {
+        console.log('err', err);
+      } else {
+        return res.json({ ok: true });
+      }
+    }
+  );
+});
+
+app.post('/get-all-projects', withAuth, (req, res) => {
+  Project.find({}, (err, users) => {
+    if (err) {
+      res.status(500).json({ error: 'An error occured' });
+    } else {
+      res.json(users);
+    }
+  });
 });
 
 app.post('/api/register', (req, res) => {
