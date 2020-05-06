@@ -1,0 +1,50 @@
+.form > .form-group {
+  & > .auth-button {
+    margin-bottom: 4rem;
+  }
+  & > input {
+    cursor: pointer;
+  }
+  & > input::before {
+    content: '';
+    background-attachment: scroll;
+    width: 24px;
+    height: 24px;
+    margin-right: 1rem;
+  }
+  &.facebook > input::before {
+    background: url('../../img/facebook.svg');
+  }
+  &.inst > input::before {
+    background: url('../../img/instagram.svg');
+  }
+}
+
+.form-group > .background {
+  width: 56px;
+  & > img {
+    width: 100%;
+    border-radius: 100%;
+  }
+  &.blocked {
+    background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+    border-radius: 100%;
+  }
+}
+
+.cut-button {
+  padding: 1rem 3rem;
+  border: none;
+  color: white;
+  background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+  & > h4 {
+    text-transform: uppercase;
+  }
+}
+
+.project-save {
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+}

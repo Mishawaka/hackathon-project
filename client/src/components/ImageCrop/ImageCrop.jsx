@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import ReactCrop from 'react-image-crop';
+import randomStr from 'randomstring';
 import 'react-image-crop/dist/ReactCrop.css';
 import { ImageContext } from '../../contexts/ImageContext';
 
-const ImageCrop = () => {
+const ImageCrop = ({ clickRef }) => {
   const {
     src,
     setSrc,
@@ -11,6 +12,7 @@ const ImageCrop = () => {
     setCroppedImageUrl,
     show,
     setShow,
+    setFile,
   } = useContext(ImageContext);
   const [imageRef, setImageRef] = useState();
   const [crop, setCrop] = useState({
@@ -30,7 +32,9 @@ const ImageCrop = () => {
   };
 
   // If you setState the crop in here you should return false.
-  const onImageLoaded = (image) => setImageRef(image);
+  const onImageLoaded = (image) => {
+    setImageRef(image);
+  };
 
   const onCropComplete = (crop) => makeClientCrop(crop);
 
@@ -42,12 +46,13 @@ const ImageCrop = () => {
 
   const makeClientCrop = async (crop) => {
     if (imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await getCroppedImg(
+      const [croppedImageUrl, file] = await getCroppedImg(
         imageRef,
         crop,
-        'newFile.jpeg'
+        randomStr.generate(16)
       );
       setCroppedImageUrl(croppedImageUrl);
+      setFile(file);
     }
   };
 
@@ -80,7 +85,8 @@ const ImageCrop = () => {
         }
         blob.name = fileName;
         const fileUrl = window.URL.createObjectURL(blob);
-        resolve(fileUrl);
+        // const file = new File([image.src], fileName);
+        resolve([fileUrl, blob]);
       }, 'image/jpeg');
     });
   };
@@ -88,7 +94,13 @@ const ImageCrop = () => {
   return (
     <div className="App">
       <div>
-        <input type="file" accept="image/*" onChange={onSelectFile} />
+        <input
+          ref={clickRef}
+          style={{ display: 'none' }}
+          type="file"
+          accept="image/*"
+          onChange={onSelectFile}
+        />
       </div>
       {src && (
         <ReactCrop
@@ -103,12 +115,13 @@ const ImageCrop = () => {
         />
       )}
       {croppedImageUrl && (
-        <div>
+        <div className="form-group">
           <button
             style={{ display: show ? 'block' : 'none' }}
             onClick={() => setShow(false)}
+            className="cut-button"
           >
-            Обрезать
+            <h4>Обрезать</h4>
           </button>
         </div>
       )}
