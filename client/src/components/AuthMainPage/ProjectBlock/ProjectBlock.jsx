@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProjectContainer from './ProjectContainer/ProjectContainer';
 
 import './ProjectBlock.scss';
@@ -12,7 +13,9 @@ const ProjectBlock = () => (
             <img src={line_text} alt=""/>
         </div>
         <ProjectContainer />
-        <h4>Посмотреть все</h4>
+        <Link to="/projects">
+            <h4 className="link-project">Посмотреть все</h4>
+        </Link>
         <div className="project-line-bottom" />
     </div>
 )
