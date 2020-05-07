@@ -88,7 +88,7 @@
       padding: 1rem 2rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      & > .item {
+      & > .project-item {
         background: #ffffff;
         box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.25);
         border-radius: 4px;
@@ -128,6 +128,9 @@
             background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+          }
+          & > img {
+            width: 16px;
           }
         }
         & p {

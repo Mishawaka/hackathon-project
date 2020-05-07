@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../../contexts/Context';
+import { ProjectContext } from '../../contexts/ProjectsContext';
 import FirstBlock from '../../components/MainPage/FirstBlock/FirstBlock';
 import SecondBlock from '../../components/MainPage/SecondBlock/SecondBlock';
 import ThirdBlock from '../../components/MainPage/ThirdBlock/ThirdBlock';
@@ -16,6 +17,7 @@ import './MainPage.scss';
 
 const MainPage = () => {
   const { setRegisterModal, setAuth, auth } = useContext(Context);
+  const { projects, setProjects } = useContext(ProjectContext);
 
   useEffect(() => {
     console.log('useEffect');
@@ -24,13 +26,32 @@ const MainPage = () => {
       method: 'POST',
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
     })
-      .then((res) => (res.status === 200 ? setAuth(true) : setAuth(false)))
+      .then((res) => {
+        if (res.status === 200) {
+          fetch('http://localhost:8000/get-all-projects', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              setProjects(data);
+              setAuth(true);
+            })
+            .catch((err) => console.log(err));
+        } else {
+          setAuth(false);
+        }
+      })
       .catch((err) => console.log(err));
   }, [auth]);
 
   return (
     <div className="main-page">
-      <div className="no-auth-main animated fadeIn slower" style={{ display: auth ? 'none' : 'block' }}>
+      <div
+        className="no-auth-main animated fadeIn slower"
+        style={{ display: auth ? 'none' : 'block' }}
+      >
         <FirstBlock setRegisterModal={setRegisterModal} />
         <SecondBlock />
         <ThirdBlock />
@@ -39,10 +60,13 @@ const MainPage = () => {
         <FIfthBlock />
         <SixthBlock />
       </div>
-      <div className="auth-main animated fadeIn" style={{ display: auth ? 'block' : 'none' }}>
+      <div
+        className="auth-main animated fadeIn"
+        style={{ display: auth ? 'block' : 'none' }}
+      >
         <BannerBlock />
         <EventBlock />
-        <ProjectBlock />
+        <ProjectBlock projects={projects} />
         <RegProjectBlock />
       </div>
     </div>

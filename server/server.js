@@ -16,9 +16,9 @@ const { DB_HOST, DB_USER, DB_PASS, DB_DATABASE, SECRET_KEY } = process.env;
 
 mongoose.connect(
   `mongodb://${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_DATABASE}`,
-  async (err) => await console.log('connected to db'),
+  async (err) => await console.log('connected to db')
 );
-mongoose.set('useCreateIndex', true)
+mongoose.set('useCreateIndex', true);
 
 const app = express();
 
@@ -98,6 +98,16 @@ app.post('/get-all-projects', withAuth, (req, res) => {
       res.status(500).json({ error: 'An error occured' });
     } else {
       res.json(users);
+    }
+  });
+});
+
+app.post('/get-project', withAuth, (req, res) => {
+  Project.findOne({ name: req.body.name }, (err, project) => {
+    if (err) {
+      res.status(500).json({ error: 'An error occured' });
+    } else {
+      res.json(project);
     }
   });
 });

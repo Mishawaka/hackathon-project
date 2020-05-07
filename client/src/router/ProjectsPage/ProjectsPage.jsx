@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Sort from '../../components/ProjectsPage/Sort/Sort';
 import Filter from '../../components/ProjectsPage/Filter/Filter';
 import Items from '../../components/ProjectsPage/Items/Items';
+import { ProjectContext } from '../../contexts/ProjectsContext';
+import { Context } from '../../contexts/Context';
 
 import './ProjectsPage.scss';
 
@@ -11,16 +13,12 @@ const ProjectsPage = () => {
     classList.toggle('sort-active');
   };
 
-  const checks = [
-    { name: 'помощь пожилым людям', value: 'help-old' },
-    { name: 'помощь сиротам', value: 'help-orphan' },
-    { name: 'помощь многодетным семьям', value: 'help-family' },
-    { name: 'помощь животным', value: 'help-animals' },
-    { name: 'эко инициативы', value: 'eco' },
-    { name: 'студенческие инициативы', value: 'students' },
-    { name: 'облагораживание города', value: 'help-city' },
-    { name: 'волонтерим и путешествуем', value: 'help-travel' },
-  ];
+  const { projects, setProjects } = useContext(ProjectContext);
+  const { auth } = useContext(Context);
+  const [changeFind, setChangeFind] = useState('');
+
+  const checks = projects.map((el) => el.theme);
+
   const cities = [
     { name: 'Одесса', value: 'odesa' },
     { name: 'Киев', value: 'kyiv' },
@@ -29,13 +27,32 @@ const ProjectsPage = () => {
     { name: 'Днепр', value: 'dnepr' },
   ];
 
+  useEffect(() => {
+    if (projects.length === 0) {
+      fetch('http://localhost:8000/get-all-projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+      })
+        .then((res) => res.json())
+        .then((data) => setProjects(data))
+        .catch((err) => console.log(err));
+    }
+  }, [auth]);
+
   return (
     <div className="projects-page animated fadeIn">
       <h2>Проекты</h2>
       <Sort toggleArrow={toggleArrow} />
       <div className="projects-content">
-        <Filter toggleArrow={toggleArrow} checks={checks} cities={cities} />
-        <Items />
+        <Filter
+          changeFind={changeFind}
+          setChangeFind={setChangeFind}
+          toggleArrow={toggleArrow}
+          checks={checks}
+          cities={cities}
+        />
+        <Items changeFind={changeFind} projects={projects} />
       </div>
     </div>
   );
