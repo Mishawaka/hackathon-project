@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import arrRight from '../../../img/arrow-right.svg';
 import { ProjectContext } from '../../../contexts/ProjectsContext';
 
@@ -50,7 +51,9 @@ const Items = ({ projects, changeFind }) => {
           <p>{pr.descr}</p>
           <div>
             <p>Тема: {pr.theme}</p>
-            <img src={arrRight} alt="arrow-right" />
+            <Link to={'/project/' + pr.name}>
+              <img src={arrRight} alt="arrow-right" />
+            </Link>
           </div>
         </div>
       ))}

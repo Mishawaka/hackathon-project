@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { Context } from '../../contexts/Context';
+
+import Name from '../../components/ProjectPage/Name/Name';
+import Description from '../../components/ProjectPage/Description/Description';
+import Contacts from '../../components/ProjectPage/Contacts/Contacts';
+import Events from '../../components/ProjectPage/Events/Events';
 
 import './ProjectPage.scss';
 
 const ProjectPage = () => {
   const { name } = useParams();
   const [project, setProject] = useState();
+  const { auth } = useContext(Context);
   useEffect(() => {
     fetch('http://localhost:8000/get-project', {
       method: 'POST',
@@ -18,14 +25,16 @@ const ProjectPage = () => {
         setProject(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [auth, name]);
 
   return (
     <div>
       {project && (
-        <div>
-          <h4>hello world</h4>
-          <h4>{project.theme}</h4>
+        <div className="project-page">
+          <Name project={project} />
+          <Description project={project} />
+          <Contacts project={project} />
+          <Events project={project} />
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Sort from '../../components/ProjectsPage/Sort/Sort';
-import Filter from '../../components/ProjectsPage/Filter/Filter';
-import Items from '../../components/ProjectsPage/Items/Items';
+import Sort from '../../components/EventsPage/Sort/Sort';
+import Filter from '../../components/EventsPage/Filter/Filter';
+import Items from '../../components/EventsPage/Items/Items';
 import { EventContext } from '../../contexts/EventsContext';
 import { Context } from '../../contexts/Context';
 
@@ -41,10 +41,10 @@ const EventsPage = () => {
   }, [auth]);
 
   return (
-    <div className="projects-page animated fadeIn">
+    <div className="events-page animated fadeIn">
       <h2>Мероприятия</h2>
       <Sort toggleArrow={toggleArrow} />
-      <div className="projects-content">
+      <div className="events-content">
         <Filter
           changeFind={changeFind}
           setChangeFind={setChangeFind}
