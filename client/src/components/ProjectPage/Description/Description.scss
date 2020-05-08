@@ -1,13 +1,15 @@
 @import '../../../variables.scss';
 
 .project-description {
+  height: 43vh;
   & > .flex {
+    height: 100%;
     display: flex;
     width: 100%;
     justify-content: space-between;
     & > .text {
-      width: 30%;
-      padding: 2rem 12rem;
+      width: 28%;
+      padding: 2rem 10rem;
       & > h1 {
         text-transform: uppercase;
         background: $gradient;

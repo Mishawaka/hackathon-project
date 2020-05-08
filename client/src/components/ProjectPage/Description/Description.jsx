@@ -1,4 +1,5 @@
 import React from 'react';
+import cloud from '../../../img/cloud.svg';
 
 import './Description.scss';
 
