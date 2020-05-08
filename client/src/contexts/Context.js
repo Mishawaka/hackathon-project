@@ -6,6 +6,7 @@ export const Provider = ({ children }) => {
   const [registerModal, setRegisterModal] = useState(false);
   const [authModal, setAuthModal] = useState(false);
   const [projectModal, setProjectModal] = useState(false);
+  const [eventModal, setEventModal] = useState(false);
   const [auth, setAuth] = useState(false);
   return (
     <Context.Provider
@@ -16,6 +17,8 @@ export const Provider = ({ children }) => {
         setAuthModal,
         projectModal,
         setProjectModal,
+        eventModal,
+        setEventModal,
         auth,
         setAuth,
       }}

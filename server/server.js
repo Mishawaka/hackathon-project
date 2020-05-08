@@ -9,6 +9,7 @@ const path = require('path');
 
 const User = require('./models/User');
 const Project = require('./models/Project');
+const Event = require('./models/Event')
 require('./config');
 const withAuth = require('./middleware');
 
@@ -43,6 +44,84 @@ app.get('/image/:folder/:file', (req, res) => {
 app.post('/checkToken', withAuth, (req, res) => {
   res.sendStatus(200);
 });
+
+//event
+
+app.post('/save-event', withAuth, (req, res) => {
+  const {
+    name,
+    theme,
+    descr,
+    email,
+    phone,
+    org,
+    city,
+    street,
+    date,
+    imageUrl,
+    facebook,
+    inst,
+  } = req.body;
+  const event = new Event({
+    name,
+    theme,
+    descr,
+    email,
+    phone,
+    org,
+    city,
+    street,
+    date,
+    imageUrl,
+    facebook,
+    inst,
+  });
+  event.save((err) => {
+    if (err) {
+      return res.status(500).json('Error saving to DB');
+    } else {
+      return res.json({ ok: true });
+    }
+  });
+});
+
+app.post('/save-event-image', (req, res) => {
+  const { image, name } = req.body;
+  const buf = new Buffer(image, 'base64'); // decode
+  fs.writeFile(
+    path.join(__dirname, `uploads/events/${name}.jpg`),
+    buf,
+    (err) => {
+      if (err) {
+        console.log('err', err);
+      } else {
+        return res.json({ ok: true });
+      }
+    }
+  );
+});
+
+app.post('/get-all-events', withAuth, (req, res) => {
+  Project.find({}, (err, users) => {
+    if (err) {
+      res.status(500).json({ error: 'An error occured' });
+    } else {
+      res.json(users);
+    }
+  });
+});
+
+app.post('/get-events', withAuth, (req, res) => {
+  Project.findOne({ name: req.body.name }, (err, event) => {
+    if (err) {
+      res.status(500).json({ error: 'An error occured' });
+    } else {
+      res.json(event);
+    }
+  });
+});
+
+// project
 
 app.post('/save-project', withAuth, (req, res) => {
   const {
@@ -111,6 +190,8 @@ app.post('/get-project', withAuth, (req, res) => {
     }
   });
 });
+
+// registration
 
 app.post('/api/register', (req, res) => {
   const { name, surname, email, password } = req.body;
