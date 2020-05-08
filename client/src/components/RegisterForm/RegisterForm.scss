@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .form-page > .form {
   width: 66%;
   background-color: white;
@@ -32,7 +34,7 @@
       cursor: not-allowed;
     }
     &.active {
-      background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+      background: $gradient;
       &:hover {
         background: #f84646;
         cursor: pointer;

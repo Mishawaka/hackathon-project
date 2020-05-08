@@ -1,3 +1,5 @@
+@import '../../../../variables.scss';
+
 .project-b {
   background: #ffffff;
   box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.25);
@@ -38,7 +40,7 @@
     width: 100%;
     & > p {
       font-size: 12px;
-      background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+      background: $gradient;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }

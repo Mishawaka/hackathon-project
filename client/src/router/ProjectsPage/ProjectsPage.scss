@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .projects-page {
   margin: 8rem 5%;
   & > .projects-sort {
@@ -24,7 +26,7 @@
       }
 
       & > .checkboxes {
-        background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+        background: $gradient;
         padding: 1px 1px 1px 0;
         margin-top: 1rem;
         & > .checkboxes-block {
@@ -43,7 +45,7 @@
               line-height: 25px;
               text-align: center;
               letter-spacing: 0.04em;
-              background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+              background: $gradient;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
             }
@@ -125,7 +127,7 @@
           justify-content: space-between;
           width: 100%;
           & > p {
-            background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+            background: $gradient;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }

@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .auth-button {
   padding: 1.15rem 4.2rem;
 }
@@ -46,7 +48,7 @@
 
 /* When the checkbox is checked, add a blue background */
 .auth-checkbox > input:checked ~ .checkmark {
-  background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+  background: $gradient;
   border: none;
 }
 
@@ -86,7 +88,7 @@
       color: #b8b8b8;
     }
     &:last-child {
-      background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+      background: $gradient;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       &:hover {
