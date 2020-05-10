@@ -9,7 +9,7 @@ const path = require('path');
 
 const User = require('./models/User');
 const Project = require('./models/Project');
-const Event = require('./models/Event')
+const Event = require('./models/Event');
 require('./config');
 const withAuth = require('./middleware');
 
@@ -127,6 +127,7 @@ app.post('/save-project', withAuth, (req, res) => {
   const {
     name,
     theme,
+    city,
     descr,
     email,
     phone,
@@ -138,6 +139,7 @@ app.post('/save-project', withAuth, (req, res) => {
   const project = new Project({
     name,
     theme,
+    city,
     descr,
     email,
     phone,
@@ -148,6 +150,7 @@ app.post('/save-project', withAuth, (req, res) => {
   });
   project.save((err) => {
     if (err) {
+      console.log(err);
       return res.status(500).json('Error saving to DB');
     } else {
       return res.json({ ok: true });

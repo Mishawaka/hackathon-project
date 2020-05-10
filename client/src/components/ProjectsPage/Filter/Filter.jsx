@@ -1,14 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ProjectContext } from '../../../contexts/ProjectsContext';
 
 import './Filter.scss';
 
-const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
-  const [find, setFind] = useState('');
-
-  const { filterChecks, setFilterChecks } = useContext(ProjectContext);
-
-  const uniqueChecks = checks.filter((el, id) => checks.indexOf(el) === id);
+const Filter = ({
+  changeFind,
+  setChangeFind,
+  changeCity,
+  setChangeCity,
+  filterChecks,
+  setFilterChecks,
+}) => {
+  const { themes, cities } = useContext(ProjectContext);
 
   const onChange = ({ checked, value }) => {
     if (checked) {
@@ -34,7 +37,7 @@ const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
           <div className="name">
             <h4>Тематика</h4>
           </div>
-          {uniqueChecks.map((el, id) => (
+          {themes.map((el, id) => (
             <div key={id} className="form-group">
               <label className="auth-checkbox">
                 {el}
@@ -57,14 +60,15 @@ const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
           </div>
           <div className="form-group">
             <select
-              onClick={toggleArrow}
+              onChange={(e) => setChangeCity(e.target.value)}
+              value={changeCity}
               name="sort-projects"
               className="city"
-              id=""
             >
+              <option value="">Все города</option>
               {cities.map((el, id) => (
-                <option key={id} value={el.value}>
-                  {el.name}
+                <option key={id} value={el}>
+                  {el}
                 </option>
               ))}
             </select>

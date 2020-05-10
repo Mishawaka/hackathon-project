@@ -20,37 +20,41 @@ const MainPage = () => {
   const { projects, setProjects } = useContext(ProjectContext);
 
   useEffect(() => {
-    console.log('useEffect');
-    fetch('http://localhost:8000/checkToken', {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
-      body: JSON.stringify({ token: localStorage.getItem('jwt') }),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          fetch('http://localhost:8000/get-all-projects', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: localStorage.getItem('jwt') }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setProjects(data);
-              setAuth(true);
-            })
-            .catch((err) => console.log(err));
-        } else {
-          setAuth(false);
-        }
+    if (localStorage.getItem('jwt') !== null) {
+      console.log('useEffect');
+      fetch('http://localhost:8000/checkToken', {
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
-      .catch((err) => console.log(err));
+        .then((res) => {
+          if (res.status === 200) {
+            fetch('http://localhost:8000/get-all-projects', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                setProjects(data);
+                setAuth(true);
+              })
+              .catch((err) => console.log(err));
+          } else {
+            localStorage.removeItem('jwt');
+            window.location.reload();
+            setAuth(false);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   }, [auth]);
 
   return (
     <div className="main-page">
       <div
         className="no-auth-main animated fadeIn slower"
-        style={{ display: auth ? 'none' : 'block' }}
+        style={{ display: localStorage.getItem('jwt') ? 'none' : 'block' }}
       >
         <FirstBlock setRegisterModal={setRegisterModal} />
         <SecondBlock />
@@ -62,7 +66,7 @@ const MainPage = () => {
       </div>
       <div
         className="auth-main animated fadeIn"
-        style={{ display: auth ? 'block' : 'none' }}
+        style={{ display: localStorage.getItem('jwt') ? 'block' : 'none' }}
       >
         <BannerBlock />
         <EventBlock />
