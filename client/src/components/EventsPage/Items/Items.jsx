@@ -40,16 +40,16 @@ const Items = ({ events, changeFind }) => {
       style={{ display: event.length === 0 ? 'none' : 'grid' }}
       className="events-items"
     >
-      {event.map((pr, id) => (
+      {event.map((event, id) => (
         <div key={id} className="event-item">
           <img
-            src={`http://localhost:8000/image/${pr.imageUrl}`}
+            src={`http://localhost:8000/image/${event.imageUrl}`}
             alt="rocket"
           />
-          <h4>{pr.name}</h4>
-          <p>{pr.descr}</p>
+          <h4>{event.name}</h4>
+          <p>{event.descr}</p>
           <div>
-            <p>Тема: {pr.theme}</p>
+            <p>Тема: {event.theme}</p>
             <img src={arrRight} alt="arrow-right" />
           </div>
         </div>
