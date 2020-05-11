@@ -42,12 +42,23 @@
 .form-group > .background {
   width: 56px;
   & > img {
-    width: 100%;
+    width: 60%;
+    padding: 20%;
     border-radius: 100%;
+    cursor: pointer;
+    transition: 1s;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   &.blocked {
     background: $gradient;
     border-radius: 100%;
+    transition: 2s;
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 6px 16px rgba(249, 71, 71, 0.25);
+    }
   }
 }
 

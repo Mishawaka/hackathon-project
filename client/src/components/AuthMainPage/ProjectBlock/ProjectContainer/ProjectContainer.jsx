@@ -5,6 +5,7 @@ import './ProjectContainer.scss';
 import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.scss';
 import arrRight from '../../../../img/arrow-right.svg';
+import { Link } from 'react-router-dom';
 
 const ProjectContainer = ({ projects }) => {
   const viewportWidth = window.innerWidth;
@@ -39,7 +40,9 @@ const ProjectContainer = ({ projects }) => {
             <p>{pr.descr}</p>
             <div>
               <p>Тема: {pr.theme}</p>
-              <img src={arrRight} alt="arrow-right" />
+              <Link to={'/project/' + pr.name}>
+                <img src={arrRight} alt="arrow-right" />
+              </Link>
             </div>
           </div>
         ))}

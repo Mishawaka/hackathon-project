@@ -3,17 +3,19 @@
 .project-b {
   background: #ffffff;
   box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.25);
-  width: 20%;
   border-radius: 4px;
   margin: 1.5rem;
-  padding: 2rem 4rem;
+  padding: 0 1.8rem;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
-  width: 13rem !important;
+  width: 18rem !important;
+  height: 300px;
+  
   & > img {
     width: 60px;
+    border-radius: 100%;
   }
   & > h4 {
     font-family: 'Open Sans';
@@ -37,6 +39,7 @@
   & > div {
     display: inline-flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     & > p {
       font-size: 12px;
