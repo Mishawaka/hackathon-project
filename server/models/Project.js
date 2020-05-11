@@ -10,6 +10,10 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    city: {
+      type: String,
+      // required: true,
+    },
     descr: {
       type: String,
       required: true,

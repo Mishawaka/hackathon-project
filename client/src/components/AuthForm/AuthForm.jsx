@@ -30,17 +30,17 @@ const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (blocked) return null;
 
-    const obj = {
+    const data = {
       email,
       password,
     };
     fetch('http://localhost:8000/api/authenticate', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify(obj),
+      body: JSON.stringify(data),
     })
       .then((res) => {
         if (res.status === 401) {

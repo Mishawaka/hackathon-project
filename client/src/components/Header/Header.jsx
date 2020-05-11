@@ -3,6 +3,7 @@ import { Context } from '../../contexts/Context';
 import { Modal } from 'react-responsive-modal';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import AuthPage from '../AuthForm/AuthForm';
+import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 
 import 'react-responsive-modal/styles.css';
 import './Header.scss';
@@ -93,20 +94,17 @@ const Header = () => {
               : 'menu-item'
           }
         >
-          <Link to="/calendar">
-            <h4 className="menu-text">Календарь</h4>
+          <Link to="/events">
+            <h4 className="menu-text">Ивенты</h4>
           </Link>
         </div>
         <div
-          className={
-            window.location.pathname === '/contacts'
-              ? 'menu-item selected'
-              : 'menu-item'
-          }
+          style={{ display: localStorage.getItem('jwt') ? 'none' : 'block' }}
+          className="menu-item"
         >
-          <Link to="/contacts">
+          <ScrollLink smooth={true} duration={1000} to="sixth-block">
             <h4 className="menu-text">Контакты</h4>
-          </Link>
+          </ScrollLink>
         </div>
       </div>
       <div className="header-right-block">
@@ -115,14 +113,16 @@ const Header = () => {
           onClick={() => setRegisterModal(true)}
           className="gradient-btn"
         >
-          <h4>Стать Волонтером</h4>
+          <h4>Присоединиться</h4>
         </button>
-        <img
-          style={{ display: auth ? 'none' : 'block' }}
-          onClick={() => setAuthModal(true)}
-          src={auth_img}
-          alt="auth"
-        />
+        <div className="user-img">
+          <img
+            style={{ display: auth ? 'none' : 'block' }}
+            onClick={() => setAuthModal(true)}
+            src={auth_img}
+            alt="auth"
+          />
+        </div>
         <img
           style={{ display: auth ? 'block' : 'none' }}
           src={user_img}

@@ -7,6 +7,23 @@
   & > input {
     cursor: pointer;
   }
+  & > select {
+    width: 70%;
+    border: 1px solid #a4a4a4;
+    box-sizing: border-box;
+    border-radius: 4px;
+    height: 2.4rem;
+    padding-left: 1rem;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+  }
   & > input::before {
     content: '';
     background-attachment: scroll;
@@ -49,4 +66,8 @@
   display: flex;
   justify-content: flex-end;
   margin: 0;
+}
+
+option.non-value {
+  background: gray;
 }

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Sort from '../../components/EventsPage/Sort/Sort';
 import Filter from '../../components/EventsPage/Filter/Filter';
 import Items from '../../components/EventsPage/Items/Items';
 import { EventContext } from '../../contexts/EventsContext';
@@ -34,7 +33,14 @@ const EventsPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem('jwt');
+            window.location.replace('/');
+          } else {
+            return res.json();
+          }
+        })
         .then((data) => setEvents(data))
         .catch((err) => console.log(err));
     }
@@ -43,7 +49,6 @@ const EventsPage = () => {
   return (
     <div className="events-page animated fadeIn">
       <h2>Мероприятия</h2>
-      <Sort toggleArrow={toggleArrow} />
       <div className="events-content">
         <Filter
           changeFind={changeFind}

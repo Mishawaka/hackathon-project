@@ -19,9 +19,15 @@ const ProjectPage = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401) {
+          localStorage.removeItem('jwt');
+          window.location.replace('/');
+        } else {
+          return res.json();
+        }
+      })
       .then((data) => {
-        // console.log(data);
         setProject(data);
       })
       .catch((err) => console.log(err));

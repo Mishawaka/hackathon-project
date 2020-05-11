@@ -26,7 +26,14 @@ const Events = ({ project }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem('jwt');
+            window.location.replace('/');
+          } else {
+            return res.json();
+          }
+        })
         .then((data) => setProjects(data))
         .catch((err) => console.log(err));
     }

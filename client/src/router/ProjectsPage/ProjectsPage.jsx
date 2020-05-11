@@ -7,25 +7,17 @@ import { Context } from '../../contexts/Context';
 
 import './ProjectsPage.scss';
 
-const ProjectsPage = () => {
+const ProjectsPage = ({ history }) => {
   const toggleArrow = ({ target }) => {
     let { classList } = target;
     classList.toggle('sort-active');
   };
 
   const { projects, setProjects } = useContext(ProjectContext);
-  const { auth } = useContext(Context);
+  const { auth, setAuthModal } = useContext(Context);
   const [changeFind, setChangeFind] = useState('');
-
-  const checks = projects.map((el) => el.theme);
-
-  const cities = [
-    { name: 'Одесса', value: 'odesa' },
-    { name: 'Киев', value: 'kyiv' },
-    { name: 'Львов', value: 'lviv' },
-    { name: 'Харьков', value: 'kharkiv' },
-    { name: 'Днепр', value: 'dnepr' },
-  ];
+  const [changeCity, setChangeCity] = useState('');
+  const [filterChecks, setFilterChecks] = useState([]);
 
   useEffect(() => {
     if (projects.length === 0) {
@@ -34,7 +26,14 @@ const ProjectsPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem('jwt');
+            window.location.replace('/');
+          } else {
+            return res.json();
+          }
+        })
         .then((data) => setProjects(data))
         .catch((err) => console.log(err));
     }
@@ -48,11 +47,18 @@ const ProjectsPage = () => {
         <Filter
           changeFind={changeFind}
           setChangeFind={setChangeFind}
+          changeCity={changeCity}
+          setChangeCity={setChangeCity}
+          filterChecks={filterChecks}
+          setFilterChecks={setFilterChecks}
           toggleArrow={toggleArrow}
-          checks={checks}
-          cities={cities}
         />
-        <Items changeFind={changeFind} projects={projects} />
+        <Items
+          changeFind={changeFind}
+          changeCity={changeCity}
+          filterChecks={filterChecks}
+          projects={projects}
+        />
       </div>
     </div>
   );

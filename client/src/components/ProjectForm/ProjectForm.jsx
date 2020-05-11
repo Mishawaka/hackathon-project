@@ -3,6 +3,7 @@ import FormPage from '../FormPage/FormPage';
 
 import ImageCrop from '../ImageCrop/ImageCrop';
 import { ImageContext } from '../../contexts/ImageContext';
+import { ProjectContext } from '../../contexts/ProjectsContext';
 
 import plus from '../../img/plus.svg';
 import facebook from '../../img/facebook.svg';
@@ -10,24 +11,40 @@ import inst from '../../img/instagram.svg';
 import './ProjectForm.scss';
 
 const ProjectForm = ({ modal, setModal }) => {
+  const { croppedImageUrl, file } = useContext(ImageContext);
   const [form, setForm] = useState({
     name: '',
     theme: '',
+    city: '',
     descr: '',
     email: '',
     phone: '',
     org: '',
     facebook: '',
     inst: '',
+    imageUrl: 'projects/image.jpg',
   });
 
-  const { croppedImageUrl, file } = useContext(ImageContext);
+  const { themes, cities } = useContext(ProjectContext);
 
   const clickRef = createRef();
 
   const fields = [
     { name: 'name', label: 'Название', value: form.name },
-    { name: 'theme', label: 'Тематика', value: form.theme },
+    {
+      name: 'theme',
+      label: 'Тематика',
+      type: 'select',
+      value: form.theme,
+      parent: themes,
+    },
+    {
+      name: 'city',
+      label: 'Город',
+      value: form.city,
+      type: 'select',
+      parent: cities,
+    },
     { name: 'descr', label: 'Описание', value: form.descr },
     { name: 'email', label: 'Почта', value: form.email },
     { name: 'phone', label: 'Телефон (без +38)', value: form.phone },
@@ -46,9 +63,13 @@ const ProjectForm = ({ modal, setModal }) => {
     reader.readAsDataURL(blob);
   };
 
-  const sendPhoto = () => {
+  const sendPhoto = (id) => {
     blobToBase64(file, (base64) => {
-      const body = JSON.stringify({ image: base64, name: file.name });
+      const body = JSON.stringify({
+        image: base64,
+        name: file.name,
+        projectId: id,
+      });
       fetch('http://localhost:8000/save-project-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,10 +83,6 @@ const ProjectForm = ({ modal, setModal }) => {
   const createProject = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      setForm({
-        ...form,
-        imageUrl: 'projects/' + file.name + '.jpg',
-      });
       fetch('http://localhost:8000/save-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -74,7 +91,8 @@ const ProjectForm = ({ modal, setModal }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.ok) {
-            sendPhoto();
+            sendPhoto(data.id);
+            setModal(false);
           }
         })
         .catch((err) => console.error(err));
@@ -103,43 +121,67 @@ const ProjectForm = ({ modal, setModal }) => {
         </div>
         <ImageCrop clickRef={clickRef} />
       </div>
-      {fields.map((el, id) => (
-        <div
-          key={id}
-          className={
-            el.name === 'facebook' || el.name === 'inst'
-              ? 'form-group ' + el.name
-              : 'form-group'
-          }
-        >
-          <input
-            onChange={({ target }) =>
-              setForm({
-                ...form,
-                [target.name]: target.value,
-              })
-            }
-            value={el.value}
-            type="text"
-            name={el.name}
-            className="form-control"
-          />
-          <label
-            htmlFor={el.name}
+      {fields.map((el, id) =>
+        el.type === 'select' ? (
+          <div key={id} className="form-group">
+            <select
+              name={el.name}
+              onChange={({ target }) => {
+                return setForm({
+                  ...form,
+                  [target.name]: target.value,
+                });
+              }}
+              value={el.value}
+            >
+              <option className="non-value" value="" disabled selected>
+                {el.label}
+              </option>
+              {el.parent.map((op, id) => (
+                <option key={id} value={op}>
+                  {op}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div
+            key={id}
             className={
-              el.value === ''
-                ? 'form-control-placeholder-off'
-                : 'form-control-placeholder-on'
+              el.name === 'facebook' || el.name === 'inst'
+                ? 'form-group ' + el.name
+                : 'form-group'
             }
           >
-            {el.name === 'facebook' || el.name === 'inst' ? (
-              <img src={el.label} alt="icon" />
-            ) : (
-              el.label
-            )}
-          </label>
-        </div>
-      ))}
+            <input
+              onChange={({ target }) =>
+                setForm({
+                  ...form,
+                  [target.name]: target.value,
+                })
+              }
+              value={el.value}
+              type="text"
+              name={el.name}
+              className="form-control"
+            />
+            <label
+              htmlFor={el.name}
+              className={
+                el.value === ''
+                  ? 'form-control-placeholder-off'
+                  : 'form-control-placeholder-on'
+              }
+            >
+              {el.name === 'facebook' || el.name === 'inst' ? (
+                <img src={el.label} alt="icon" />
+              ) : (
+                el.label
+              )}
+            </label>
+          </div>
+        )
+      )}
       <div className="form-group project-save">
         <button
           onClick={() => createProject()}

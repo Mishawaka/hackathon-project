@@ -1,40 +1,32 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import arrRight from '../../../img/arrow-right.svg';
-import { ProjectContext } from '../../../contexts/ProjectsContext';
 
 import './Items.scss';
 
-const Items = ({ projects, changeFind }) => {
-  const { filterChecks } = useContext(ProjectContext);
+const Items = ({ projects, changeFind, changeCity, filterChecks }) => {
   const [proj, setProj] = useState(projects);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setProj(projects);
-    if (filterChecks.length === 0) {
-      setProj(projects);
-    } else {
-      let arr = projects.filter((el) =>
-        filterChecks.includes(el.theme.toLowerCase())
-      );
+    let arr = [...proj];
+    if (filterChecks.length !== 0) {
+      arr = arr.filter((el) => filterChecks.includes(el.theme.toLowerCase()));
       setProj(arr);
     }
-    setLoading(false);
-  }, [projects, filterChecks, changeFind]);
-
-  useEffect(() => {
+    if (changeCity.length !== 0) {
+      arr = arr.filter((el) => el.city === changeCity);
+      setProj(arr);
+    }
     if (changeFind.length !== 0) {
       const reg = new RegExp(changeFind);
-      let arr = proj.filter(
-        ({ name, theme, descr, org }) =>
+      arr = arr.filter(
+        ({ name, descr, org }) =>
           reg.test(name) || reg.test(org) || reg.test(descr)
       );
       setProj(arr);
-    } else {
-      setProj(projects);
     }
-  }, [changeFind]);
+  }, [projects, filterChecks, changeFind, changeCity]);
 
   return (
     <div
