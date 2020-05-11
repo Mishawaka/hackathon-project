@@ -1,10 +1,13 @@
 import React, { useState, useContext } from 'react';
+import Calendar from 'react-calendar';
 import { EventContext } from '../../../contexts/EventsContext';
 
+import 'react-calendar/dist/Calendar.css';
 import './Filter.scss';
 
 const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
   const [find, setFind] = useState('');
+  const [date, setDate] = useState(new Date());
 
   const { filterChecks, setFilterChecks } = useContext(EventContext);
 
@@ -19,15 +22,15 @@ const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
     }
   };
 
+  const onDateChange = (e) => {
+    console.log(e);
+    setDate(e);
+  };
+
   return (
     <div className="events-filter">
       <div className="find">
-        <input
-          type="text"
-          placeholder="Поиск"
-          onChange={(e) => setChangeFind(e.target.value)}
-          value={changeFind}
-        />
+        <Calendar value={date} onChange={(e) => onDateChange(e)} />
       </div>
       <div className="checkboxes">
         <div className="checkboxes-block">

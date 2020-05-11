@@ -12,7 +12,7 @@ const Items = ({ events, changeFind }) => {
   useEffect(() => {
     setEvent(events);
     if (filterChecks.length === 0) {
-        setEvent(events);
+      setEvent(events);
     } else {
       let arr = events.filter((el) =>
         filterChecks.includes(el.theme.toLowerCase())
@@ -31,7 +31,7 @@ const Items = ({ events, changeFind }) => {
       );
       setEvent(arr);
     } else {
-        setEvent(events);
+      setEvent(events);
     }
   }, [changeFind]);
 

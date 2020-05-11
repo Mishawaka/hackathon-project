@@ -49,7 +49,7 @@ const App = () => (
                 exact
               />
               <RouteWrapper
-                path="/calendar"
+                path="/events"
                 component={EventsPage}
                 layout={withLayout}
                 exact

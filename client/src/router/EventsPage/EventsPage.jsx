@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Sort from '../../components/EventsPage/Sort/Sort';
 import Filter from '../../components/EventsPage/Filter/Filter';
 import Items from '../../components/EventsPage/Items/Items';
 import { EventContext } from '../../contexts/EventsContext';
@@ -50,7 +49,6 @@ const EventsPage = () => {
   return (
     <div className="events-page animated fadeIn">
       <h2>Мероприятия</h2>
-      <Sort toggleArrow={toggleArrow} />
       <div className="events-content">
         <Filter
           changeFind={changeFind}

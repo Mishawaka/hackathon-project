@@ -94,7 +94,7 @@ const Header = () => {
               : 'menu-item'
           }
         >
-          <Link to="/calendar">
+          <Link to="/events">
             <h4 className="menu-text">Ивенты</h4>
           </Link>
         </div>
