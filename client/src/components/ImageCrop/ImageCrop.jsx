@@ -8,11 +8,11 @@ const ImageCrop = ({ clickRef }) => {
   const {
     src,
     setSrc,
-    croppedImageUrl,
-    setCroppedImageUrl,
     show,
     setShow,
     setFile,
+    croppedImageUrl,
+    setCroppedImageUrl,
   } = useContext(ImageContext);
   const [imageRef, setImageRef] = useState();
   const [crop, setCrop] = useState({

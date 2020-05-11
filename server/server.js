@@ -153,13 +153,13 @@ app.post('/save-project', withAuth, (req, res) => {
       console.log(err);
       return res.status(500).json('Error saving to DB');
     } else {
-      return res.json({ ok: true });
+      return res.json({ ok: true, id: project._id });
     }
   });
 });
 
 app.post('/save-project-image', (req, res) => {
-  const { image, name } = req.body;
+  const { image, name, projectId } = req.body;
   const buf = new Buffer(image, 'base64'); // decode
   fs.writeFile(
     path.join(__dirname, `uploads/projects/${name}.jpg`),
@@ -168,7 +168,13 @@ app.post('/save-project-image', (req, res) => {
       if (err) {
         console.log('err', err);
       } else {
-        return res.json({ ok: true });
+        Project.findByIdAndUpdate(
+          projectId,
+          { imageUrl: `projects/${name}.jpg` },
+          (err) => {
+            return err ? res.json({ err }) : res.json({ ok: true });
+          }
+        );
       }
     }
   );

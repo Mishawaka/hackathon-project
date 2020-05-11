@@ -12,7 +12,7 @@ const ProjectSchema = mongoose.Schema(
     },
     city: {
       type: String,
-      required: true,
+      // required: true,
     },
     descr: {
       type: String,

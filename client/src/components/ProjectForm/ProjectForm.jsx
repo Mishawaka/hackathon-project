@@ -11,6 +11,7 @@ import inst from '../../img/instagram.svg';
 import './ProjectForm.scss';
 
 const ProjectForm = ({ modal, setModal }) => {
+  const { croppedImageUrl, file } = useContext(ImageContext);
   const [form, setForm] = useState({
     name: '',
     theme: '',
@@ -21,9 +22,9 @@ const ProjectForm = ({ modal, setModal }) => {
     org: '',
     facebook: '',
     inst: '',
+    imageUrl: 'projects/image.jpg',
   });
 
-  const { croppedImageUrl, file } = useContext(ImageContext);
   const { themes, cities } = useContext(ProjectContext);
 
   const clickRef = createRef();
@@ -62,9 +63,13 @@ const ProjectForm = ({ modal, setModal }) => {
     reader.readAsDataURL(blob);
   };
 
-  const sendPhoto = () => {
+  const sendPhoto = (id) => {
     blobToBase64(file, (base64) => {
-      const body = JSON.stringify({ image: base64, name: file.name });
+      const body = JSON.stringify({
+        image: base64,
+        name: file.name,
+        projectId: id,
+      });
       fetch('http://localhost:8000/save-project-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,10 +83,6 @@ const ProjectForm = ({ modal, setModal }) => {
   const createProject = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      setForm({
-        ...form,
-        imageUrl: 'projects/' + file.name + '.jpg',
-      });
       fetch('http://localhost:8000/save-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -90,7 +91,7 @@ const ProjectForm = ({ modal, setModal }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.ok) {
-            sendPhoto();
+            sendPhoto(data.id);
             setModal(false);
           }
         })
