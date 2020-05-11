@@ -148,21 +148,23 @@ app.post('/save-project', withAuth, (req, res) => {
     facebook,
     inst,
   });
-  project.save((err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json('Error saving to DB');
-    } else {
-      return res.json({ ok: true, id: project._id });
-    }
+  fs.mkdir(path.join(__dirname, `uploads/projects/${project._id}`), () => {
+    project.save((err) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json('Error saving to DB');
+      } else {
+        return res.json({ ok: true, id: project._id });
+      }
+    });
   });
 });
 
 app.post('/save-project-image', (req, res) => {
   const { image, name, projectId } = req.body;
-  const buf = new Buffer(image, 'base64'); // decode
+  const buf = new Buffer(image, 'base64'); // decode\
   fs.writeFile(
-    path.join(__dirname, `uploads/projects/${name}.jpg`),
+    path.join(__dirname, `uploads/projects/${projectId}/${name}.jpg`),
     buf,
     (err) => {
       if (err) {
@@ -170,12 +172,29 @@ app.post('/save-project-image', (req, res) => {
       } else {
         Project.findByIdAndUpdate(
           projectId,
-          { imageUrl: `projects/${name}.jpg` },
+          { imageUrl: `projects/${projectId}/${name}.jpg` },
           (err) => {
             return err ? res.json({ err }) : res.json({ ok: true });
           }
         );
       }
+    }
+  );
+});
+
+app.post('/save-project-images', (req, res) => {
+  const { image, name, projectId } = req.body;
+  const buf = new Buffer(image, 'base64');
+  fs.writeFile(
+    path.join(__dirname, `uploads/projects/${projectId}/${name}.jpg`),
+    buf,
+    (err) => {
+      if (err) console.log('err', err);
+      Project.findByIdAndUpdate(
+        projectId,
+        { $push: { images: `projects/${projectId}/${name}.jpg` } },
+        (err) => (err ? res.json({ err }) : res.json({ ok: true }))
+      );
     }
   );
 });

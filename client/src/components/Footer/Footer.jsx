@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Modal } from 'react-responsive-modal';
 import { Context } from '../../contexts/Context';
 import ProjectForm from '../ProjectForm/ProjectForm';
+import ProjectImages from '../ProjectImages/ProjectImages';
 
 import './Footer.scss';
 import footer_logo from '../../img/LogoFooter.svg';
@@ -13,6 +14,8 @@ const Footer = () => {
   const {
     setRegisterModal,
     setProjectModal,
+    imagesModal,
+    setImagesModal,
     projectModal,
     auth,
     setAuth,
@@ -37,6 +40,14 @@ const Footer = () => {
         center
       >
         <ProjectForm modal={projectModal} setModal={setProjectModal} />
+      </Modal>
+      <Modal
+        classNames={{ modal: 'modal-class' }}
+        open={imagesModal}
+        onClose={() => setImagesModal(false)}
+        center
+      >
+        <ProjectImages modal={imagesModal} setModal={setImagesModal} />
       </Modal>
       <div className="footer-logo-block">
         <img src={footer_logo} alt="" />

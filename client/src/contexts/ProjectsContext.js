@@ -5,6 +5,7 @@ export const ProjectContext = createContext();
 export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [findProjects, setFindProjects] = useState('');
+  const [projectId, setProjectId] = useState('');
   const themes = [
     'помощь пожилым людям',
     'помощь сиротам',
@@ -23,6 +24,8 @@ export const ProjectProvider = ({ children }) => {
         setProjects,
         findProjects,
         setFindProjects,
+        projectId,
+        setProjectId,
         themes,
         cities,
       }}
