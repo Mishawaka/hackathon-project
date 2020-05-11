@@ -4,12 +4,13 @@ import randomStr from 'randomstring';
 import 'react-image-crop/dist/ReactCrop.css';
 import { ImageContext } from '../../contexts/ImageContext';
 
-const ImageCrop = ({ clickRef }) => {
+const ImageCrop = ({ clickRef, nextImage, index, aspect, height }) => {
   const {
     src,
     setSrc,
     show,
     setShow,
+    file,
     setFile,
     croppedImageUrl,
     setCroppedImageUrl,
@@ -17,8 +18,8 @@ const ImageCrop = ({ clickRef }) => {
   const [imageRef, setImageRef] = useState();
   const [crop, setCrop] = useState({
     unit: '%',
-    height: 100,
-    aspect: 1 / 1,
+    height,
+    aspect,
   });
 
   const onSelectFile = ({ target }) => {
@@ -28,6 +29,14 @@ const ImageCrop = ({ clickRef }) => {
       reader.addEventListener('load', () => setSrc(reader.result));
       reader.readAsDataURL(files[0]);
       setShow(true);
+    }
+  };
+
+  const next = () => {
+    setShow(false);
+    if (index) {
+      setCroppedImageUrl(false);
+      nextImage(file);
     }
   };
 
@@ -107,7 +116,7 @@ const ImageCrop = ({ clickRef }) => {
           style={{ display: show ? 'inline-block' : 'none' }}
           src={src}
           crop={crop}
-          circularCrop={true}
+          circularCrop={index ? false : true}
           ruleOfThirds
           onImageLoaded={onImageLoaded}
           onComplete={onCropComplete}
@@ -118,10 +127,14 @@ const ImageCrop = ({ clickRef }) => {
         <div className="form-group">
           <button
             style={{ display: show ? 'block' : 'none' }}
-            onClick={() => setShow(false)}
-            className="cut-button"
+            onClick={() => next()}
+            className="cut-button active"
           >
-            <h4>Обрезать</h4>
+            {index ? (
+              <h4>{index < 4 ? 'Следующее фото' : 'Сохранить'}</h4>
+            ) : (
+              <h4>Обрезать</h4>
+            )}
           </button>
         </div>
       )}

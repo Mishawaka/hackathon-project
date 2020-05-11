@@ -34,6 +34,7 @@ const ProjectSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    images: [String],
     facebook: String,
     inst: String,
     createdAt: Date,

@@ -4,6 +4,7 @@ import FormPage from '../FormPage/FormPage';
 import ImageCrop from '../ImageCrop/ImageCrop';
 import { ImageContext } from '../../contexts/ImageContext';
 import { ProjectContext } from '../../contexts/ProjectsContext';
+import { Context } from '../../contexts/Context';
 
 import plus from '../../img/plus.svg';
 import facebook from '../../img/facebook.svg';
@@ -11,7 +12,9 @@ import inst from '../../img/instagram.svg';
 import './ProjectForm.scss';
 
 const ProjectForm = ({ modal, setModal }) => {
-  const { croppedImageUrl, file } = useContext(ImageContext);
+  const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
+    ImageContext
+  );
   const [form, setForm] = useState({
     name: '',
     theme: '',
@@ -25,7 +28,10 @@ const ProjectForm = ({ modal, setModal }) => {
     imageUrl: 'projects/image.jpg',
   });
 
-  const { themes, cities } = useContext(ProjectContext);
+  const { themes, cities, projectId, setProjectId } = useContext(
+    ProjectContext
+  );
+  const { setImagesModal } = useContext(Context);
 
   const clickRef = createRef();
 
@@ -75,7 +81,8 @@ const ProjectForm = ({ modal, setModal }) => {
         headers: { 'Content-Type': 'application/json' },
         body,
       })
-        .then((res) => console.log(res))
+        .then((res) => res.json())
+        .then((data) => setTimeout(() => setImagesModal(true), 800))
         .catch((err) => console.log(err));
     });
   };
@@ -91,6 +98,8 @@ const ProjectForm = ({ modal, setModal }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.ok) {
+            setProjectId(data.id);
+            setCroppedImageUrl(false);
             sendPhoto(data.id);
             setModal(false);
           }
@@ -119,7 +128,7 @@ const ProjectForm = ({ modal, setModal }) => {
             alt="plus"
           />
         </div>
-        <ImageCrop clickRef={clickRef} />
+        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       {fields.map((el, id) =>
         el.type === 'select' ? (
