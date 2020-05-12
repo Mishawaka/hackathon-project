@@ -68,7 +68,7 @@ const Header = () => {
         <div
           className={
             window.location.pathname === '/'
-              ? 'menu-item selected'
+              ? 'menu-item selected animated fadeIn faster'
               : 'menu-item'
           }
         >
@@ -79,7 +79,7 @@ const Header = () => {
         <div
           className={
             window.location.pathname === '/projects'
-              ? 'menu-item selected'
+              ? 'menu-item selected animated fadeIn faster'
               : 'menu-item'
           }
         >
@@ -90,7 +90,7 @@ const Header = () => {
         <div
           className={
             window.location.pathname === '/events'
-              ? 'menu-item selected'
+              ? 'menu-item selected animated fadeIn faster'
               : 'menu-item'
           }
         >

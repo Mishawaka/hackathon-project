@@ -24,12 +24,17 @@
     width: 20%;
     border-radius: 4px;
     margin: 1.5rem;
-    padding: 2rem 4rem;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    width: 13rem !important;
+    width: 21rem !important;
+    height: 300px;
+    transition: 1s;
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.5);
+    }
     & > .item-flex > div > p {
       font-family: Open Sans;
       font-style: normal;
@@ -44,6 +49,7 @@
     }
     & > img {
       width: 60px;
+      border-radius: 100%;
     }
     & > h4 {
       font-family: 'Open Sans';
@@ -65,9 +71,14 @@
       align-items: center;
     }
     & > div {
-      display: inline-flex;
-      justify-content: space-between;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
       width: 100%;
+      &:first-child {
+        margin-bottom: 1.4rem;
+        border-bottom: 1px solid rgba(248, 70, 70, 0.25);
+      }
       & > p {
         font-size: 12px;
         background: $gradient;
