@@ -7,6 +7,7 @@ import { Context } from '../../../contexts/Context';
 import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.scss';
 import './Events.scss';
+import { Link } from 'react-router-dom';
 
 const Events = ({ project }) => {
   const viewportWidth = window.innerWidth;
@@ -75,7 +76,9 @@ const Events = ({ project }) => {
             <p>{pr.descr}</p>
             <div>
               <p>Тема: {pr.theme}</p>
-              <img src={arrRight} alt="arrow-right" />
+              <Link to={'/project/' + pr.name}>
+                <img src={arrRight} alt="arrow-right" />
+              </Link>
             </div>
           </div>
         ))}

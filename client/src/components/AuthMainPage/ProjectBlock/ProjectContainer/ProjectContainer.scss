@@ -12,7 +12,11 @@
   align-items: center !important;
   width: 18rem !important;
   height: 300px;
-  
+  transition: 1s;
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.5);
+  }
   & > img {
     width: 60px;
     border-radius: 100%;
