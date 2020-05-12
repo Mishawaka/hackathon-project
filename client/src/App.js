@@ -11,6 +11,7 @@ import { Provider } from './contexts/Context';
 import { ImageProvider } from './contexts/ImageContext';
 import { ProjectProvider } from './contexts/ProjectsContext';
 import { EventProvider } from './contexts/EventsContext';
+import { RegisterProvider } from './contexts/RegisterContext';
 
 const RouteWrapper = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -29,32 +30,34 @@ const App = () => (
       <ImageProvider>
         <ProjectProvider>
           <EventProvider>
-            <Switch>
-              <RouteWrapper
-                path="/"
-                component={MainPage}
-                layout={withLayout}
-                exact
-              />
-              <RouteWrapper
-                path="/projects"
-                component={ProjectsPage}
-                layout={withLayout}
-                exact
-              />
-              <RouteWrapper
-                path="/project/:name"
-                component={ProjectPage}
-                layout={withLayout}
-                exact
-              />
-              <RouteWrapper
-                path="/events"
-                component={EventsPage}
-                layout={withLayout}
-                exact
-              />
-            </Switch>
+            <RegisterProvider>
+              <Switch>
+                <RouteWrapper
+                  path="/"
+                  component={MainPage}
+                  layout={withLayout}
+                  exact
+                />
+                <RouteWrapper
+                  path="/projects"
+                  component={ProjectsPage}
+                  layout={withLayout}
+                  exact
+                />
+                <RouteWrapper
+                  path="/project/:name"
+                  component={ProjectPage}
+                  layout={withLayout}
+                  exact
+                />
+                <RouteWrapper
+                  path="/events"
+                  component={EventsPage}
+                  layout={withLayout}
+                  exact
+                />
+              </Switch>
+            </RegisterProvider>
           </EventProvider>
         </ProjectProvider>
       </ImageProvider>

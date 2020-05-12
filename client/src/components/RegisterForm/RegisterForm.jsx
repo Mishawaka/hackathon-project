@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, createRef } from 'react';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { RegisterContext } from '../../contexts/RegisterContext';
+import { ImageContext } from '../../contexts/ImageContext';
+import ImageCrop from '../ImageCrop/ImageCrop';
 
 import FormPage from '../FormPage/FormPage';
 import eye from '../../img/eye.svg';
 import activeEye from '../../img/active-eye.svg';
+import plus from '../../img/plus.svg';
 import './RegisterForm.scss';
 
 const RegisterForm = ({ modal, setModal, setAuthModal }) => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [blocked, setBlocked] = useState(true);
+  const { email, setEmail } = useContext(RegisterContext);
+  const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
+    ImageContext
+  );
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  const onChange = ({ id, value }) => {
-    if (id === 'name') {
-      setName(value);
-    } else if (id === 'surname') {
-      setSurname(value);
-    } else if (id === 'email') {
-      setEmail(value);
-    } else if (id === 'password') {
-      setPassword(value);
-    }
-    check();
-  };
+  const clickRef = createRef();
 
   const check = () => {
     if (
@@ -41,29 +37,61 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
     }
   };
 
+  const blobToBase64 = function (blob, cb) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      var dataUrl = reader.result;
+      var base64 = dataUrl.split(',')[1];
+      cb(base64);
+    };
+    reader.readAsDataURL(blob);
+  };
+
+  const sendImage = (id, cb) => {
+    blobToBase64(file, (base64) => {
+      const body = JSON.stringify({
+        image: base64,
+        name: file.name,
+        userId: id,
+      });
+      fetch('http://localhost:8000/save-user-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      })
+        .then((res) => res.json())
+        .then((data) => cb(data))
+        .catch((err) => console.log(err));
+    });
+  };
+
   const onSubmit = () => {
+    check();
     if (blocked) return null;
 
     const obj = {
       name,
       surname,
       email,
+      phone,
       password,
     };
     fetch('http://localhost:8000/api/register', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify(obj),
+      body: JSON.stringify({ ...obj, imageUrl: 'users/.jpg' }),
     })
-      .then((res) => console.log(res))
+      .then((res) => res.json())
       .then((data) => {
         setModal(false);
-        setTimeout(() => {
-          scroll.scrollTo(0, { smooth: true });
-        }, 1000);
-        setTimeout(() => {
-          setAuthModal(true);
-        }, 2000);
+        sendImage(data.id, (result) => {
+          setTimeout(() => {
+            scroll.scrollTo(0, { smooth: true });
+          }, 1000);
+          setTimeout(() => {
+            setAuthModal(true);
+          }, 2000);
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -73,46 +101,26 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
       <h1>Регистрация</h1>
       <h3>Заполните поля</h3>
       <div className="form-group">
-        <input
-          type="text"
-          onChange={(e) => onChange(e.target)}
-          value={name}
-          id="name"
-          className="form-control"
-        />
-        <label
-          htmlFor="name"
-          className={
-            name === ''
-              ? 'form-control-placeholder-off'
-              : 'form-control-placeholder-on'
-          }
+        <div
+          className={croppedImageUrl ? 'background' : 'blocked background'}
+          onClick={croppedImageUrl ? null : () => clickRef.current.click()}
         >
-          Имя
-        </label>
+          <img
+            style={{ display: croppedImageUrl ? 'block' : 'none' }}
+            src={croppedImageUrl}
+            alt="cropped"
+          />
+          <img
+            style={{ display: croppedImageUrl ? 'none' : 'block' }}
+            src={plus}
+            alt="plus"
+          />
+        </div>
+        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       <div className="form-group">
         <input
-          onChange={(e) => onChange(e.target)}
-          value={surname}
-          type="text"
-          id="surname"
-          className="form-control"
-        />
-        <label
-          htmlFor="surname"
-          className={
-            surname === ''
-              ? 'form-control-placeholder-off'
-              : 'form-control-placeholder-on'
-          }
-        >
-          Фамилия
-        </label>
-      </div>
-      <div className="form-group">
-        <input
-          onChange={(e) => onChange(e.target)}
+          onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="email"
           id="email"
@@ -131,7 +139,64 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
       </div>
       <div className="form-group">
         <input
-          onChange={(e) => onChange(e.target)}
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          id="name"
+          className="form-control"
+        />
+        <label
+          htmlFor="name"
+          className={
+            name === ''
+              ? 'form-control-placeholder-off'
+              : 'form-control-placeholder-on'
+          }
+        >
+          Имя
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          onChange={(e) => setSurname(e.target.value)}
+          value={surname}
+          type="text"
+          id="surname"
+          className="form-control"
+        />
+        <label
+          htmlFor="surname"
+          className={
+            surname === ''
+              ? 'form-control-placeholder-off'
+              : 'form-control-placeholder-on'
+          }
+        >
+          Фамилия
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          onChange={(e) => setPhone(e.target.value)}
+          value={phone}
+          type="text"
+          id="phone"
+          className="form-control"
+        />
+        <label
+          htmlFor="phone"
+          className={
+            phone === ''
+              ? 'form-control-placeholder-off'
+              : 'form-control-placeholder-on'
+          }
+        >
+          Телефон (без +38)
+        </label>
+      </div>
+      <div className="form-group">
+        <input
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
           type={showPass ? 'text' : 'password'}
           id="password"

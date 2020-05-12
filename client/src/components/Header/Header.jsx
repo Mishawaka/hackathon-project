@@ -122,12 +122,16 @@ const Header = () => {
             src={auth_img}
             alt="auth"
           />
+          <img
+            style={{ display: auth ? 'block' : 'none' }}
+            src={
+              localStorage.getItem('img')
+                ? `http://localhost:8000/image/${localStorage.getItem('img')}`
+                : user_img
+            }
+            alt="user"
+          />
         </div>
-        <img
-          style={{ display: auth ? 'block' : 'none' }}
-          src={user_img}
-          alt="user"
-        />
         <div className="language-block">
           <h4>Укр</h4>
           <h4>Рус</h4>

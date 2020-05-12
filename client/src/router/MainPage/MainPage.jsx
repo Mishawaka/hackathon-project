@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../../contexts/Context';
 import { ProjectContext } from '../../contexts/ProjectsContext';
+import { RegisterContext } from '../../contexts/RegisterContext';
 import FirstBlock from '../../components/MainPage/FirstBlock/FirstBlock';
 import SecondBlock from '../../components/MainPage/SecondBlock/SecondBlock';
 import ThirdBlock from '../../components/MainPage/ThirdBlock/ThirdBlock';
@@ -18,6 +19,7 @@ import './MainPage.scss';
 const MainPage = () => {
   const { setRegisterModal, setAuth, auth } = useContext(Context);
   const { projects, setProjects } = useContext(ProjectContext);
+  const { email, setEmail } = useContext(RegisterContext);
 
   useEffect(() => {
     if (localStorage.getItem('jwt') !== null) {
@@ -62,7 +64,11 @@ const MainPage = () => {
         <ForthBlock />
         <SecondBanner />
         <FIfthBlock />
-        <SixthBlock />
+        <SixthBlock
+          email={email}
+          setEmail={setEmail}
+          setModal={setRegisterModal}
+        />
       </div>
       <div
         className="auth-main animated fadeIn"

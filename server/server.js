@@ -228,24 +228,55 @@ app.post('/get-project', withAuth, (req, res) => {
 // registration
 
 app.post('/api/register', (req, res) => {
-  const { name, surname, email, password } = req.body;
+  const { name, surname, email, phone, password, imageUrl } = req.body;
   bcrypt.hash(`${password}`, 10, (err, hashed) => {
     if (err) {
       console.log(err);
       return res.status(500).json({ error: 'Error generating hash' });
     }
-    const user = new User({ name, surname, email, password: hashed });
-    user.save((err) => {
-      if (err) {
-        console.log(err);
-        res
-          .status(500)
-          .json({ error: 'Error registering new user please try again.' });
-      } else {
-        res.json({ ok: 'Welcome to the club!' });
-      }
+    const user = new User({
+      name,
+      surname,
+      email,
+      phone,
+      imageUrl,
+      password: hashed,
+    });
+    fs.mkdir(path.join(__dirname, `uploads/users/${user._id}`), () => {
+      user.save((err) => {
+        if (err) {
+          console.log(err);
+          res
+            .status(500)
+            .json({ error: 'Error registering new user please try again.' });
+        } else {
+          res.json({ ok: 'Welcome to the club!', id: user._id });
+        }
+      });
     });
   });
+});
+
+app.post('/save-user-image', (req, res) => {
+  const { image, name, userId } = req.body;
+  const buf = new Buffer(image, 'base64'); // decode\
+  fs.writeFile(
+    path.join(__dirname, `uploads/users/${userId}/${name}.jpg`),
+    buf,
+    (err) => {
+      if (err) {
+        console.log('err', err);
+      } else {
+        User.findByIdAndUpdate(
+          userId,
+          { imageUrl: `users/${userId}/${name}.jpg` },
+          (err) => {
+            return err ? res.json({ err }) : res.json({ ok: true });
+          }
+        );
+      }
+    }
+  );
 });
 
 app.post('/api/authenticate', (req, res) => {
@@ -277,7 +308,7 @@ app.post('/api/authenticate', (req, res) => {
             expiresIn: '1h',
           });
           console.log(token);
-          res.json({ jwt: token });
+          res.json({ jwt: token, email });
         }
       });
     }

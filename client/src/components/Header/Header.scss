@@ -130,3 +130,12 @@
 .react-responsive-modal-closeButton {
   display: none;
 }
+
+.user-img {
+  width: 36px;
+  border-radius: 100%;
+  & > img {
+    border-radius: 100%;
+    width: 36px;
+  }
+}

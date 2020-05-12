@@ -34,7 +34,7 @@ const ImageCrop = ({ clickRef, nextImage, index, aspect, height }) => {
 
   const next = () => {
     setShow(false);
-    if (index) {
+    if (nextImage) {
       setCroppedImageUrl(false);
       nextImage(file);
     }
