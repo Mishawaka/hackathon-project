@@ -13,39 +13,52 @@ const ProjectImages = ({ modal, setModal }) => {
   const [index, setIndex] = useState(1);
 
   const nextImage = (file) => {
-    setImageArr([...imageArr, file]);
-    if (index < 4) {
-      setFile(false);
-      setIndex(index + 1);
-    } else {
-      sendImages();
-    }
+    blobToBase64(file, (base64) => {
+      fetch('http://localhost:8000/save-project-images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64, name: file.name, projectId }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.ok) {
+            if (index < 4) {
+              setFile(false);
+              setIndex(index + 1);
+            } else {
+              setFile(false);
+              setModal(false);
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    });
   };
 
-  const blobToBase64 = function (blobArray, cb) {
+  const blobToBase64 = function (blob, cb) {
     var reader = new FileReader();
     reader.onload = function () {
       var dataUrl = reader.result;
       var base64 = dataUrl.split(',')[1];
       cb(base64);
     };
-    reader.readAsDataURL(blobArray);
+    reader.readAsDataURL(blob);
   };
 
-  const sendImages = () => {
-    for (let i of imageArr) {
-      blobToBase64(i, (base64) => {
-        fetch('http://localhost:8000/save-project-images', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: base64, name: i.name, projectId }),
-        })
-          .then((res) => res.json())
-          .then((data) => (data.ok ? setModal(false) : null))
-          .catch((err) => console.log(err));
-      });
-    }
-  };
+  // const sendImages = () => {
+  //   for (let i of imageArr) {
+  //     blobToBase64(i, (base64) => {
+  //       fetch('http://localhost:8000/save-project-images', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify({ image: base64, name: i.name, projectId }),
+  //       })
+  //         .then((res) => res.json())
+  //         .then((data) => (data.ok ? setModal(false) : null))
+  //         .catch((err) => console.log(err));
+  //     });
+  //   }
+  // };
 
   return (
     <FormPage modal={modal} setModal={setModal}>

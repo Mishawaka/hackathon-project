@@ -32,13 +32,19 @@ app.get('/', withAuth, (req, res) => {
   res.send('HI, MAAARK');
 });
 
-app.get('/image/:folder/:file', (req, res) => {
-  const { folder, file } = req.params;
+app.get('/image/:type/:folder/:file', (req, res) => {
+  const { folder, type, file } = req.params;
   try {
-    res.sendFile(path.join(__dirname, 'uploads', folder, file));
+    res.sendFile(path.join(__dirname, 'uploads', type, folder, file));
   } catch {
     res.json({ found: false });
   }
+  // console.log(req.params);
+  // try {
+  //   res.sendFile(path.join(__dirname, 'uploads', folder, file));
+  // } catch {
+  //   res.json({ found: false });
+  // }
 });
 
 app.post('/checkToken', withAuth, (req, res) => {

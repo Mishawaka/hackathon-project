@@ -1,5 +1,5 @@
 import React from 'react';
-import cloud from '../../../img/cloud.svg';
+import Carousel from './Carousel';
 
 import './Description.scss';
 
@@ -17,6 +17,7 @@ const Description = ({ project }) => {
           </button>
         </div>
       </div>
+      <Carousel images={project.images} />
     </div>
   );
 };
