@@ -36,7 +36,7 @@ const ProjectPage = () => {
   return (
     <div>
       {project && (
-        <div className="project-page">
+        <div className="project-page animated fadeIn slower">
           <Name project={project} />
           <Description project={project} />
           <Contacts project={project} />
