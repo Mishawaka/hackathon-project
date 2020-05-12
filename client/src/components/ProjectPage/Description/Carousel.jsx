@@ -1,22 +1,15 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import './ProjectContainer.scss';
+import './Carousel.scss';
 import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.scss';
 
-const Carousel = () => {
-  const viewportWidth = window.innerWidth;
-  const viewport = () => {
-    if (viewportWidth >= 1750) return 4;
-    if (viewportWidth > 900 && viewportWidth < 1750) return 3;
-    if (viewportWidth <= 900) return 1;
-  };
-
+const Carousel = ({ images }) => {
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: viewport(),
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     speed: 1000,
@@ -28,21 +21,14 @@ const Carousel = () => {
   return (
     <div className="project-container">
       <Slider {...settings}>
-        {projects.map((pr, id) => (
-          <div key={id} className="project-b">
-            <img
-              src={`http://localhost:8000/image/${pr.imageUrl}`}
-              alt="rocket"
-            />
-            <h4>{pr.name}</h4>
-            <p>{pr.descr}</p>
-            <div>
-              <p>Тема: {pr.theme}</p>
-              <img src={arrRight} alt="arrow-right" />
-            </div>
+        {images.map((pr, id) => (
+          <div key={id} className="carousel-img">
+            <img src={`http://localhost:8000/image/${pr}`} alt="rocket" />
           </div>
         ))}
       </Slider>
     </div>
   );
 };
+
+export default Carousel;
