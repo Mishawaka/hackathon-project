@@ -11,6 +11,9 @@
   display: flex;
   justify-content: space-between;
   z-index: 2;
+  button {
+    margin-right: 1rem;
+  }
 }
 
 .header-right-block {

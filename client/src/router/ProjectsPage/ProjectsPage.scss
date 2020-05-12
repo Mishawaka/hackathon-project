@@ -97,8 +97,13 @@
         margin: 1.5rem;
         display: flex;
         flex-direction: column;
-        padding: 2rem 1.5rem 0.5rem;
+        padding: 0 1.8rem;
         align-items: center;
+        justify-content: center;
+        height: 300px;
+        & > img:first-child {
+          border-radius: 100%;
+        }
         & > img {
           width: 60px;
           height: 60px;
@@ -109,9 +114,12 @@
           font-weight: 1000;
           font-size: 14px;
           line-height: 19px;
+          letter-spacing: .1em;
           display: flex;
           align-items: center;
           text-align: center;
+          text-transform: uppercase;
+          margin-bottom: .5rem;
         }
         & > p {
           font-family: 'Open Sans';
@@ -121,10 +129,12 @@
           line-height: 19px;
           display: flex;
           align-items: center;
+          margin-bottom: .5rem;
         }
         & > div {
           display: inline-flex;
           justify-content: space-between;
+          align-items: center;
           width: 100%;
           & > p {
             background: $gradient;

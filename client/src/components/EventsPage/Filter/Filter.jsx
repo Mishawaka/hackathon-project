@@ -61,7 +61,7 @@ const Filter = ({ checks, cities, toggleArrow, changeFind, setChangeFind }) => {
           <div className="form-group">
             <select
               onClick={toggleArrow}
-              name="sort-projects"
+              name="sort-events"
               className="city"
               id=""
             >

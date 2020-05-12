@@ -13,7 +13,7 @@ const Description = ({ project }) => {
         </div>
         <div className="volunteer-invite">
           <button>
-            <h4>стать волонтером</h4>
+            <h4>Подпишись</h4>
           </button>
         </div>
       </div>

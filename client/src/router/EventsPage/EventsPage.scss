@@ -9,7 +9,7 @@
       display: flex;
       width: 100%;
       & > .events-filter {
-        width: 22%;
+        width: 21%;
         & > .find {
           & > input {
             padding: 0.5rem;
@@ -17,7 +17,6 @@
             box-sizing: border-box;
             border-radius: 4px;
             width: 80%;
-  
             background: url('../../img/search.svg') no-repeat scroll right;
             background-position-x: 94%;
           }
@@ -85,7 +84,7 @@
   
       & > .events-items {
         width: 78%;
-        padding: 1rem 2rem;
+        padding: 0 2rem 1rem 2rem;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         & > .event-item {
@@ -176,3 +175,9 @@
     }
   }
   
+
+// calendar
+
+.react-calendar {
+  border: 1px solid #FD7A42;
+}

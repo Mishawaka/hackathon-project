@@ -89,7 +89,7 @@ const Header = () => {
         </div>
         <div
           className={
-            window.location.pathname === '/calendar'
+            window.location.pathname === '/events'
               ? 'menu-item selected'
               : 'menu-item'
           }

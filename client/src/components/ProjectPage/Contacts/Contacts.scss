@@ -13,17 +13,19 @@
       display: block;
       width: 11%;
       height: 2px;
+      margin-top: 1rem;
       background: $gradient;
     }
   }
   & > .contacts-flex {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    margin: 4rem 0;
     & > .coord {
       box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.25);
       border-radius: 4px;
-      width: 50%;
+      width: 30%;
       & > h4 {
         margin-left: 2rem;
         text-transform: uppercase;
