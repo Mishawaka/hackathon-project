@@ -115,7 +115,7 @@ const Header = () => {
         >
           <h4>Присоединиться</h4>
         </button>
-        <div className="user-img">
+        <div className={auth ? 'user-img' : ''}>
           <img
             style={{ display: auth ? 'none' : 'block' }}
             onClick={() => setAuthModal(true)}

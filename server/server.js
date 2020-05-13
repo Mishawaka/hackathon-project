@@ -150,6 +150,7 @@ app.post('/save-project', withAuth, (req, res) => {
     email,
     phone,
     org,
+    coord: req.user.email,
     imageUrl,
     facebook,
     inst,
@@ -220,7 +221,14 @@ app.post('/get-project', withAuth, (req, res) => {
     if (err) {
       res.status(500).json({ error: 'An error occured' });
     } else {
-      res.json(project);
+      User.findOne({ email: project.coord }, (err, user) => {
+        if (err) {
+          res.status(500).json({ error: 'An error occured' });
+        } else {
+          const json = { ...project._doc, coord: user };
+          res.json(json);
+        }
+      });
     }
   });
 });
@@ -308,7 +316,7 @@ app.post('/api/authenticate', (req, res) => {
             expiresIn: '1h',
           });
           console.log(token);
-          res.json({ jwt: token, email });
+          res.json({ jwt: token, email, img: user.imageUrl });
         }
       });
     }

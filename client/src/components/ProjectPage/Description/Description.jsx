@@ -4,6 +4,7 @@ import Carousel from './Carousel';
 import './Description.scss';
 
 const Description = ({ project }) => {
+  console.log(project);
   return (
     <div className="project-description">
       <div className="flex">

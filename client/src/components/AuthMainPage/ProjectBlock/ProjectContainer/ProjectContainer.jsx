@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from 'react-slick';
+import { Slider } from '../../../Slider';
 
 import './ProjectContainer.scss';
 import 'slick-carousel/slick/slick.scss';

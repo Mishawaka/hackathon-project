@@ -3,6 +3,7 @@ import React from 'react';
 import './Contacts.scss';
 
 const Contacts = ({ project }) => {
+  const name = `${project.coord.name} ${project.coord.surname}`;
   return (
     <div className="project-contacts">
       <h1>Контакты</h1>
@@ -12,11 +13,11 @@ const Contacts = ({ project }) => {
           <div>
             <div>
               <img
-                src={`http://localhost:8000/image/${project.imageUrl}`}
+                src={`http://localhost:8000/image/${project.coord.imageUrl}`}
                 alt=""
               />
             </div>
-            <h3>{project.org}</h3>
+            <h3>{name}</h3>
             <p className="email">{project.email}</p>
             <p className="phone">{project.phone}</p>
           </div>

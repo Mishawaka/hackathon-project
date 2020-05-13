@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const ProjectSchema = mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const ProjectSchema = Schema(
   {
     name: {
       type: String,
@@ -31,6 +33,10 @@ const ProjectSchema = mongoose.Schema(
       required: true,
     },
     imageUrl: {
+      type: String,
+      required: true,
+    },
+    coord: {
       type: String,
       required: true,
     },
