@@ -1,6 +1,6 @@
 import React from 'react';
-import formHeart from '../../img/form-heart.svg';
-import close from '../../img/close.svg';
+import formHeart from '../../../img/form-heart.svg';
+import close from '../../../img/close.svg';
 
 import './FormPage.scss';
 

@@ -36,12 +36,9 @@ const UserSchema = mongoose.Schema(
   }
 );
 
-UserSchema.methods.isCorrectPassword = (password, callback) => {
-  bcrypt.compare(password, this.password, (err, same) => {
-    return err ? callback(err) : callback(err, same);
-  });
-};
-
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+module.exports = {
+  User,
+  UserSchema,
+};

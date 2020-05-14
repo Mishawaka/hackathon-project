@@ -29,6 +29,8 @@ const ProjectsPage = ({ history }) => {
         .then((res) => {
           if (res.status === 401) {
             localStorage.removeItem('jwt');
+            localStorage.removeItem('img');
+            localStorage.removeItem('email');
             window.location.replace('/');
           } else {
             return res.json();

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { UserSchema } = require('./User');
 
 const Schema = mongoose.Schema;
 
@@ -38,7 +39,7 @@ const ProjectSchema = Schema(
       required: true,
     },
     coord: {
-      type: String,
+      type: UserSchema,
       required: true,
     },
     images: [String],
@@ -55,4 +56,7 @@ const ProjectSchema = Schema(
 
 const Project = mongoose.model('Project', ProjectSchema);
 
-module.exports = Project;
+module.exports = {
+  Project,
+  ProjectSchema,
+};

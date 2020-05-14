@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal } from 'react-responsive-modal';
 import { Context } from '../../contexts/Context';
-import ProjectForm from '../ProjectForm/ProjectForm';
-import ProjectImages from '../ProjectImages/ProjectImages';
+import ProjectForm from '../forms/ProjectForm/ProjectForm';
+import ProjectImages from '../forms/ProjectImages/ProjectImages';
 
 import './Footer.scss';
 import footer_logo from '../../img/LogoFooter.svg';

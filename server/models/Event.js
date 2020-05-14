@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ProjectSchema } = require('./Project');
 
 const EventSchema = mongoose.Schema(
   {
@@ -7,44 +8,34 @@ const EventSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
-    theme: {
-      type: String,
-      required: true,
-    },
     descr: {
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    org: {
-      type: String,
-      required: true,
-    },
     city: {
-        type: String,
-        require: true,
+      type: String,
+      required: true,
     },
-    street: {
-        type: String,
-        require: true,
+    addr: {
+      type: String,
+      required: true,
     },
     date: {
-        type: Date,
-        require: true,
+      type: Date,
+      required: true,
+    },
+    regUrl: {
+      type: String,
+      required: true,
+    },
+    project: {
+      type: ProjectSchema,
+      required: true,
     },
     imageUrl: {
       type: String,
       required: true,
     },
-    facebook: String,
-    inst: String,
     createdAt: Date,
   },
   {

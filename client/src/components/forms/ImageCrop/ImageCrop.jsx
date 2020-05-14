@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import ReactCrop from 'react-image-crop';
 import randomStr from 'randomstring';
 import 'react-image-crop/dist/ReactCrop.css';
-import { ImageContext } from '../../contexts/ImageContext';
+import { ImageContext } from '../../../contexts/ImageContext';
 
 const ImageCrop = ({ clickRef, nextImage, index, aspect, height }) => {
   const {

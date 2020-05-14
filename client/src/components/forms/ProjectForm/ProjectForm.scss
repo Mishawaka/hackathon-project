@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import '../../../variables.scss';
 
 .form > .form-group {
   & > .auth-button {
@@ -32,10 +32,10 @@
     margin-right: 1rem;
   }
   &.facebook > input::before {
-    background: url('../../img/facebook.svg');
+    background: url('../../../img/facebook.svg');
   }
   &.inst > input::before {
-    background: url('../../img/instagram.svg');
+    background: url('../../../img/instagram.svg');
   }
 }
 

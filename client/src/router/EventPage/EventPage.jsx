@@ -2,19 +2,19 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../contexts/Context';
 
-import Name from '../../components/ProjectPage/Name/Name';
-import Description from '../../components/ProjectPage/Description/Description';
-import Contacts from '../../components/ProjectPage/Contacts/Contacts';
-import Events from '../../components/ProjectPage/Events/Events';
+import Name from '../../components/EventPage/Name/Name';
+import Description from '../../components/EventPage/Description/Description';
+import Contacts from '../../components/EventPage/Contacts/Contacts';
+import Events from '../../components/EventPage/Events/Events';
 
-import './ProjectPage.scss';
+import './EventPage.scss';
 
-const ProjectPage = () => {
+const EventPage = () => {
   const { name } = useParams();
-  const [project, setProject] = useState();
+  const [event, setEvent] = useState();
   const { auth } = useContext(Context);
   useEffect(() => {
-    fetch('http://localhost:8000/get-project', {
+    fetch('http://localhost:8000/get-event', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
@@ -22,31 +22,31 @@ const ProjectPage = () => {
       .then((res) => {
         if (res.status === 401) {
           localStorage.removeItem('jwt');
-          localStorage.removeItem('img');
           localStorage.removeItem('email');
+          localStorage.removeItem('img');
           window.location.replace('/');
         } else {
           return res.json();
         }
       })
       .then((data) => {
-        setProject(data);
+        setEvent(data);
       })
       .catch((err) => console.log(err));
   }, [auth, name]);
 
   return (
     <div>
-      {project && (
+      {event && (
         <div className="project-page animated fadeIn slower">
-          <Name project={project} />
-          <Description project={project} />
-          <Contacts project={project} />
-          <Events project={project} />
+          <Name event={event} />
+          <Description event={event} />
+          <Contacts event={event} />
+          <Events event={event} />
         </div>
       )}
     </div>
   );
 };
 
-export default ProjectPage;
+export default EventPage;

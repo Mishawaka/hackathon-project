@@ -1,62 +1,74 @@
-import React, { useState, useContext, createRef } from 'react';
+import React, { useState, useContext, createRef, useEffect } from 'react';
 import FormPage from '../FormPage/FormPage';
 
 import ImageCrop from '../ImageCrop/ImageCrop';
-import { ImageContext } from '../../contexts/ImageContext';
-import { ProjectContext } from '../../contexts/ProjectsContext';
-import { Context } from '../../contexts/Context';
+import { ImageContext } from '../../../contexts/ImageContext';
+import { EventContext } from '../../../contexts/EventsContext';
+import { ProjectContext } from '../../../contexts/ProjectsContext';
+import { Context } from '../../../contexts/Context';
 
-import plus from '../../img/plus.svg';
-import facebook from '../../img/facebook.svg';
-import inst from '../../img/instagram.svg';
-import './ProjectForm.scss';
+import plus from '../../../img/plus.svg';
+import './EventForm.scss';
 
-const ProjectForm = ({ modal, setModal }) => {
+const EventForm = ({ modal, setModal }) => {
   const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
     ImageContext
   );
+  const [proj, setProj] = useState([]);
   const [form, setForm] = useState({
     name: '',
-    theme: '',
-    city: '',
     descr: '',
-    email: '',
-    phone: '',
-    org: '',
-    facebook: '',
-    inst: '',
-    imageUrl: 'projects/image.jpg',
+    city: '',
+    addr: '',
+    day: '',
+    time: '',
+    regUrl: '',
+    project: '',
+    imageUrl: 'events/image.jpg',
   });
+  const [showDay, setShowDay] = useState('text');
+  const [showTime, setShowTime] = useState('text');
 
-  const { themes, cities, projectId, setProjectId } = useContext(
-    ProjectContext
-  );
+  const { cities, setEventId } = useContext(EventContext);
   const { setImagesModal } = useContext(Context);
 
   const clickRef = createRef();
 
   const fields = [
-    { name: 'name', label: 'Название', value: form.name },
     {
-      name: 'theme',
-      label: 'Тематика',
-      type: 'select',
-      value: form.theme,
-      parent: themes,
+      name: 'day',
+      label: 'Дата проведения',
+      value: form.day,
+      type: showDay,
     },
+    {
+      name: 'time',
+      label: 'Время проведения',
+      value: form.time,
+      type: showTime,
+    },
+    { name: 'name', label: 'Название', value: form.name },
+    { name: 'descr', label: 'Описание', value: form.descr },
     {
       name: 'city',
       label: 'Город',
       value: form.city,
-      type: 'select',
+      tag: 'select',
       parent: cities,
     },
-    { name: 'descr', label: 'Описание', value: form.descr },
-    { name: 'email', label: 'Почта', value: form.email },
-    { name: 'phone', label: 'Телефон (без +38)', value: form.phone },
-    { name: 'org', label: 'Организация', value: form.org },
-    { name: 'facebook', label: facebook, value: form.facebook },
-    { name: 'inst', label: inst, value: form.inst },
+    { name: 'addr', label: 'Адрес', value: form.addr },
+    {
+      name: 'regUrl',
+      label: 'Ссылка на регистрацию волонтеров',
+      value: form.regUrl,
+    },
+    {
+      name: 'project',
+      label: 'Проект',
+      value: form.project,
+      tag: 'select',
+      parent: proj,
+    },
   ];
 
   const blobToBase64 = function (blob, cb) {
@@ -74,23 +86,23 @@ const ProjectForm = ({ modal, setModal }) => {
       const body = JSON.stringify({
         image: base64,
         name: file.name,
-        projectId: id,
+        eventId: id,
       });
-      fetch('http://localhost:8000/save-project-image', {
+      fetch('http://localhost:8000/save-event-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
       })
         .then((res) => res.json())
-        .then((data) => setTimeout(() => setImagesModal(true), 800))
+        .then((data) => console.log('event created successfully'))
         .catch((err) => console.log(err));
     });
   };
 
-  const createProject = () => {
+  const createEvent = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      fetch('http://localhost:8000/save-project', {
+      fetch('http://localhost:8000/save-event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, token: localStorage.getItem('jwt') }),
@@ -98,7 +110,7 @@ const ProjectForm = ({ modal, setModal }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.ok) {
-            setProjectId(data.id);
+            setEventId(data.id);
             setCroppedImageUrl(false);
             sendPhoto(data.id);
             setModal(false);
@@ -108,9 +120,34 @@ const ProjectForm = ({ modal, setModal }) => {
     }
   };
 
+  const setShow = (el) => {
+    if (el.name === 'day') {
+      return showDay === 'text' ? setShowDay('date') : setShowDay('text');
+    } else if (el.name === 'time') {
+      return showTime === 'text' ? setShowTime('time') : setShowTime('text');
+    }
+  };
+
+  useEffect(() => {
+    fetch('http://localhost:8000/get-all-projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let projects = data.map((el) => ({
+          id: el._id,
+          value: el.name,
+        }));
+        setProj(projects);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <FormPage modal={modal} setModal={setModal}>
-      <h1>Регистрация проекта</h1>
+      <h1>Создание ивента</h1>
       <h3>Заполните поля</h3>
       <div className="form-group">
         <div
@@ -131,7 +168,7 @@ const ProjectForm = ({ modal, setModal }) => {
         <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       {fields.map((el, id) =>
-        el.type === 'select' ? (
+        el.tag === 'select' ? (
           <div key={id} className="form-group">
             <select
               name={el.name}
@@ -147,21 +184,17 @@ const ProjectForm = ({ modal, setModal }) => {
                 {el.label}
               </option>
               {el.parent.map((op, id) => (
-                <option key={id} value={op}>
-                  {op}
+                <option
+                  key={el.name === 'city' ? id : op.id}
+                  value={el.name === 'city' ? op : op.value}
+                >
+                  {el.name === 'city' ? op : op.value}
                 </option>
               ))}
             </select>
           </div>
         ) : (
-          <div
-            key={id}
-            className={
-              el.name === 'facebook' || el.name === 'inst'
-                ? 'form-group ' + el.name
-                : 'form-group'
-            }
-          >
+          <div key={id} className="form-group">
             <input
               onChange={({ target }) =>
                 setForm({
@@ -170,7 +203,11 @@ const ProjectForm = ({ modal, setModal }) => {
                 })
               }
               value={el.value}
-              type="text"
+              type={el.type || 'text'}
+              onFocus={() => setShow(el)}
+              onBlur={() => {
+                setShow(el);
+              }}
               name={el.name}
               className="form-control"
             />
@@ -182,25 +219,23 @@ const ProjectForm = ({ modal, setModal }) => {
                   : 'form-control-placeholder-on'
               }
             >
-              {el.name === 'facebook' || el.name === 'inst' ? (
-                <img src={el.label} alt="icon" />
-              ) : (
-                el.label
-              )}
+              {el.label}
             </label>
           </div>
         )
       )}
-      <div className="form-group project-save">
-        <button
-          onClick={() => createProject()}
-          className={'active auth-button'}
-        >
-          <h4>зарегистрировать</h4>
-        </button>
-      </div>
+      {proj && (
+        <div className="form-group project-save">
+          <button
+            onClick={() => createEvent()}
+            className={'active auth-button'}
+          >
+            <h4>Создать</h4>
+          </button>
+        </div>
+      )}
     </FormPage>
   );
 };
 
-export default ProjectForm;
+export default EventForm;

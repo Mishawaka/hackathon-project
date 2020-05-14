@@ -7,8 +7,8 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
-const User = require('./models/User');
-const Project = require('./models/Project');
+const { User } = require('./models/User');
+const { Project } = require('./models/Project');
 const Event = require('./models/Event');
 require('./config');
 const withAuth = require('./middleware');
@@ -56,69 +56,77 @@ app.post('/checkToken', withAuth, (req, res) => {
 app.post('/save-event', withAuth, (req, res) => {
   const {
     name,
-    theme,
     descr,
-    email,
-    phone,
-    org,
     city,
-    street,
-    date,
+    addr,
+    day,
+    time,
+    regUrl,
+    project,
     imageUrl,
-    facebook,
-    inst,
   } = req.body;
+  const date = new Date(`${day} ${time}`);
   const event = new Event({
     name,
-    theme,
     descr,
-    email,
-    phone,
-    org,
     city,
-    street,
+    addr,
     date,
+    regUrl,
     imageUrl,
-    facebook,
-    inst,
   });
-  event.save((err) => {
-    if (err) {
-      return res.status(500).json('Error saving to DB');
-    } else {
-      return res.json({ ok: true });
-    }
+  fs.mkdir(path.join(__dirname, `uploads/events/${event._id}`), () => {
+    Project.findOne({ name: project }, (err, pr) => {
+      if (err) {
+        return res.status(500).json('Error getting info from DB');
+      } else {
+        event.project = pr;
+        event.save((err) => {
+          if (err) {
+            return res.status(500).json('Error saving to DB');
+          } else {
+            return res.json({ ok: true, id: event._id });
+          }
+        });
+      }
+    });
   });
 });
 
 app.post('/save-event-image', (req, res) => {
-  const { image, name } = req.body;
+  const { image, name, eventId } = req.body;
   const buf = new Buffer(image, 'base64'); // decode
   fs.writeFile(
-    path.join(__dirname, `uploads/events/${name}.jpg`),
+    path.join(__dirname, `uploads/events/${eventId}/${name}.jpg`),
     buf,
     (err) => {
       if (err) {
         console.log('err', err);
       } else {
-        return res.json({ ok: true });
+        Event.findByIdAndUpdate(
+          eventId,
+          { imageUrl: `events/${eventId}/${name}.jpg` },
+          (err) => {
+            return res.json({ ok: true });
+          }
+        );
       }
     }
   );
 });
 
 app.post('/get-all-events', withAuth, (req, res) => {
-  Project.find({}, (err, users) => {
+  Event.find({}, (err, events) => {
     if (err) {
       res.status(500).json({ error: 'An error occured' });
     } else {
-      res.json(users);
+      res.json(events);
     }
   });
 });
 
-app.post('/get-events', withAuth, (req, res) => {
-  Project.findOne({ name: req.body.name }, (err, event) => {
+app.post('/get-event', withAuth, (req, res) => {
+  Event.findOne({ name: req.body.name }, (err, event) => {
     if (err) {
       res.status(500).json({ error: 'An error occured' });
     } else {
@@ -150,18 +158,25 @@ app.post('/save-project', withAuth, (req, res) => {
     email,
     phone,
     org,
-    coord: req.user.email,
     imageUrl,
     facebook,
     inst,
   });
   fs.mkdir(path.join(__dirname, `uploads/projects/${project._id}`), () => {
-    project.save((err) => {
+    User.findOne({ email: req.user.email }, (err, user) => {
       if (err) {
         console.log(err);
         return res.status(500).json('Error saving to DB');
       } else {
-        return res.json({ ok: true, id: project._id });
+        project.coord = user;
+        project.save((err) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json('Error saving to DB');
+          } else {
+            return res.json({ ok: true, id: project._id });
+          }
+        });
       }
     });
   });
@@ -207,11 +222,11 @@ app.post('/save-project-images', (req, res) => {
 });
 
 app.post('/get-all-projects', withAuth, (req, res) => {
-  Project.find({}, (err, users) => {
+  Project.find({}, (err, projects) => {
     if (err) {
       res.status(500).json({ error: 'An error occured' });
     } else {
-      res.json(users);
+      res.json(projects);
     }
   });
 });

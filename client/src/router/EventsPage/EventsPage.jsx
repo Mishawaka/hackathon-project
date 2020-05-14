@@ -1,22 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Filter from '../../components/EventsPage/Filter/Filter';
 import Items from '../../components/EventsPage/Items/Items';
+import Add from '../../components/EventsPage/Add/Add';
 import { EventContext } from '../../contexts/EventsContext';
+import { ProjectContext } from '../../contexts/ProjectsContext';
 import { Context } from '../../contexts/Context';
 
 import './EventsPage.scss';
 
 const EventsPage = () => {
-  const toggleArrow = ({ target }) => {
-    let { classList } = target;
-    classList.toggle('sort-active');
-  };
-
-  const { events, setEvents } = useContext(EventContext);
+  const { events, setEvents, date } = useContext(EventContext);
+  const { projects, setProjects } = useContext(ProjectContext);
   const { auth } = useContext(Context);
-  const [changeFind, setChangeFind] = useState('');
 
-  const checks = events.map((el) => el.theme);
+  const checks = events.map((el) => el.project.theme);
 
   const cities = [
     { name: 'Одесса', value: 'odesa' },
@@ -24,6 +21,17 @@ const EventsPage = () => {
     { name: 'Львов', value: 'lviv' },
     { name: 'Харьков', value: 'kharkiv' },
     { name: 'Днепр', value: 'dnepr' },
+  ];
+
+  const themes = [
+    'помощь пожилым людям',
+    'помощь сиротам',
+    'помощь многодетным семьям',
+    'помощь животным',
+    'эко инициативы',
+    'студенческие инициативы',
+    'облагораживание города',
+    'волонтерим и путешествуем',
   ];
 
   useEffect(() => {
@@ -36,12 +44,17 @@ const EventsPage = () => {
         .then((res) => {
           if (res.status === 401) {
             localStorage.removeItem('jwt');
+            localStorage.removeItem('img');
+            localStorage.removeItem('email');
             window.location.replace('/');
           } else {
             return res.json();
           }
         })
-        .then((data) => setEvents(data))
+        .then((data) => {
+          setEvents(data);
+          console.log(data);
+        })
         .catch((err) => console.log(err));
     }
   }, [auth]);
@@ -49,15 +62,10 @@ const EventsPage = () => {
   return (
     <div className="events-page animated fadeIn">
       <h2>Мероприятия</h2>
+      <Add />
       <div className="events-content">
-        <Filter
-          changeFind={changeFind}
-          setChangeFind={setChangeFind}
-          toggleArrow={toggleArrow}
-          checks={checks}
-          cities={cities}
-        />
-        <Items changeFind={changeFind} events={events} />
+        <Filter checks={checks} cities={cities} themes={themes} />
+        <Items events={events} date={date} />
       </div>
     </div>
   );

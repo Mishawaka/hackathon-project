@@ -1,9 +1,9 @@
 import React, { createRef, useState, useContext } from 'react';
 import FormPage from '../FormPage/FormPage';
 import ImageCrop from '../ImageCrop/ImageCrop';
-import { ImageContext } from '../../contexts/ImageContext';
-import { ProjectContext } from '../../contexts/ProjectsContext';
-import plus from '../../img/plus.svg';
+import { ImageContext } from '../../../contexts/ImageContext';
+import { ProjectContext } from '../../../contexts/ProjectsContext';
+import plus from '../../../img/plus.svg';
 
 const ProjectImages = ({ modal, setModal }) => {
   const ref = createRef();

@@ -1,13 +1,13 @@
 import React, { useState, useContext, createRef } from 'react';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
-import { RegisterContext } from '../../contexts/RegisterContext';
-import { ImageContext } from '../../contexts/ImageContext';
+import { RegisterContext } from '../../../contexts/RegisterContext';
+import { ImageContext } from '../../../contexts/ImageContext';
 import ImageCrop from '../ImageCrop/ImageCrop';
 
 import FormPage from '../FormPage/FormPage';
-import eye from '../../img/eye.svg';
-import activeEye from '../../img/active-eye.svg';
-import plus from '../../img/plus.svg';
+import eye from '../../../img/eye.svg';
+import activeEye from '../../../img/active-eye.svg';
+import plus from '../../../img/plus.svg';
 import './RegisterForm.scss';
 
 const RegisterForm = ({ modal, setModal, setAuthModal }) => {

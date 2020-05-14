@@ -7,3 +7,4 @@
 **/.env
 **/events/**/*.jpg
 **/projects/**/*.jpg
+**/users/**/*.jpg

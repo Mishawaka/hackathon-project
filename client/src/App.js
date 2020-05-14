@@ -5,6 +5,7 @@ import MainPage from './router/MainPage/MainPage';
 import ProjectsPage from './router/ProjectsPage/ProjectsPage';
 import ProjectPage from './router/ProjectPage/ProjectPage';
 import EventsPage from './router/EventsPage/EventsPage';
+import EventPage from './router/EventPage/EventPage';
 
 import { withLayout } from './layout/Layout';
 import { Provider } from './contexts/Context';
@@ -48,6 +49,12 @@ const App = () => (
                 <RouteWrapper
                   path="/project/:name"
                   component={ProjectPage}
+                  layout={withLayout}
+                  exact
+                />
+                <RouteWrapper
+                  path="/event/:name"
+                  component={EventPage}
                   layout={withLayout}
                   exact
                 />

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../../contexts/Context';
 import { Modal } from 'react-responsive-modal';
-import RegisterForm from '../RegisterForm/RegisterForm';
-import AuthPage from '../AuthForm/AuthForm';
+import RegisterForm from '../forms/RegisterForm/RegisterForm';
+import AuthPage from '../forms/AuthForm/AuthForm';
 import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 
 import 'react-responsive-modal/styles.css';
@@ -135,15 +135,15 @@ const Header = () => {
             alt="auth"
           />
           <Link to={`/profile/${localStorage.getItem('name')}`}>
-          <img
-            style={{ display: auth ? 'block' : 'none' }}
-            src={
-              localStorage.getItem('img')
-                ? `http://localhost:8000/image/${localStorage.getItem('img')}`
-                : user_img
-            }
-            alt="user"
-          />
+            <img
+              style={{ display: auth ? 'block' : 'none' }}
+              src={
+                localStorage.getItem('img')
+                  ? `http://localhost:8000/image/${localStorage.getItem('img')}`
+                  : user_img
+              }
+              alt="user"
+            />
           </Link>
         </div>
         <div className="language-block">

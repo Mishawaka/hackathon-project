@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import FormPage from '../FormPage/FormPage';
-import eye from '../../img/eye.svg';
-import activeEye from '../../img/active-eye.svg';
+import eye from '../../../img/eye.svg';
+import activeEye from '../../../img/active-eye.svg';
 import './AuthForm.scss';
 
 const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
