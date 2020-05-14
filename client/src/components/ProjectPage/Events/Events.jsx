@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import Slider from 'react-slick';
+import { Slider } from '../../Slider';
 import arrRight from '../../../img/arrow-right.svg';
 import { ProjectContext } from '../../../contexts/ProjectsContext';
 import { Context } from '../../../contexts/Context';

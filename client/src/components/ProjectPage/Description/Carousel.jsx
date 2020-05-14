@@ -1,5 +1,5 @@
 import React from 'react';
-import Slider from 'react-slick';
+import { Slider } from '../../Slider';
 
 import './Carousel.scss';
 import 'slick-carousel/slick/slick.scss';
@@ -20,13 +20,15 @@ const Carousel = ({ images }) => {
 
   return (
     <div className="project-container">
-      <Slider {...settings}>
-        {images.map((pr, id) => (
-          <div key={id} className="carousel-img">
-            <img src={`http://localhost:8000/image/${pr}`} alt="rocket" />
-          </div>
-        ))}
-      </Slider>
+      {images && (
+        <Slider {...settings}>
+          {images.map((pr, id) => (
+            <div key={id} className="carousel-img">
+              <img src={`http://localhost:8000/image/${pr}`} alt="rocket" />
+            </div>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };

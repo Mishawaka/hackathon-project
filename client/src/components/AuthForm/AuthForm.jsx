@@ -53,6 +53,7 @@ const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
       .then((data) => {
         localStorage.setItem('jwt', data.jwt);
         localStorage.setItem('email', data.email);
+        localStorage.setItem('img', data.img);
         setAuth(true);
         setModal(false);
       })
