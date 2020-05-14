@@ -83,9 +83,15 @@ const Header = () => {
               : 'menu-item'
           }
         >
-          <Link to="/projects">
-            <h4 className="menu-text">Проекты</h4>
-          </Link>
+          {auth ? (
+            <Link to="/projects">
+              <h4 className="menu-text">Проекты</h4>
+            </Link>
+          ) : (
+            <h4 onClick={() => setAuthModal(true)} className="menu-text">
+              Проекты
+            </h4>
+          )}
         </div>
         <div
           className={
@@ -94,9 +100,15 @@ const Header = () => {
               : 'menu-item'
           }
         >
-          <Link to="/events">
-            <h4 className="menu-text">Ивенты</h4>
-          </Link>
+          {auth ? (
+            <Link to="/events">
+              <h4 className="menu-text">Ивенты</h4>
+            </Link>
+          ) : (
+            <h4 onClick={() => setAuthModal(true)} className="menu-text">
+              Ивенты
+            </h4>
+          )}
         </div>
         <div
           style={{ display: localStorage.getItem('jwt') ? 'none' : 'block' }}
