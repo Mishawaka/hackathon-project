@@ -13,7 +13,7 @@ const EventBlock = () => (
             <img src={line_text} alt=""/>
         </div>
         <EventContainer />
-        <Link to="/calendar">
+        <Link to="/events">
             <h4 className="link-event">Посмотреть все</h4>
         </Link>
         <div className="event-line-bottom" />

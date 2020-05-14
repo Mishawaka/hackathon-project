@@ -135,7 +135,11 @@
   width: 36px;
   border-radius: 100%;
   & > img {
-    border-radius: 100%;
     width: 36px;
+    cursor: pointer;
+    &:last-child {
+      border-radius: 100%;
+    }
   }
+  
 }
