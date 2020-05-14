@@ -93,8 +93,7 @@
 
 .header-right-block {
   justify-content: flex-end;
-  & > img {
-    margin-left: 2rem;
+  img {
     cursor: pointer;
   }
 }
@@ -134,7 +133,7 @@
 .user-img {
   width: 36px;
   border-radius: 100%;
-  & > img {
+  & > a > img {
     width: 36px;
     cursor: pointer;
     &:last-child {

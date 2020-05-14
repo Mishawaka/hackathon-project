@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import arrRight from '../../../img/arrow-right.svg';
 import { EventContext } from '../../../contexts/EventsContext';
 
@@ -42,17 +43,29 @@ const Items = ({ events, changeFind }) => {
     >
       {event.map((event, id) => (
         <div key={id} className="event-item">
-          <img
-            src={`http://localhost:8000/image/${event.imageUrl}`}
-            alt="rocket"
-          />
-          <h4>{event.name}</h4>
-          <p>{event.descr}</p>
-          <div>
-            <p>Тема: {event.theme}</p>
-            <img src={arrRight} alt="arrow-right" />
+            <div className="item-flex">
+              <div>
+                <p>Одесса</p>
+                <p>Ул. Ришельевская, 25</p>
+              </div>
+              <div>
+                <p>18 марта</p>
+                <p>19:00</p>
+              </div>
+            </div>
+            <img
+              src={`http://localhost:8000/image/${event.imageUrl}`}
+              alt="rocket"
+            />
+            <h4>{event.name}</h4>
+            <p>{event.descr}</p>
+            <div>
+              <p>Тема: {event.theme}</p>
+              <Link to={'/project/' + event.name}>
+                <img src={arrRight} alt="arrow-right" />
+              </Link>
+            </div>
           </div>
-        </div>
       ))}
     </div>
   );

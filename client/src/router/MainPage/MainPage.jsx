@@ -75,7 +75,7 @@ const MainPage = () => {
         style={{ display: localStorage.getItem('jwt') ? 'block' : 'none' }}
       >
         <BannerBlock />
-        <EventBlock />
+        <EventBlock projects={projects} />
         <ProjectBlock projects={projects} />
         <RegProjectBlock />
       </div>

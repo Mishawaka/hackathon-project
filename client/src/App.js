@@ -12,6 +12,7 @@ import { ImageProvider } from './contexts/ImageContext';
 import { ProjectProvider } from './contexts/ProjectsContext';
 import { EventProvider } from './contexts/EventsContext';
 import { RegisterProvider } from './contexts/RegisterContext';
+import ProfilePage from './router/ProfilePage/ProfilePage';
 
 const RouteWrapper = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
@@ -53,6 +54,12 @@ const App = () => (
                 <RouteWrapper
                   path="/events"
                   component={EventsPage}
+                  layout={withLayout}
+                  exact
+                />
+                <RouteWrapper
+                  path="/profile/:name"
+                  component={ProfilePage}
                   layout={withLayout}
                   exact
                 />
