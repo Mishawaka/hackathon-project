@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .events-page {
     margin: 8rem 5%;
     & > .events-sort {
@@ -94,11 +96,24 @@
           margin: 1.5rem;
           display: flex;
           flex-direction: column;
-          padding: 2rem 1.5rem 0.5rem;
+          padding: 1rem 0.5rem;
           align-items: center;
-          height: fit-content;
+          height: 300px;
+          & > .item-flex > div > p {
+            font-family: Open Sans;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 12px;
+            line-height: 12px;
+            display: flex;
+            align-items: center;
+            background: $gradient;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
           & > img {
             width: 60px;
+            border-radius: 100%;
           }
           & > h4 {
             font-family: 'Open Sans';
@@ -120,20 +135,20 @@
             align-items: center;
           }
           & > div {
-            display: inline-flex;
-            justify-content: space-between;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
             width: 100%;
+            &:first-child {
+              margin-bottom: 1.4rem;
+              border-bottom: 1px solid rgba(248, 70, 70, 0.25);
+            }
             & > p {
-              background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+              font-size: 12px;
+              background: $gradient;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
             }
-            & > img {
-              width: 16px;
-            }
-          }
-          & p {
-            text-transform: none;
           }
         }
       }

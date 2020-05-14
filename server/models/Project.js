@@ -7,6 +7,7 @@ const ProjectSchema = Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     theme: {
       type: String,

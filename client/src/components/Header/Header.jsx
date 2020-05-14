@@ -134,6 +134,7 @@ const Header = () => {
             src={auth_img}
             alt="auth"
           />
+          <Link to={`/profile/${localStorage.getItem('name')}`}>
           <img
             style={{ display: auth ? 'block' : 'none' }}
             src={
@@ -143,6 +144,7 @@ const Header = () => {
             }
             alt="user"
           />
+          </Link>
         </div>
         <div className="language-block">
           <h4>Укр</h4>
