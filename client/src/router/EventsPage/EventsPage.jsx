@@ -1,16 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Filter from '../../components/EventsPage/Filter/Filter';
 import Items from '../../components/EventsPage/Items/Items';
 import Add from '../../components/EventsPage/Add/Add';
 import { EventContext } from '../../contexts/EventsContext';
-import { ProjectContext } from '../../contexts/ProjectsContext';
 import { Context } from '../../contexts/Context';
 
 import './EventsPage.scss';
 
 const EventsPage = () => {
   const { events, setEvents, date } = useContext(EventContext);
-  const { projects, setProjects } = useContext(ProjectContext);
   const { auth } = useContext(Context);
 
   const checks = events.map((el) => el.project.theme);
@@ -53,7 +51,6 @@ const EventsPage = () => {
         })
         .then((data) => {
           setEvents(data);
-          console.log(data);
         })
         .catch((err) => console.log(err));
     }

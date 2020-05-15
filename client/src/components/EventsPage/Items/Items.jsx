@@ -35,11 +35,9 @@ const Items = ({ events, date }) => {
       date: new Date(el.date),
     }));
     if (date !== '') {
-      const arr = evs.filter((el) => {
-        console.log(el.date.toLocaleDateString());
-        console.log(date.toLocaleDateString());
-        return el.date.toLocaleDateString() === date.toLocaleDateString();
-      });
+      const arr = evs.filter(
+        (el) => el.date.toLocaleDateString() === date.toLocaleDateString()
+      );
       setEvent(arr);
     }
   }, [date, filterChecks]);
@@ -57,8 +55,10 @@ const Items = ({ events, date }) => {
               <p>{el.addr}</p>
             </div>
             <div>
-              <p>{el.date.toLocaleDateString('en-GB')}</p>
-              <p>{el.date.toLocaleTimeString('en-GB').substring(0, 5)}</p>
+              <p>{`${el.date.getDay()} ${el.date.toLocaleDateString('ru-RU', {
+                month: 'long',
+              })}`}</p>
+              <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
             </div>
           </div>
           <img

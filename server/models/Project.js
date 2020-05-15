@@ -38,10 +38,7 @@ const ProjectSchema = Schema(
       type: String,
       required: true,
     },
-    coord: {
-      type: UserSchema,
-      required: true,
-    },
+    coord: { type: Schema.Types.ObjectId, ref: 'User' },
     images: [String],
     facebook: String,
     inst: String,

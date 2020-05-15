@@ -4,12 +4,16 @@ import arrRight from '../../../img/arrow-right.svg';
 
 import './Items.scss';
 
-const Items = ({ projects, changeFind, changeCity, filterChecks }) => {
+const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
   const [proj, setProj] = useState(projects);
+  const [names, setNames] = useState([]);
 
   useEffect(() => {
     setProj(projects);
     let arr = [...proj];
+    if (sort === 'date') {
+      arr = proj.reverse();
+    }
     if (filterChecks.length !== 0) {
       arr = arr.filter((el) => filterChecks.includes(el.theme.toLowerCase()));
       setProj(arr);
@@ -24,9 +28,10 @@ const Items = ({ projects, changeFind, changeCity, filterChecks }) => {
         ({ name, descr, org }) =>
           reg.test(name) || reg.test(org) || reg.test(descr)
       );
+      console.log(arr[0].event);
       setProj(arr);
     }
-  }, [projects, filterChecks, changeFind, changeCity]);
+  }, [projects, filterChecks, changeFind, changeCity, sort]);
 
   return (
     <div

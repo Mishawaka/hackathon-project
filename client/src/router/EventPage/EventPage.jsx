@@ -30,7 +30,11 @@ const EventPage = () => {
         }
       })
       .then((data) => {
-        setEvent(data);
+        let event = {
+          ...data,
+          date: new Date(data.date),
+        };
+        setEvent(event);
       })
       .catch((err) => console.log(err));
   }, [auth, name]);

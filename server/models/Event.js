@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-const { ProjectSchema } = require('./Project');
+// const { ProjectSchema } = require('./Project');
 
-const EventSchema = mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const EventSchema = Schema(
   {
     name: {
       type: String,
@@ -28,10 +30,7 @@ const EventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    project: {
-      type: ProjectSchema,
-      required: true,
-    },
+    project: { type: Schema.Types.ObjectId, ref: 'Project' },
     imageUrl: {
       type: String,
       required: true,

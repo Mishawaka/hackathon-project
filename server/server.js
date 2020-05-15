@@ -222,30 +222,39 @@ app.post('/save-project-images', (req, res) => {
 });
 
 app.post('/get-all-projects', withAuth, (req, res) => {
-  Project.find({}, (err, projects) => {
-    if (err) {
-      res.status(500).json({ error: 'An error occured' });
-    } else {
-      res.json(projects);
-    }
-  });
+  Project.find()
+    .populate('coord')
+    .exec((err, projects) => {
+      if (err) {
+        res.status(500).json({ error: 'An error occured' });
+      } else {
+        console.log(projects[0].coord);
+
+        // let arr = [];
+        // for (let i of projects) {
+        //   Event.findOne()
+        //     .sort({ created_at: -1 })
+        //     .select({ name: i.name })
+        //     .limit(1)
+        //     .exec((err, event) => {
+        //       i.event = event;
+        //     });
+        // }
+        res.json(projects);
+      }
+    });
 });
 
 app.post('/get-project', withAuth, (req, res) => {
-  Project.findOne({ name: req.body.name }, (err, project) => {
-    if (err) {
-      res.status(500).json({ error: 'An error occured' });
-    } else {
-      User.findOne({ email: project.coord }, (err, user) => {
-        if (err) {
-          res.status(500).json({ error: 'An error occured' });
-        } else {
-          const json = { ...project._doc, coord: user };
-          res.json(json);
-        }
-      });
-    }
-  });
+  Project.findOne({ name: req.body.name })
+    .populate('coord')
+    .exec((err, project) => {
+      if (err) {
+        res.status(500).json({ error: 'An error occured' });
+      } else {
+        res.json({ project });
+      }
+    });
 });
 
 // registration

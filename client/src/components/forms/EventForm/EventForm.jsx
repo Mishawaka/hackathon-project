@@ -14,7 +14,6 @@ const EventForm = ({ modal, setModal }) => {
   const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
     ImageContext
   );
-  const [proj, setProj] = useState([]);
   const [form, setForm] = useState({
     name: '',
     descr: '',
@@ -29,7 +28,7 @@ const EventForm = ({ modal, setModal }) => {
   const [showDay, setShowDay] = useState('text');
   const [showTime, setShowTime] = useState('text');
 
-  const { cities, setEventId } = useContext(EventContext);
+  const { cities, setEventId, prForEvent } = useContext(EventContext);
   const { setImagesModal } = useContext(Context);
 
   const clickRef = createRef();
@@ -67,7 +66,7 @@ const EventForm = ({ modal, setModal }) => {
       label: 'Проект',
       value: form.project,
       tag: 'select',
-      parent: proj,
+      parent: prForEvent,
     },
   ];
 
@@ -127,23 +126,6 @@ const EventForm = ({ modal, setModal }) => {
       return showTime === 'text' ? setShowTime('time') : setShowTime('text');
     }
   };
-
-  useEffect(() => {
-    fetch('http://localhost:8000/get-all-projects', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: localStorage.getItem('jwt') }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        let projects = data.map((el) => ({
-          id: el._id,
-          value: el.name,
-        }));
-        setProj(projects);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <FormPage modal={modal} setModal={setModal}>
@@ -224,7 +206,7 @@ const EventForm = ({ modal, setModal }) => {
           </div>
         )
       )}
-      {proj && (
+      {prForEvent && (
         <div className="form-group project-save">
           <button
             onClick={() => createEvent()}

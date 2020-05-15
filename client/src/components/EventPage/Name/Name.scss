@@ -1,16 +1,35 @@
 @import '../../../variables.scss';
 
-.project-name {
+.event-name {
   margin-top: 4.5rem;
   background: $gradient;
   padding: 4rem 10rem;
-  & > h3 {
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: 600;
-    color: white;
-    font-size: 22px;
-    line-height: 30px;
+  & > .inline-flex {
+    display: flex;
+    justify-content: space-between;
+    & > h3,
+    & > div > div > h3 {
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: 600;
+      color: white;
+      font-size: 22px;
+      line-height: 30px;
+    }
+    & > div {
+      display: flex;
+      justify-content: flex-end;
+      width: 50%;
+      & > div {
+        margin: 0 0 0 4rem;
+        &:first-child {
+          text-align: left;
+        }
+        &:last-child {
+          text-align: center;
+        }
+      }
+    }
   }
   & > .name {
     width: 100%;

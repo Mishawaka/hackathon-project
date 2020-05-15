@@ -13,10 +13,11 @@ const ProjectsPage = ({ history }) => {
     classList.toggle('sort-active');
   };
 
-  const { projects, setProjects } = useContext(ProjectContext);
-  const { auth, setAuthModal } = useContext(Context);
+  const { projects, setProjects, sort, setSort } = useContext(ProjectContext);
+  const { auth } = useContext(Context);
   const [changeFind, setChangeFind] = useState('');
   const [changeCity, setChangeCity] = useState('');
+  const [lastEvents, setLastEvents] = useState([]);
   const [filterChecks, setFilterChecks] = useState([]);
 
   useEffect(() => {
@@ -41,10 +42,36 @@ const ProjectsPage = ({ history }) => {
     }
   }, [auth]);
 
+  // useEffect(() => {
+  //   if (projects.length !== 0) {
+  //     fetch('http://localhost:8000/get-last-events', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ token: localStorage.getItem('jwt'), projects }),
+  //     })
+  //       .then((res) => {
+  //         if (res.status === 401) {
+  //           localStorage.removeItem('jwt');
+  //           localStorage.removeItem('img');
+  //           localStorage.removeItem('email');
+  //           window.location.replace('/');
+  //         } else {
+  //           return res.json();
+  //         }
+  //       })
+  //       .then((data) => setLastEvents(data))
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [projects]);
+
+  const onSortChange = (id) => {
+    setSort(id);
+  };
+
   return (
     <div className="projects-page animated fadeIn">
       <h2>Проекты</h2>
-      <Sort toggleArrow={toggleArrow} />
+      <Sort onSortChange={onSortChange} toggleArrow={toggleArrow} />
       <div className="projects-content">
         <Filter
           changeFind={changeFind}
@@ -60,6 +87,7 @@ const ProjectsPage = ({ history }) => {
           changeCity={changeCity}
           filterChecks={filterChecks}
           projects={projects}
+          sort={sort}
         />
       </div>
     </div>

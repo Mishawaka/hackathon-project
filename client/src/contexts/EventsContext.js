@@ -7,6 +7,7 @@ export const EventProvider = ({ children }) => {
   const [filterChecks, setFilterChecks] = useState([]);
   const [date, setDate] = useState('');
   const [eventId, setEventId] = useState('');
+  const [prForEvent, setPrForEvent] = useState([]);
   const themes = [
     'помощь пожилым людям',
     'помощь сиротам',
@@ -29,6 +30,8 @@ export const EventProvider = ({ children }) => {
         setDate,
         eventId,
         setEventId,
+        prForEvent,
+        setPrForEvent,
         themes,
         cities,
       }}
