@@ -28,7 +28,6 @@ const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
         ({ name, descr, org }) =>
           reg.test(name) || reg.test(org) || reg.test(descr)
       );
-      console.log(arr[0].event);
       setProj(arr);
     }
   }, [projects, filterChecks, changeFind, changeCity, sort]);

@@ -33,12 +33,6 @@
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 4rem;
-  img {
-    width: 220px;
-    border-radius: 100%;
-    border: 3px solid #FFFFFF;
-    box-shadow: 0px 6px 16px rgba(249, 71, 71, 0.25);
-  }
   h3 {
     margin-top: 0;
     font-family: Roboto;
@@ -71,13 +65,38 @@
     box-shadow: 0px 6px 16px rgba(249, 72, 70, 0.15);
     border-radius: 30px;
   }
-
+  
   .profile-block-left {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
+    & > img {
+      width: 220px;
+      border-radius: 100%;
+      border: 3px solid #FFFFFF;
+      box-shadow: 0px 6px 16px rgba(249, 71, 71, 0.25);
+    }
+    & > .plus-block {
+      position: absolute;
+      background: $gradient;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+      border: 2px solid #FFFFFF;
+      bottom: 60px;
+      right: 110px;
+      cursor: pointer;
+      & > img {
+        width: 2rem;
+      }
+    }
   }
-
+  
   .profile-block-center {
     h4 {
       font-family: 'Open Sans';
