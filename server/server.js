@@ -116,23 +116,41 @@ app.post('/save-event-image', (req, res) => {
 });
 
 app.post('/get-all-events', withAuth, (req, res) => {
-  Event.find({}, (err, events) => {
-    if (err) {
-      res.status(500).json({ error: 'An error occured' });
-    } else {
-      res.json(events);
-    }
-  });
+  Event.find()
+    .populate('project')
+    .exec((err, events) => {
+      if (err) {
+        res.status(500).json({ error: 'An error occured' });
+      } else {
+        res.json(events);
+      }
+    });
 });
 
 app.post('/get-event', withAuth, (req, res) => {
-  Event.findOne({ name: req.body.name }, (err, event) => {
-    if (err) {
-      res.status(500).json({ error: 'An error occured' });
-    } else {
-      res.json(event);
-    }
-  });
+  Event.findOne({ name: req.body.name })
+    .populate({ path: 'project', populate: { path: 'coord' } })
+    .exec((err, event) => {
+      if (err) {
+        res.status(500).json({ error: 'An error occured' });
+      } else {
+        res.json(event);
+      }
+    });
+});
+
+app.post('/get-last-events', withAuth, (req, res) => {
+  Event.find()
+    .populate('project', 'name _id')
+    .sort({ updatedAt: -1 })
+    .then((events) => {
+      let projects = events.map((el) => el.project._id);
+      let uniqueEvents = events.filter(
+        (el, id) => projects.indexOf(el.project._id) == id
+      );
+      res.json(uniqueEvents);
+    })
+    .catch((err) => console.log(err));
 });
 
 // project
@@ -224,12 +242,11 @@ app.post('/save-project-images', (req, res) => {
 app.post('/get-all-projects', withAuth, (req, res) => {
   Project.find()
     .populate('coord')
+    .sort({ createdAt: -1 })
     .exec((err, projects) => {
       if (err) {
         res.status(500).json({ error: 'An error occured' });
       } else {
-        console.log(projects[0].coord);
-
         // let arr = [];
         // for (let i of projects) {
         //   Event.findOne()
@@ -309,6 +326,48 @@ app.post('/save-user-image', (req, res) => {
       }
     }
   );
+});
+
+app.post('/get-user-info', withAuth, (req, res) => {
+  User.findOne({ email: req.user.email }).exec((err, user) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: err });
+    }
+    return res.json(user);
+  });
+});
+
+app.post('/set-password', withAuth, (req, res) => {
+  const { oldPass, newPass } = req.body;
+  User.findOne({ email: req.user.email }).exec((err, user) => {
+    if (err) {
+      console.log(err);
+      return res.json({ err: 'Some error with finding user' });
+    }
+    bcrypt.compare(oldPass, user.password, (bcErr, same) => {
+      if (bcErr) {
+        console.log(bcErr);
+        return res.json({ err: 'Error comparing passwords' });
+      }
+      if (!same) {
+        return res.json({ correct: false });
+      } else {
+        bcrypt.hash(`${newPass}`, 10, (hashedErr, hashed) => {
+          if (hashedErr) return res.json({ err: 'Error with creating hash' });
+          User.findOneAndUpdate(
+            { email: req.user.email },
+            { password: hashed },
+            (updateErr) => {
+              if (updateErr)
+                return res.json({ err: 'Error updating password' });
+              return res.json({ correct: true });
+            }
+          );
+        });
+      }
+    });
+  });
 });
 
 app.post('/api/authenticate', (req, res) => {

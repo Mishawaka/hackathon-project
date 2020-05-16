@@ -6,10 +6,12 @@ import { EventContext } from '../../contexts/EventsContext';
 import { Context } from '../../contexts/Context';
 
 import './EventsPage.scss';
+import { ProjectContext } from '../../contexts/ProjectsContext';
 
 const EventsPage = () => {
   const { events, setEvents, date } = useContext(EventContext);
   const { auth } = useContext(Context);
+  const { projects, setProjects } = useContext(ProjectContext);
 
   const checks = events.map((el) => el.project.theme);
 
@@ -55,6 +57,30 @@ const EventsPage = () => {
         .catch((err) => console.log(err));
     }
   }, [auth]);
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      fetch('http://localhost:8000/get-all-projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('img');
+            localStorage.removeItem('email');
+            window.location.replace('/');
+          } else {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          setProjects(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   return (
     <div className="events-page animated fadeIn">

@@ -3,22 +3,24 @@ import EventForm from '../../forms/EventForm/EventForm';
 import { Modal } from 'react-responsive-modal';
 import { Context } from '../../../contexts/Context';
 import { EventContext } from '../../../contexts/EventsContext';
+import { ProjectContext } from '../../../contexts/ProjectsContext';
 
 import './Add.scss';
 
 const Add = ({ toggleArrow }) => {
   const { eventModal, setEventModal } = useContext(Context);
   const { events, prForEvent, setPrForEvent } = useContext(EventContext);
+  const { projects } = useContext(ProjectContext);
 
   useEffect(() => {
-    let arr = events
-      .filter((el) => el.project.coord.email === localStorage.getItem('email'))
+    let arr = projects
+      .filter((el) => el.coord.email === localStorage.getItem('email'))
       .map((el) => ({
-        id: el.project._id,
-        value: el.project.name,
+        id: el._id,
+        value: el.name,
       }));
     setPrForEvent(arr);
-  }, [events]);
+  }, [projects]);
   return (
     <div>
       {prForEvent.length > 0 && (
