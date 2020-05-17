@@ -1,30 +1,6 @@
-import React, {useState,  useCallback } from 'react';
+import React, { useState } from 'react';
 
 import './ProfileBottom.scss';
-
-// const ProfileBottom = () => {
-
-//   return (
-//     <div className="profile-bottom">
-//       <div className="profile-btn-block">
-//         <button onClick={() => {document.getElementById('myprojects').style.display = 'block'}}>
-//           <h4>Мои проекты</h4>
-//         </button>
-//         <button onClick={() => {document.getElementById('subscriptions').style.display = 'block'}}>
-//           <h4>Подписки</h4>
-//         </button>
-//         <button onClick={() => {document.getElementById('events').style.display = 'block'}}>
-//           <h4>Ивенты</h4>
-//         </button>
-//       </div>
-//       <div className="profile-sliders-block">
-//         <div id="myprojects" className="my-projects-block">Мои проекты</div>
-//         <div id="subscriptions" className="subscriptions-block">Подписки</div>
-//         <div id="events" className="events-block">Ивенты</div>
-//       </div>
-//     </div>
-//   );
-// }
 
 const MyProjects = () => (
   <div className="my-projects-block">Мои проекты</div>
@@ -32,7 +8,7 @@ const MyProjects = () => (
 
 const Subscriptions = () => (
   <div className="subscriptions-block">Подписки</div>
-  );
+);
 
 const Events = () => (
   <div className="events-block">Ивенты</div>
@@ -65,15 +41,19 @@ const ProfileBottom = () => {
   return (
     <div className="profile-bottom">
       <div className="profile-btn-block">
-        {Object.keys(sections).map(sectionName => (
-          <button onClick={() => setActiveSection(sectionName)}>
-            <h4>{sections[sectionName]['tabName']}</h4>
-          </button>
-        ))}
+        {Object.keys(sections).map(sectionName => {
+          const className = sectionName === activeSection ? 'active' : '';
+          
+          return (
+            <button className={className} onClick={() => setActiveSection(sectionName)}>
+              {sections[sectionName]['tabName']}
+            </button>
+          );
+        })}
       </div>
 
       <div className="profile-sliders-block">
-        <Component />        
+        <Component />       
       </div>
     </div>
   );
