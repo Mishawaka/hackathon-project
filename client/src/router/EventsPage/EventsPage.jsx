@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Filter from '../../components/EventsPage/Filter/Filter';
 import Items from '../../components/EventsPage/Items/Items';
 import Add from '../../components/EventsPage/Add/Add';
@@ -14,14 +14,9 @@ const EventsPage = () => {
   const { projects, setProjects } = useContext(ProjectContext);
 
   const checks = events.map((el) => el.project.theme);
+  const [changeCity, setChangeCity] = useState('');
 
-  const cities = [
-    { name: 'Одесса', value: 'odesa' },
-    { name: 'Киев', value: 'kyiv' },
-    { name: 'Львов', value: 'lviv' },
-    { name: 'Харьков', value: 'kharkiv' },
-    { name: 'Днепр', value: 'dnepr' },
-  ];
+  const cities = ['Одесса', 'Киев', 'Львов', 'Харьков', 'Днепр'];
 
   const themes = [
     'помощь пожилым людям',
@@ -52,7 +47,11 @@ const EventsPage = () => {
           }
         })
         .then((data) => {
-          setEvents(data);
+          let arr = data.map((el) => ({
+            ...el,
+            date: new Date(el.date),
+          }));
+          setEvents(arr);
         })
         .catch((err) => console.log(err));
     }
@@ -87,8 +86,13 @@ const EventsPage = () => {
       <h2>Мероприятия</h2>
       <Add />
       <div className="events-content">
-        <Filter checks={checks} cities={cities} themes={themes} />
-        <Items events={events} date={date} />
+        <Filter
+          setChangeCity={setChangeCity}
+          checks={checks}
+          cities={cities}
+          themes={themes}
+        />
+        <Items changeCity={changeCity} events={events} date={date} />
       </div>
     </div>
   );

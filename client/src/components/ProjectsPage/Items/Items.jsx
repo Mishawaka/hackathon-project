@@ -15,12 +15,12 @@ const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
         arr = arr.sort((a, b) => b.lastEvent - a.lastEvent);
         setProj(arr);
       }
-      if (filterChecks.length !== 0) {
-        arr = arr.filter((el) => filterChecks.includes(el.theme.toLowerCase()));
+      if (changeCity.length !== 0) {
+        arr = projects.filter((el) => el.city == changeCity);
         setProj(arr);
       }
-      if (changeCity.length !== 0) {
-        arr = arr.filter((el) => el.city === changeCity);
+      if (filterChecks.length !== 0) {
+        arr = arr.filter((el) => filterChecks.includes(el.theme.toLowerCase()));
         setProj(arr);
       }
       if (changeFind.length !== 0) {

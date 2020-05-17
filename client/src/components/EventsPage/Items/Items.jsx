@@ -5,37 +5,28 @@ import { EventContext } from '../../../contexts/EventsContext';
 
 import './Items.scss';
 
-const Items = ({ events, date }) => {
+const Items = ({ events, date, changeCity }) => {
   const { filterChecks } = useContext(EventContext);
   const [event, setEvent] = useState([]);
 
   useEffect(() => {
-    setEvent([...events]);
-    if (filterChecks.length === 0) {
-      const evs = events.map((el) => ({
-        ...el,
-        date: new Date(el.date),
-      }));
-      setEvent(evs);
-    } else {
-      let arr = events.filter((el) =>
-        filterChecks.includes(el.project.theme.toLowerCase())
-      );
-      const evs = arr.map((el) => ({
-        ...el,
-        date: new Date(el.date),
-      }));
+    setEvent(events);
+    let evs = [];
+    if (changeCity.length !== 0) {
+      evs = events.filter((el) => el.city == changeCity);
       setEvent(evs);
     }
-  }, [events, filterChecks]);
+    if (filterChecks.length !== 0) {
+      let arr = evs.filter((el) =>
+        filterChecks.includes(el.project.theme.toLowerCase())
+      );
+      setEvent(arr);
+    }
+  }, [events, filterChecks, changeCity]);
 
   useEffect(() => {
-    const evs = events.map((el) => ({
-      ...el,
-      date: new Date(el.date),
-    }));
     if (date !== '') {
-      const arr = evs.filter(
+      const arr = event.filter(
         (el) => el.date.toLocaleDateString() === date.toLocaleDateString()
       );
       setEvent(arr);

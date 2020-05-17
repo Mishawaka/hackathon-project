@@ -5,7 +5,7 @@ import { EventContext } from '../../../contexts/EventsContext';
 import 'react-calendar/dist/Calendar.css';
 import './Filter.scss';
 
-const Filter = ({ checks, cities, themes }) => {
+const Filter = ({ checks, cities, themes, setChangeCity }) => {
   const { filterChecks, setFilterChecks, date, setDate } = useContext(
     EventContext
   );
@@ -52,10 +52,15 @@ const Filter = ({ checks, cities, themes }) => {
             <h4>Город</h4>
           </div>
           <div className="form-group">
-            <select name="sort-events" className="city" id="">
+            <select
+              onChange={(e) => setChangeCity(e.target.value)}
+              name="sort-projects"
+              className="city"
+            >
+              <option value="">Все города</option>
               {cities.map((el, id) => (
-                <option key={id} value={el.value}>
-                  {el.name}
+                <option key={id} value={el}>
+                  {el}
                 </option>
               ))}
             </select>

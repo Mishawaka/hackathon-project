@@ -59,7 +59,7 @@ const MainPage = () => {
           } else {
             localStorage.removeItem('jwt');
             localStorage.removeItem('email');
-            localStorage.removeItem('imageUrl');
+            localStorage.removeItem('img');
             window.location.reload();
             setAuth(false);
           }

@@ -61,7 +61,6 @@ const Filter = ({
           <div className="form-group">
             <select
               onChange={(e) => setChangeCity(e.target.value)}
-              value={changeCity}
               name="sort-projects"
               className="city"
             >

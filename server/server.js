@@ -345,6 +345,22 @@ app.post('/save-user-image', (req, res) => {
   );
 });
 
+app.post('/set-user-image', (req, res) => {
+  const { image, email } = req.body;
+  const buf = new Buffer(image, 'base64');
+  User.findOne({ email }).exec((err, user) => {
+    if (err) res.json({ err: 'Error searching user' });
+    const imagePath = path.join(__dirname, 'uploads', user.imageUrl);
+    fs.unlink(imagePath, (remErr) => {
+      if (remErr) return res.json({ err: 'Error removing file' });
+      fs.writeFile(imagePath, buf, (saveErr) => {
+        if (saveErr) return res.json({ err: 'Error saving photo' });
+        return res.json({ ok: true, user });
+      });
+    });
+  });
+});
+
 app.post('/get-user-info', withAuth, (req, res) => {
   User.findOne({ email: req.user.email }).exec((err, user) => {
     if (err) {
