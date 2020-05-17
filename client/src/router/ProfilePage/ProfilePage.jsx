@@ -5,6 +5,8 @@ import ProfileRightBlock from '../../components/ProfilePage/ProfileRightBlock/Pr
 import { Context } from '../../contexts/Context';
 
 import './ProfilePage.scss';
+import ProfileTop from '../../components/ProfilePage/ProfileTop/ProfileTop';
+import ProfileBottom from '../../components/ProfilePage/ProfileBottom/ProfileBottom';
 
 const ProfilePage = () => {
   const [user, setUser] = useState();
@@ -32,12 +34,14 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page animated fadeIn slower">
-      <h2>Профиль</h2>
-      <div className="profile-container">
+      <ProfileTop />
+      <div className="profile-center">
         <ProfileLeftBlock user={user} />
         <ProfileCenterBlock user={user} />
         <ProfileRightBlock user={user} />
       </div>
+      <div className="gradient-line" />
+      <ProfileBottom />
     </div>
   );
 };

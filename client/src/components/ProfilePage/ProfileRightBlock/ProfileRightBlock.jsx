@@ -34,7 +34,7 @@ const ProfileRightBlock = () => {
     <div className="profile-block-right">
       <h3>Безопасность</h3>
       <form onSubmit={(e) => onSubmit(e)} id="form" action="POST">
-        <div className="form-group">
+        <div className="profile-form-group">
           <input
             onChange={(e) => setOldPass(e.target.value)}
             value={oldPass}
@@ -52,14 +52,14 @@ const ProfileRightBlock = () => {
             htmlFor="password"
             className={
               oldPass === ''
-                ? 'form-control-placeholder-off'
-                : 'form-control-placeholder-on'
+                ? 'profile-form-control-placeholder-off'
+                : 'profile-form-control-placeholder-on'
             }
           >
             Старый пароль
           </label>
         </div>
-        <div className="form-group">
+        <div className="profile-form-group">
           <input
             onChange={(e) => setNewPass(e.target.value)}
             value={newPass}
@@ -77,8 +77,8 @@ const ProfileRightBlock = () => {
             htmlFor="password"
             className={
               newPass === ''
-                ? 'form-control-placeholder-off'
-                : 'form-control-placeholder-on'
+                ? 'profile-form-control-placeholder-off'
+                : 'profile-form-control-placeholder-on'
             }
           >
             Новый пароль
