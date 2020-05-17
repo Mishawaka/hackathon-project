@@ -43,30 +43,33 @@ const SUBSCRIPTIONS = 'subscriptions';
 const EVENTS = 'events';
 
 const sections = {
-  [MY_PROJECTS]: MyProjects,
-  [SUBSCRIPTIONS]: Subscriptions,
-  [EVENTS]: Events
+  [MY_PROJECTS]: {
+    tabName: 'Мои проекты',
+    component: MyProjects,
+  },
+  [SUBSCRIPTIONS]: {
+    tabName: 'Подписки',
+    component: Subscriptions,
+  },
+  [EVENTS]: {
+    tabName: 'Ивенты',
+    component: Events,
+  },
 };
 
-const DEFAULT_SECTION = SUBSCRIPTIONS;
-
 const ProfileBottom = () => {
-  const [activeSection, setActiveSection] = useState(DEFAULT_SECTION);
+  const [activeSection, setActiveSection] = useState(SUBSCRIPTIONS);
 
-  const Component = sections[activeSection];
+  const Component = sections[activeSection]['component'];
 
   return (
     <div className="profile-bottom">
       <div className="profile-btn-block">
-        <button onClick={useCallback(() => setActiveSection(MY_PROJECTS), [])}>
-          <h4>Мои проекты</h4>
-        </button>
-        <button onClick={useCallback(() => setActiveSection(SUBSCRIPTIONS), [])}>
-          <h4>Подписки</h4>
-        </button>
-        <button onClick={useCallback(() => setActiveSection(EVENTS), [])}>
-          <h4>Ивенты</h4>
-        </button>
+        {Object.keys(sections).map(sectionName => (
+          <button onClick={() => setActiveSection(sectionName)}>
+            <h4>{sections[sectionName]['tabName']}</h4>
+          </button>
+        ))}
       </div>
 
       <div className="profile-sliders-block">
