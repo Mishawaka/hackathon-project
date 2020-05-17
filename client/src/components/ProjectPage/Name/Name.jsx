@@ -2,7 +2,9 @@ import React from 'react';
 
 import './Name.scss';
 
-const Name = ({ project }) => {
+const Name = ({ project, subscribe, subscribed }) => {
+  const creator = project.coord.email === localStorage.getItem('email');
+
   return (
     <div className="project-name">
       <h3>Тема: {project.theme}</h3>
@@ -13,8 +15,17 @@ const Name = ({ project }) => {
         <h1>{project.name}</h1>
       </div>
       <div className="volunteer">
-        <button>
-          <h4>стать волонтером</h4>
+        <button
+          onClick={creator ? null : subscribe}
+          className={creator || subscribed ? 'disabled-gradient' : ''}
+        >
+          <h4>
+            {creator
+              ? 'Вы - создатель'
+              : subscribed
+              ? 'Вы подписаны'
+              : 'Подпишись'}
+          </h4>
         </button>
       </div>
     </div>

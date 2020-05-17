@@ -117,7 +117,7 @@ app.post('/save-event-image', (req, res) => {
 
 app.post('/get-all-events', withAuth, (req, res) => {
   Event.find()
-    .populate('project')
+    .populate({ path: 'project' })
     .exec((err, events) => {
       if (err) {
         res.status(500).json({ error: 'An error occured' });
@@ -239,6 +239,33 @@ app.post('/save-project-images', (req, res) => {
   );
 });
 
+app.post('/subscribe', withAuth, (req, res) => {
+  const { name } = req.body;
+  const { email } = req.user;
+  Project.findOne({ name })
+    .populate('coord')
+    .exec((err, project) => {
+      if (err) return res.json({ err: 'Error finding project' });
+      User.findOneAndUpdate(
+        { email },
+        { $push: { projects: project._id } },
+        (userErr, user) => {
+          console.log(userErr);
+          if (userErr) return res.json({ err: 'Error updating user' });
+          Project.findOneAndUpdate(
+            { name },
+            { $push: { subscribers: user.email } },
+            (projectErr, newProject) => {
+              if (projectErr)
+                return res.json({ err: 'Error updating project' });
+              return res.json(newProject);
+            }
+          );
+        }
+      );
+    });
+});
+
 app.post('/get-all-projects', withAuth, (req, res) => {
   Project.find()
     .populate('coord')
@@ -247,16 +274,6 @@ app.post('/get-all-projects', withAuth, (req, res) => {
       if (err) {
         res.status(500).json({ error: 'An error occured' });
       } else {
-        // let arr = [];
-        // for (let i of projects) {
-        //   Event.findOne()
-        //     .sort({ created_at: -1 })
-        //     .select({ name: i.name })
-        //     .limit(1)
-        //     .exec((err, event) => {
-        //       i.event = event;
-        //     });
-        // }
         res.json(projects);
       }
     });

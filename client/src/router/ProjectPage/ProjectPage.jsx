@@ -13,6 +13,7 @@ import './ProjectPage.scss';
 const ProjectPage = () => {
   const { name } = useParams();
   const [project, setProject] = useState();
+  const [subscribed, setSubscribed] = useState();
   const { auth } = useContext(Context);
   const { events, setEvents } = useContext(EventContext);
   useEffect(() => {
@@ -33,6 +34,10 @@ const ProjectPage = () => {
       })
       .then((data) => {
         setProject(data.project);
+        setSubscribed(
+          data.project.subscribers.includes(localStorage.getItem('email'))
+        );
+        console.log(data);
       })
       .catch((err) => console.log(err));
   }, [auth, name]);
@@ -61,12 +66,42 @@ const ProjectPage = () => {
     }
   }, [auth, name]);
 
+  const subscribe = () => {
+    if (project.coord.email !== localStorage.getItem('email')) {
+      fetch('http://localhost:8000/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: localStorage.getItem('jwt'),
+          name: project.name,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setSubscribed(
+            data.subscribers.includes(localStorage.getItem('email'))
+          );
+          setProject(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   return (
     <div>
-      {project && (
+      {project && project.coord && (
         <div className="project-page animated fadeIn slower">
-          <Name project={project} />
-          <Description project={project} />
+          <Name
+            subscribed={subscribed}
+            subscribe={subscribe}
+            project={project}
+          />
+          <Description
+            subscribed={subscribed}
+            subscribe={subscribe}
+            project={project}
+          />
           <Contacts project={project} />
           <Events events={events} project={project} />
         </div>

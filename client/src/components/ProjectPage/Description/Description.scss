@@ -1,7 +1,6 @@
 @import '../../../variables.scss';
 
 .project-description {
-  // height: 43vh;
   & > .flex {
     height: 43vh;
     display: flex;
@@ -35,38 +34,38 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      & > a {
-        text-decoration: none;
+      & > button {
+        background: $gradient;
+        box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1.2rem 1.8rem;
+        border: none;
         cursor: pointer;
-        & > button {
-          background: $gradient;
-          box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
-          border-radius: 4px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 1.2rem 1.8rem;
-          border: none;
-          cursor: pointer;
-          & > h4 {
-            background: white;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 18px;
-            line-height: 20px;
-            margin: 0;
-            /* identical to box height */
+        & > h4 {
+          background: white;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-transform: uppercase;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 20px;
+          margin: 0;
+          /* identical to box height */
 
-            display: flex;
-            align-items: center;
-            text-align: center;
-            letter-spacing: 0.02em;
-            font-variant: small-caps;
-          }
+          display: flex;
+          align-items: center;
+          text-align: center;
+          letter-spacing: 0.02em;
+          font-variant: small-caps;
+        }
+        &.disabled-gradient {
+          background: $disGradient;
+          cursor: default;
         }
       }
     }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Context } from '../../contexts/Context';
 import { ProjectContext } from '../../contexts/ProjectsContext';
+import { EventContext } from '../../contexts/EventsContext';
 import { RegisterContext } from '../../contexts/RegisterContext';
 import FirstBlock from '../../components/MainPage/FirstBlock/FirstBlock';
 import SecondBlock from '../../components/MainPage/SecondBlock/SecondBlock';
@@ -19,11 +20,11 @@ import './MainPage.scss';
 const MainPage = () => {
   const { setRegisterModal, setAuth, auth } = useContext(Context);
   const { projects, setProjects } = useContext(ProjectContext);
+  const { events, setEvents } = useContext(EventContext);
   const { email, setEmail } = useContext(RegisterContext);
 
   useEffect(() => {
     if (localStorage.getItem('jwt') !== null) {
-      console.log('useEffect');
       fetch('http://localhost:8000/checkToken', {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
@@ -39,11 +40,26 @@ const MainPage = () => {
               .then((res) => res.json())
               .then((data) => {
                 setProjects(data);
-                setAuth(true);
+                fetch('http://localhost:8000/get-all-events', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+                })
+                  .then((res) => res.json())
+                  .then((data) => {
+                    let arr = data.map((el) => ({
+                      ...el,
+                      date: new Date(el.date),
+                    }));
+                    setEvents(arr);
+                    setAuth(true);
+                  });
               })
               .catch((err) => console.log(err));
           } else {
             localStorage.removeItem('jwt');
+            localStorage.removeItem('email');
+            localStorage.removeItem('imageUrl');
             window.location.reload();
             setAuth(false);
           }
@@ -75,7 +91,7 @@ const MainPage = () => {
         style={{ display: localStorage.getItem('jwt') ? 'block' : 'none' }}
       >
         <BannerBlock />
-        <EventBlock projects={projects} />
+        <EventBlock events={events} />
         <ProjectBlock projects={projects} />
         <RegProjectBlock />
       </div>

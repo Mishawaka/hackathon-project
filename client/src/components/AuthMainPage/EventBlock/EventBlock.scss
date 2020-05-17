@@ -7,20 +7,24 @@
   padding-bottom: 8rem;
   position: relative;
   .link-event {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: normal;
-    font-size: 21px;
-    line-height: 25px;
-    letter-spacing: 0.02em;
-    font-variant: small-caps;
-    background: $gradient;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 4px 8px rgba(249, 74, 70, 0.35);
-    text-transform: uppercase;
     padding: 2rem 0;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    & > a > h4 {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: normal;
+      font-size: 21px;
+      line-height: 25px;
+      letter-spacing: 0.02em;
+      font-variant: small-caps;
+      background: $gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 4px 8px rgba(249, 74, 70, 0.35);
+      text-transform: uppercase;
+    }
   }
   & > .title-block {
     display: flex;

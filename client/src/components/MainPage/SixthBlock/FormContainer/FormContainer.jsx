@@ -11,13 +11,25 @@ const FormContainer = ({ email, setEmail, setModal }) => (
       <span>С</span>тать волонтер легк<span>о!</span>
     </h3>
     <form action="POST">
-      <input
-        type="email"
-        name="email"
-        placeholder="Почта"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+      <div className="form-group">
+        <input
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          type="email"
+          id="email"
+          className="form-control"
+        />
+        <label
+          htmlFor="email"
+          className={
+            email === ''
+              ? 'form-control-placeholder-off'
+              : 'form-control-placeholder-on'
+          }
+        >
+          Почта
+        </label>
+      </div>
       <button
         onClick={(e) => {
           e.preventDefault();

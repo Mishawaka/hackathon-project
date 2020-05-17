@@ -3,8 +3,9 @@ import Carousel from './Carousel';
 
 import './Description.scss';
 
-const Description = ({ project }) => {
-  console.log(project);
+const Description = ({ project, subscribe, subscribed }) => {
+  const creator = project.coord.email === localStorage.getItem('email');
+  console.log(subscribed);
   return (
     <div className="project-description">
       <div className="flex">
@@ -13,8 +14,17 @@ const Description = ({ project }) => {
           <p>{project.descr}</p>
         </div>
         <div className="volunteer-invite">
-          <button>
-            <h4>Подпишись</h4>
+          <button
+            onClick={creator ? null : subscribe}
+            className={creator || subscribed ? 'disabled-gradient' : ''}
+          >
+            <h4>
+              {creator
+                ? 'Вы - создатель'
+                : subscribed
+                ? 'Вы подписаны'
+                : 'Подпишись'}
+            </h4>
           </button>
         </div>
       </div>
