@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const UserSchema = mongoose.Schema(
+const Schema = mongoose.Schema;
+
+const UserSchema = Schema(
   {
     name: {
       type: String,
@@ -24,9 +26,8 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    password: {
-      type: String,
-    },
+    password: String,
+    projects: [Schema.Types.ObjectId],
     createdAt: Date,
   },
   {

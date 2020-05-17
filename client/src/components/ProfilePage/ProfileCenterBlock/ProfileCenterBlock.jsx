@@ -2,14 +2,30 @@ import React from 'react';
 
 import './ProfileCenterBlock.scss';
 
-const ProfileCenterBlock = () => (
+const ProfileCenterBlock = ({ user }) => (
   <div className="profile-block-center">
-    <h3>Информация обо мне</h3>
-    <h4>Имя: <span>{localStorage.getItem('name').split(' ')[0]}</span></h4>
-    <h4>Фамилия: <span>{localStorage.getItem('name').split(' ')[1]}</span></h4>
-    <h4>Почта: <span>{localStorage.getItem('email')}</span></h4>
-    <h4>Номер телефона: <span>+{localStorage.getItem('phone')}</span></h4>
+    {user && (
+      <div>
+        <h3>Информация обо мне</h3>
+        <h4>
+          Имя: <span>{user.name}</span>
+        </h4>
+        <h4>
+          Фамилия: <span>{user.surname}</span>
+        </h4>
+        <h4>
+          Почта: <span>{user.email}</span>
+        </h4>
+        <h4>
+          Номер телефона:{' '}
+          <span>
+            +38 ({user.phone.substring(0, 3)})-{user.phone.substring(3, 6)}-
+            {user.phone.substring(6, 10)}
+          </span>
+        </h4>
+      </div>
+    )}
   </div>
-)
+);
 
 export default ProfileCenterBlock;

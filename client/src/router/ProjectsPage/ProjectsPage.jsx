@@ -17,7 +17,6 @@ const ProjectsPage = ({ history }) => {
   const { auth } = useContext(Context);
   const [changeFind, setChangeFind] = useState('');
   const [changeCity, setChangeCity] = useState('');
-  const [lastEvents, setLastEvents] = useState([]);
   const [filterChecks, setFilterChecks] = useState([]);
 
   useEffect(() => {
@@ -42,27 +41,50 @@ const ProjectsPage = ({ history }) => {
     }
   }, [auth]);
 
-  // useEffect(() => {
-  //   if (projects.length !== 0) {
-  //     fetch('http://localhost:8000/get-last-events', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ token: localStorage.getItem('jwt'), projects }),
-  //     })
-  //       .then((res) => {
-  //         if (res.status === 401) {
-  //           localStorage.removeItem('jwt');
-  //           localStorage.removeItem('img');
-  //           localStorage.removeItem('email');
-  //           window.location.replace('/');
-  //         } else {
-  //           return res.json();
-  //         }
-  //       })
-  //       .then((data) => setLastEvents(data))
-  //       .catch((err) => console.log(err));
-  //   }
-  // }, [projects]);
+  useEffect(() => {
+    if (projects.length !== 0) {
+      fetch('http://localhost:8000/get-last-events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('img');
+            localStorage.removeItem('email');
+            window.location.replace('/');
+          } else {
+            return res.json();
+          }
+        })
+        .then((data) => {
+          let arr = data.map((el) => ({
+            projectId: el.project._id,
+            createdAt: new Date(el.createdAt),
+          }));
+          let fullProjects = projects.map((el) => {
+            let ids = arr.map((elem) => elem.projectId);
+            for (let i in arr) {
+              if (!ids.includes(el._id)) {
+                return {
+                  ...el,
+                  lastEvent: new Date(0),
+                };
+              }
+              if (arr[i].projectId == el._id) {
+                return {
+                  ...el,
+                  lastEvent: arr[i].createdAt,
+                };
+              }
+            }
+          });
+          setProjects(fullProjects);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [projects]);
 
   const onSortChange = (id) => {
     setSort(id);

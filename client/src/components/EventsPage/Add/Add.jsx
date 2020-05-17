@@ -10,11 +10,11 @@ import './Add.scss';
 const Add = ({ toggleArrow }) => {
   const { eventModal, setEventModal } = useContext(Context);
   const { events, prForEvent, setPrForEvent } = useContext(EventContext);
-  const { projects } = useContext(ProjectContext)
+  const { projects } = useContext(ProjectContext);
 
   useEffect(() => {
     let arr = projects
-      .filter((el) => el.project.coord.email === localStorage.getItem('email'))
+      .filter((el) => el.coord.email === localStorage.getItem('email'))
       .map((el) => ({
         id: el._id,
         value: el.name,

@@ -5,16 +5,13 @@ import './Sort.scss';
 const Sort = ({ onSortChange }) => (
   <div className="projects-sort">
     <select
-      onChange={({ target }) => onSortChange(target.id)}
+      onChange={({ target }) => onSortChange(target.value)}
       name="sort-projects"
-      id=""
     >
-      <option id="date" selected value="create">
+      <option selected value="create">
         По дате создания
       </option>
-      <option id="update" value="update">
-        По дате обновления
-      </option>
+      <option value="update">По дате обновления</option>
     </select>
   </div>
 );

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Slider } from '../../Slider';
 import arrRight from '../../../img/arrow-right.svg';
-import { ProjectContext } from '../../../contexts/ProjectsContext';
+import { EventContext } from '../../../contexts/EventsContext';
 import { Context } from '../../../contexts/Context';
 
 import 'slick-carousel/slick/slick.scss';
@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick-theme.scss';
 import './Events.scss';
 import { Link } from 'react-router-dom';
 
-const Events = ({ project }) => {
+const Events = ({ event }) => {
   const viewportWidth = window.innerWidth;
   const viewport = () => {
     if (viewportWidth >= 1750) return 4;
@@ -17,12 +17,13 @@ const Events = ({ project }) => {
     if (viewportWidth <= 900) return 1;
   };
 
-  const { projects, setProjects } = useContext(ProjectContext);
+  const { events, setEvents } = useContext(EventContext);
   const { auth } = useContext(Context);
+  const [eventsToShow, setEventsToShow] = useState([]);
 
   useEffect(() => {
-    if (projects.length === 0) {
-      fetch('http://localhost:8000/get-all-projects', {
+    if (events.length === 0) {
+      fetch('http://localhost:8000/get-all-events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -37,10 +38,27 @@ const Events = ({ project }) => {
             return res.json();
           }
         })
-        .then((data) => setProjects(data))
+        .then((data) => setEvents(data))
         .catch((err) => console.log(err));
     }
   }, [auth]);
+
+  useEffect(() => {
+    let arr = events.filter(
+      (ev) =>
+        ev.project.theme === event.project.theme ||
+        ev.project.name === event.project.name
+    );
+    if (arr.length === 1) {
+      arr = [...events];
+    }
+    arr = arr.filter((el) => el._id !== event._id);
+    arr = arr.map((el) => ({
+      ...el,
+      date: new Date(el.date),
+    }));
+    setEventsToShow(arr);
+  }, [events, event]);
 
   const settings = {
     dots: true,
@@ -58,27 +76,29 @@ const Events = ({ project }) => {
     <div className="project-events">
       <h1>ближайшие ивенты</h1>
       <Slider {...settings}>
-        {projects.map((pr, id) => (
-          <div className="event-item">
+        {eventsToShow.map((ev, id) => (
+          <div key={id} className="event-item">
             <div className="item-flex">
               <div>
-                <p>Одесса</p>
-                <p>Ул. Ришельевская, 25</p>
+                <p>{ev.city}</p>
+                <p>{ev.addr}</p>
               </div>
               <div>
-                <p>18 марта</p>
-                <p>19:00</p>
+                <p>{`${ev.date.getDay()} ${ev.date.toLocaleDateString('ru-RU', {
+                  month: 'long',
+                })}`}</p>
+                <p>{ev.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
               </div>
             </div>
             <img
-              src={`http://localhost:8000/image/${pr.imageUrl}`}
+              src={`http://localhost:8000/image/${ev.imageUrl}`}
               alt="rocket"
             />
-            <h4>{pr.name}</h4>
-            <p>{pr.descr}</p>
+            <h4>{ev.name}</h4>
+            <p>{ev.project.descr}</p>
             <div>
-              <p>Тема: {pr.theme}</p>
-              <Link to={'/project/' + pr.name}>
+              <p>Тема: {ev.project.theme}</p>
+              <Link to={'/project/' + ev.name}>
                 <img src={arrRight} alt="arrow-right" />
               </Link>
             </div>
