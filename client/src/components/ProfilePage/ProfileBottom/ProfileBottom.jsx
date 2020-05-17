@@ -1,17 +1,53 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import './ProfileBottom.scss';
+import arrRight from '../../../img/arrow-right.svg';
+import Slider from 'react-slick';
 
-const MyProjects = () => (
-  <div className="my-projects-block">Мои проекты</div>
+const Projects = ({id, pr}) => (
+  <div key={id} className="project-item">
+      <img
+        src={`http://localhost:8000/image/${pr.imageUrl}`}
+        alt="rocket"
+      />
+      <h4>{pr.name}</h4>
+      <p>{pr.descr}</p>
+      <div>
+        <p>Тема: {pr.theme}</p>
+        <Link to={'/project/' + pr.name}>
+          <img src={arrRight} alt="arrow-right" />
+        </Link>
+      </div>
+  </div>
 );
 
-const Subscriptions = () => (
-  <div className="subscriptions-block">Подписки</div>
-);
-
-const Events = () => (
-  <div className="events-block">Ивенты</div>
+const Events = ({id, el}) => (
+  <div key={id} className="event-item">
+    <div className="item-flex">
+      <div>
+        <p>{el.city}</p>
+        <p>{el.addr}</p>
+      </div>
+      <div>
+        <p>{`${el.date.getDay()} ${el.date.toLocaleDateString('ru-RU', {
+          month: 'long',
+        })}`}</p>
+        <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
+      </div>
+    </div>
+    <img
+      src={`http://localhost:8000/image/${el.imageUrl}`}
+      alt="rocket"
+    />
+    <h4>{el.name}</h4>
+    <div>
+      <p>Тема: {el.project.theme}</p>
+      <Link to={'/event/' + el.name}>
+        <img src={arrRight} alt="arrow-right" />
+      </Link>
+    </div>
+  </div>
 );
 
 const MY_PROJECTS =  'my_projects';
@@ -21,11 +57,11 @@ const EVENTS = 'events';
 const sections = {
   [MY_PROJECTS]: {
     tabName: 'Мои проекты',
-    component: MyProjects,
+    component: Projects,
   },
   [SUBSCRIPTIONS]: {
     tabName: 'Подписки',
-    component: Subscriptions,
+    component: Projects,
   },
   [EVENTS]: {
     tabName: 'Ивенты',
@@ -33,10 +69,28 @@ const sections = {
   },
 };
 
-const ProfileBottom = () => {
+const ProfileBottom = ({ myProjects, subscribes, events }) => {
+  
   const [activeSection, setActiveSection] = useState(SUBSCRIPTIONS);
 
-  const Component = sections[activeSection]['component'];
+  const viewportWidth = window.innerWidth;
+  const viewport = () => {
+    if (viewportWidth >= 1750) return 4;
+    if (viewportWidth > 900 && viewportWidth < 1750) return 3;
+    if (viewportWidth <= 900) return 1;
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: viewport(),
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 1000,
+    autoplaySpeed: 3000,
+    cssEase: 'linear',
+    arrows: false,
+  };
 
   return (
     <div className="profile-bottom">
@@ -53,7 +107,8 @@ const ProfileBottom = () => {
       </div>
 
       <div className="profile-sliders-block">
-        <Component />       
+        <Slider {...settings}>      
+        </Slider>
       </div>
     </div>
   );

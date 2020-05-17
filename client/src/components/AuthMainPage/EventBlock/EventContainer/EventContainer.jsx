@@ -5,7 +5,6 @@ import { Slider } from '../../../Slider';
 import './EventContainer.scss';
 import 'slick-carousel/slick/slick.scss';
 import 'slick-carousel/slick/slick-theme.scss';
-import rocket_img from '../../../../img/rocket.svg';
 import arrow_img from '../../../../img/arrow_main.svg';
 
 const EventContainer = ({ events }) => {
