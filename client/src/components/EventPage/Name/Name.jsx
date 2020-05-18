@@ -30,9 +30,11 @@ const Name = ({ event }) => {
         <h1>{event.name}</h1>
       </div>
       <div className="volunteer">
-        <button>
-          <h4>стать волонтером</h4>
-        </button>
+        <a rel="noopener noreferrer" target="_blank" href={event.regUrl}>
+          <button>
+            <h4>стать волонтером</h4>
+          </button>
+        </a>
       </div>
     </div>
   );

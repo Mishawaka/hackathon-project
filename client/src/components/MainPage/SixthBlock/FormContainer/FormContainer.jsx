@@ -17,7 +17,7 @@ const FormContainer = ({ email, setEmail, setModal }) => (
           value={email}
           type="email"
           id="email"
-          className="form-control"
+          className="form-control register-sixth"
         />
         <label
           htmlFor="email"

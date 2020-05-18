@@ -26,9 +26,11 @@ const Items = ({ events, date, changeCity }) => {
 
   useEffect(() => {
     if (date !== '') {
-      const arr = event.filter(
-        (el) => el.date.toLocaleDateString() === date.toLocaleDateString()
-      );
+      console.log(date.toLocaleDateString());
+      const arr = events.filter((el) => {
+        console.log(el.date.toLocaleDateString());
+        return el.date.toLocaleDateString() == date.toLocaleDateString();
+      });
       setEvent(arr);
     }
   }, [date, filterChecks]);

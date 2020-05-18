@@ -3,26 +3,23 @@ import { Link } from 'react-router-dom';
 
 import './ProfileBottom.scss';
 import arrRight from '../../../img/arrow-right.svg';
-import Slider from 'react-slick';
+import { Slider } from '../../Slider';
 
-const Projects = ({id, pr}) => (
+const Projects = ({ id, pr }) => (
   <div key={id} className="project-item">
-      <img
-        src={`http://localhost:8000/image/${pr.imageUrl}`}
-        alt="rocket"
-      />
-      <h4>{pr.name}</h4>
-      <p>{pr.descr}</p>
-      <div>
-        <p>Тема: {pr.theme}</p>
-        <Link to={'/project/' + pr.name}>
-          <img src={arrRight} alt="arrow-right" />
-        </Link>
-      </div>
+    <img src={`http://localhost:8000/image/${pr.imageUrl}`} alt="rocket" />
+    <h4>{pr.name}</h4>
+    <p>{pr.descr}</p>
+    <div>
+      <p>Тема: {pr.theme}</p>
+      <Link to={'/project/' + pr.name}>
+        <img src={arrRight} alt="arrow-right" />
+      </Link>
+    </div>
   </div>
 );
 
-const Events = ({id, el}) => (
+const Events = ({ id, el }) => (
   <div key={id} className="event-item">
     <div className="item-flex">
       <div>
@@ -36,10 +33,7 @@ const Events = ({id, el}) => (
         <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
       </div>
     </div>
-    <img
-      src={`http://localhost:8000/image/${el.imageUrl}`}
-      alt="rocket"
-    />
+    <img src={`http://localhost:8000/image/${el.imageUrl}`} alt="rocket" />
     <h4>{el.name}</h4>
     <div>
       <p>Тема: {el.project.theme}</p>
@@ -50,7 +44,7 @@ const Events = ({id, el}) => (
   </div>
 );
 
-const MY_PROJECTS =  'my_projects';
+const MY_PROJECTS = 'my_projects';
 const SUBSCRIPTIONS = 'subscriptions';
 const EVENTS = 'events';
 
@@ -70,8 +64,7 @@ const sections = {
 };
 
 const ProfileBottom = ({ myProjects, subscribes, events }) => {
-  
-  const [activeSection, setActiveSection] = useState(SUBSCRIPTIONS);
+  const [activeSection, setActiveSection] = useState(MY_PROJECTS);
 
   const viewportWidth = window.innerWidth;
   const viewport = () => {
@@ -92,26 +85,42 @@ const ProfileBottom = ({ myProjects, subscribes, events }) => {
     arrows: false,
   };
 
+  const toRender = () => {
+    if (activeSection === MY_PROJECTS) {
+      return myProjects.map((pr, id) => <Projects id={id} pr={pr} />);
+    } else if (activeSection === SUBSCRIPTIONS) {
+      return subscribes.map((pr, id) => <Projects id={id} pr={pr} />);
+    } else {
+      return events.map((el, id) => <Events id={id} el={el} />);
+    }
+  };
+
   return (
     <div className="profile-bottom">
-      <div className="profile-btn-block">
-        {Object.keys(sections).map(sectionName => {
-          const className = sectionName === activeSection ? 'active' : '';
-          
-          return (
-            <button className={className} onClick={() => setActiveSection(sectionName)}>
-              {sections[sectionName]['tabName']}
-            </button>
-          );
-        })}
-      </div>
+      {events.length > 0 && (
+        <div>
+          <div className="profile-btn-block">
+            {Object.keys(sections).map((sectionName) => {
+              const className = sectionName === activeSection ? 'active' : '';
 
-      <div className="profile-sliders-block">
-        <Slider {...settings}>      
-        </Slider>
-      </div>
+              return (
+                <button
+                  className={className}
+                  onClick={() => setActiveSection(sectionName)}
+                >
+                  {sections[sectionName]['tabName']}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="profile-sliders-block">
+            <Slider {...settings}>{toRender()}</Slider>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default ProfileBottom;

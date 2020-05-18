@@ -18,7 +18,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
   const [showPass, setShowPass] = useState(false);
   const [blocked, setBlocked] = useState(true);
   const { email, setEmail } = useContext(RegisterContext);
-  const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
+  const { croppedImageUrl, setCroppedImageUrl, file, setFile } = useContext(
     ImageContext
   );
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -83,6 +83,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
     })
       .then((res) => res.json())
       .then((data) => {
+        setFile({});
         setModal(false);
         sendImage(data.id, (result) => {
           setTimeout(() => {
@@ -124,6 +125,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
           value={email}
           type="email"
           id="email"
+          onBlur={check}
           className="form-control"
         />
         <label
@@ -143,6 +145,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
           onChange={(e) => setName(e.target.value)}
           value={name}
           id="name"
+          onBlur={check}
           className="form-control"
         />
         <label
@@ -161,6 +164,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
           onChange={(e) => setSurname(e.target.value)}
           value={surname}
           type="text"
+          onBlur={check}
           id="surname"
           className="form-control"
         />
@@ -180,6 +184,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
           onChange={(e) => setPhone(e.target.value)}
           value={phone}
           type="text"
+          onBlur={check}
           id="phone"
           className="form-control"
         />
@@ -200,6 +205,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
           value={password}
           type={showPass ? 'text' : 'password'}
           id="password"
+          onBlur={check}
           className="form-control"
         />
         <img

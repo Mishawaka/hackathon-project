@@ -134,7 +134,7 @@ const Header = () => {
             src={auth_img}
             alt="auth"
           />
-          <Link to={`/profile/${localStorage.getItem('name')}`}>
+          <Link to="/profile">
             <img
               style={{ display: auth ? 'block' : 'none' }}
               src={

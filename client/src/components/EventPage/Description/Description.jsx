@@ -12,8 +12,8 @@ const Description = ({ event }) => {
           <p>{event.project.descr}</p>
         </div>
         <div className="volunteer-invite">
-          <a href={event.regUrl}>
-            <button>
+          <a rel="noopener noreferrer" target="_blank" href={event.regUrl}>
+            <button className="gradient-btn">
               <h4>Стать волонтером</h4>
             </button>
           </a>

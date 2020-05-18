@@ -35,8 +35,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      & > button {
+      & > a > button {
         background: $gradient;
+        cursor: pointer;
         box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
         border-radius: 4px;
         display: flex;
@@ -44,6 +45,31 @@
         align-items: center;
         padding: 1.2rem 1.8rem;
         border: none;
+        &:hover {
+          box-shadow: 0px 4px 16px rgba(249, 71, 70, 0.25);
+          background-image: linear-gradient(
+            to right,
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255),
+            rgb(255, 255, 255)
+          );
+          border: 1px solid #fd7a42;
+          & > h4,
+          & > a > h4 {
+            background: linear-gradient(90deg, #f84646 0%, #fd7a42 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
+        }
         & > h4 {
           background: white;
           -webkit-background-clip: text;

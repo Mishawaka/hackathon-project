@@ -83,6 +83,7 @@ const ProjectPage = () => {
             data.subscribers.includes(localStorage.getItem('email'))
           );
           setProject(data);
+          window.location.reload();
         })
         .catch((err) => console.log(err));
     }

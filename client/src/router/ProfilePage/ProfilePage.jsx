@@ -93,9 +93,15 @@ const ProfilePage = () => {
           }
         })
         .then((data) => {
-          let sbs = subscribes.map((el) => el.name);
-          let arr = data.filter((el) => sbs.includes(el.project.name));
-          return arr.length !== 0 ? setEvents(arr) : setEvents(data);
+          let arr = data.map((el) => ({
+            ...el,
+            date: new Date(el.date),
+          }));
+          console.log(data);
+          // let arr1 = arr.filter(
+          //   (el) => el.project.coord.email === localStorage.getItem('email')
+          // );
+          return setEvents(arr);
         })
         .catch((err) => console.log(err));
     }

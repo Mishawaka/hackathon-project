@@ -65,7 +65,7 @@ const App = () => (
                   exact
                 />
                 <RouteWrapper
-                  path="/profile/:name"
+                  path="/profile"
                   component={ProfilePage}
                   layout={withLayout}
                   exact
