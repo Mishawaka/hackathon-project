@@ -5,7 +5,6 @@ import './Description.scss';
 
 const Description = ({ project, subscribe, subscribed }) => {
   const creator = project.coord.email === localStorage.getItem('email');
-  console.log(subscribed);
   return (
     <div className="project-description">
       <div className="flex">

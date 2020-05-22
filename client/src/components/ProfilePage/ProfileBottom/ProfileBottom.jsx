@@ -7,7 +7,10 @@ import { Slider } from '../../Slider';
 
 const Projects = ({ id, pr }) => (
   <div key={id} className="project-item">
-    <img src={`http://localhost:8000/image/${pr.imageUrl}`} alt="rocket" />
+    <img
+      src={`https://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
+      alt="rocket"
+    />
     <h4>{pr.name}</h4>
     <p>{pr.descr}</p>
     <div>
@@ -33,7 +36,10 @@ const Events = ({ id, el }) => (
         <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
       </div>
     </div>
-    <img src={`http://localhost:8000/image/${el.imageUrl}`} alt="rocket" />
+    <img
+      src={`https://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
+      alt="rocket"
+    />
     <h4>{el.name}</h4>
     <div>
       <p>Тема: {el.project.theme}</p>

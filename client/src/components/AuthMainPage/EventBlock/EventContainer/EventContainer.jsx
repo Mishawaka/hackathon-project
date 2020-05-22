@@ -45,7 +45,10 @@ const EventContainer = ({ events }) => {
               </div>
             </div>
             <div className="event-container-center">
-              <img src={`http://localhost:8000/image/${ev.imageUrl}`} alt="" />
+              <img
+                src={`https://${process.env.REACT_APP_ROOT}/image/${ev.imageUrl}`}
+                alt=""
+              />
               <h4>{ev.name}</h4>
               <h4>{ev.descr}</h4>
             </div>

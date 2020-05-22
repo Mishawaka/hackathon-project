@@ -6,7 +6,10 @@ import EventContainer from './EventContainer/EventContainer';
 import { Link } from 'react-router-dom';
 
 const EventBlock = ({ events }) => (
-  <div className="event-block">
+  <div
+    style={{ display: events.length > 0 ? 'block' : 'none' }}
+    className="event-block"
+  >
     <div className="event-line-top" />
     <div className="title-block">
       <h2>Ближайшие мероприятия</h2>

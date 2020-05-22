@@ -1,0 +1,35 @@
+{
+  "name": "volunteers-website",
+  "version": "1.0.0",
+  "description": "Volunteers diploma for Ann",
+  "private": true,
+  "scripts": {
+    "start:client": "cd client && react-scripts start",
+    "start:server": "cd server && nodemon server.js",
+    "build:client": "cd client && react-scripts build",
+    "test:client": "cd client && react-scripts test",
+    "eject:client": "cd client && react-scripts eject"
+  },
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Mishawaka/volunteers-website.git"
+  },
+  "author": "Misha & Max",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mishawaka/volunteers-website/issues"
+  },
+  "homepage": "https://github.com/Mishawaka/volunteers-website#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}

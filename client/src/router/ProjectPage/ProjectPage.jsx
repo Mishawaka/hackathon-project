@@ -17,7 +17,7 @@ const ProjectPage = () => {
   const { auth } = useContext(Context);
   const { events, setEvents } = useContext(EventContext);
   useEffect(() => {
-    fetch('http://localhost:8000/get-project', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/get-project`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
@@ -37,14 +37,13 @@ const ProjectPage = () => {
         setSubscribed(
           data.project.subscribers.includes(localStorage.getItem('email'))
         );
-        console.log(data);
       })
       .catch((err) => console.log(err));
   }, [auth, name]);
 
   useEffect(() => {
     if (events.length === 0) {
-      fetch('http://localhost:8000/get-all-events', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
@@ -68,7 +67,7 @@ const ProjectPage = () => {
 
   const subscribe = () => {
     if (project.coord.email !== localStorage.getItem('email')) {
-      fetch('http://localhost:8000/subscribe', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/subscribe`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -78,7 +77,6 @@ const ProjectPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setSubscribed(
             data.subscribers.includes(localStorage.getItem('email'))
           );

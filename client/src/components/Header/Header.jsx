@@ -23,8 +23,7 @@ const Header = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    console.log('useEffect');
-    fetch('http://localhost:8000/checkToken', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/checkToken`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -139,7 +138,9 @@ const Header = () => {
               style={{ display: auth ? 'block' : 'none' }}
               src={
                 localStorage.getItem('img')
-                  ? `http://localhost:8000/image/${localStorage.getItem('img')}`
+                  ? `https://${
+                      process.env.REACT_APP_ROOT
+                    }/image/${localStorage.getItem('img')}`
                   : user_img
               }
               alt="user"

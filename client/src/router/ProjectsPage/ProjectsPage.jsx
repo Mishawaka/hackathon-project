@@ -21,8 +21,9 @@ const ProjectsPage = ({ history }) => {
 
   useEffect(() => {
     if (projects.length === 0) {
-      fetch('http://localhost:8000/get-all-projects', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
         method: 'POST',
+        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
@@ -43,7 +44,7 @@ const ProjectsPage = ({ history }) => {
 
   useEffect(() => {
     if (projects.length !== 0) {
-      fetch('http://localhost:8000/get-last-events', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-last-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -63,24 +64,26 @@ const ProjectsPage = ({ history }) => {
             projectId: el.project._id,
             createdAt: new Date(el.createdAt),
           }));
-          let fullProjects = projects.map((el) => {
-            let ids = arr.map((elem) => elem.projectId);
-            for (let i in arr) {
-              if (!ids.includes(el._id)) {
-                return {
-                  ...el,
-                  lastEvent: new Date(0),
-                };
+          if (arr.length > 0) {
+            let fullProjects = projects.map((el) => {
+              let ids = arr.map((elem) => elem.projectId);
+              for (let i in arr) {
+                if (!ids.includes(el._id)) {
+                  return {
+                    ...el,
+                    lastEvent: new Date(0),
+                  };
+                }
+                if (arr[i].projectId == el._id) {
+                  return {
+                    ...el,
+                    lastEvent: arr[i].createdAt,
+                  };
+                }
               }
-              if (arr[i].projectId == el._id) {
-                return {
-                  ...el,
-                  lastEvent: arr[i].createdAt,
-                };
-              }
-            }
-          });
-          setProjects(fullProjects);
+            });
+            setProjects(fullProjects);
+          }
         })
         .catch((err) => console.log(err));
     }

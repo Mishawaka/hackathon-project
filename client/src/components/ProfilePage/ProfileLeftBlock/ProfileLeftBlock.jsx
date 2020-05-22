@@ -6,7 +6,9 @@ import plus_img from '../../../img/plus.svg';
 const ProfileLeftBlock = ({ setModal }) => (
   <div className="profile-block-left">
     <img
-      src={`http://localhost:8000/image/${localStorage.getItem('img')}`}
+      src={`https://${process.env.REACT_APP_ROOT}/image/${localStorage.getItem(
+        'img'
+      )}`}
       alt=""
     />
     <div onClick={() => setModal(true)} className="plus-block">

@@ -31,7 +31,7 @@ const EventsPage = () => {
 
   useEffect(() => {
     if (events.length === 0) {
-      fetch('http://localhost:8000/get-all-events', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -59,7 +59,7 @@ const EventsPage = () => {
 
   useEffect(() => {
     if (projects.length === 0) {
-      fetch('http://localhost:8000/get-all-projects', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),

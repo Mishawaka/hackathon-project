@@ -5,15 +5,27 @@ import arrRight from '../../../img/arrow-right.svg';
 import './Items.scss';
 
 const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
-  const [proj, setProj] = useState([]);
+  const [proj, setProj] = useState(projects);
 
   useEffect(() => {
+    setProj(projects);
     if (projects.length !== 0) {
-      setProj([...projects]);
-      let arr = [...proj];
-      if (sort === 'update') {
-        arr = arr.sort((a, b) => b.lastEvent - a.lastEvent);
-        setProj(arr);
+      let arr = [...projects];
+      if (arr.length > 1) {
+        if (sort === 'update') {
+          arr = arr.sort((a, b) =>
+            b.lastEvent && a.lastEvent ? b.lastEvent - a.lastEvent : 1
+          );
+          setProj(arr);
+        }
+        if (changeFind.length !== 0) {
+          const reg = new RegExp(changeFind);
+          arr = arr.filter(
+            ({ name, descr, org }) =>
+              reg.test(name) || reg.test(org) || reg.test(descr)
+          );
+          setProj(arr);
+        }
       }
       if (changeCity.length !== 0) {
         arr = projects.filter((el) => el.city == changeCity);
@@ -21,14 +33,6 @@ const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
       }
       if (filterChecks.length !== 0) {
         arr = arr.filter((el) => filterChecks.includes(el.theme.toLowerCase()));
-        setProj(arr);
-      }
-      if (changeFind.length !== 0) {
-        const reg = new RegExp(changeFind);
-        arr = arr.filter(
-          ({ name, descr, org }) =>
-            reg.test(name) || reg.test(org) || reg.test(descr)
-        );
         setProj(arr);
       }
     }
@@ -40,7 +44,7 @@ const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
         proj.map((pr, id) => (
           <div key={id} className="project-item">
             <img
-              src={`http://localhost:8000/image/${pr.imageUrl}`}
+              src={`https://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
               alt="rocket"
             />
             <h4>{pr.name}</h4>

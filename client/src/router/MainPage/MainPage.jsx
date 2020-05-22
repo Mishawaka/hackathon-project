@@ -25,14 +25,14 @@ const MainPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem('jwt') !== null) {
-      fetch('http://localhost:8000/checkToken', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/checkToken`, {
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
       })
         .then((res) => {
           if (res.status === 200) {
-            fetch('http://localhost:8000/get-all-projects', {
+            fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -40,10 +40,12 @@ const MainPage = () => {
               .then((res) => res.json())
               .then((data) => {
                 setProjects(data);
-                fetch('http://localhost:8000/get-all-events', {
+                fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+                  body: JSON.stringify({
+                    token: localStorage.getItem('jwt'),
+                  }),
                 })
                   .then((res) => res.json())
                   .then((data) => {

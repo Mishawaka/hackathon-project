@@ -25,7 +25,10 @@ const Name = ({ event }) => {
       </div>
       <div className="name">
         <div className="image">
-          <img src={`http://localhost:8000/image/${event.imageUrl}`} alt="" />
+          <img
+            src={`https://${process.env.REACT_APP_ROOT}/image/${event.imageUrl}`}
+            alt=""
+          />
         </div>
         <h1>{event.name}</h1>
       </div>

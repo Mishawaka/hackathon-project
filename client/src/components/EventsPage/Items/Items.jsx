@@ -26,9 +26,7 @@ const Items = ({ events, date, changeCity }) => {
 
   useEffect(() => {
     if (date !== '') {
-      console.log(date.toLocaleDateString());
       const arr = events.filter((el) => {
-        console.log(el.date.toLocaleDateString());
         return el.date.toLocaleDateString() == date.toLocaleDateString();
       });
       setEvent(arr);
@@ -53,7 +51,7 @@ const Items = ({ events, date, changeCity }) => {
               </div>
             </div>
             <img
-              src={`http://localhost:8000/image/${el.imageUrl}`}
+              src={`https://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
               alt="rocket"
             />
             <h4>{el.name}</h4>

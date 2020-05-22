@@ -23,7 +23,7 @@ const Events = ({ event }) => {
 
   useEffect(() => {
     if (events.length === 0) {
-      fetch('http://localhost:8000/get-all-events', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -91,7 +91,7 @@ const Events = ({ event }) => {
               </div>
             </div>
             <img
-              src={`http://localhost:8000/image/${ev.imageUrl}`}
+              src={`https://${process.env.REACT_APP_ROOT}/image/${ev.imageUrl}`}
               alt="rocket"
             />
             <h4>{ev.name}</h4>

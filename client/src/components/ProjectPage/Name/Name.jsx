@@ -10,7 +10,10 @@ const Name = ({ project, subscribe, subscribed }) => {
       <h3>Тема: {project.theme}</h3>
       <div className="name">
         <div className="image">
-          <img src={`http://localhost:8000/image/${project.imageUrl}`} alt="" />
+          <img
+            src={`https://${process.env.REACT_APP_ROOT}/image/${project.imageUrl}`}
+            alt=""
+          />
         </div>
         <h1>{project.name}</h1>
       </div>

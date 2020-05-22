@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const ref = createRef();
 
   useEffect(() => {
-    fetch('http://localhost:8000/get-user-info', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/get-user-info`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -41,7 +41,7 @@ const ProfilePage = () => {
   }, [auth]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/get-all-projects', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -77,7 +77,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (subscribes.length > 0) {
-      fetch('http://localhost:8000/get-all-events', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -97,7 +97,6 @@ const ProfilePage = () => {
             ...el,
             date: new Date(el.date),
           }));
-          console.log(data);
           // let arr1 = arr.filter(
           //   (el) => el.project.coord.email === localStorage.getItem('email')
           // );

@@ -9,7 +9,7 @@ const ProjectImages = ({ modal, setModal, customRef, setUser }) => {
 
   const nextImage = (file) => {
     blobToBase64(file, (base64) => {
-      fetch('http://localhost:8000/set-user-image', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/set-user-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -19,7 +19,6 @@ const ProjectImages = ({ modal, setModal, customRef, setUser }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.ok) {
             setFile(false);
             setUser(data.user);

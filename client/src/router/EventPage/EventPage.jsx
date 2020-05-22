@@ -14,7 +14,7 @@ const EventPage = () => {
   const [event, setEvent] = useState();
   const { auth } = useContext(Context);
   useEffect(() => {
-    fetch('http://localhost:8000/get-event', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/get-event`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),

@@ -87,7 +87,7 @@ const EventForm = ({ modal, setModal }) => {
         name: file.name,
         eventId: id,
       });
-      fetch('http://localhost:8000/save-event-image', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/save-event-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
@@ -101,7 +101,7 @@ const EventForm = ({ modal, setModal }) => {
   const createEvent = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      fetch('http://localhost:8000/save-event', {
+      fetch(`https://${process.env.REACT_APP_ROOT}/save-event`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, token: localStorage.getItem('jwt') }),

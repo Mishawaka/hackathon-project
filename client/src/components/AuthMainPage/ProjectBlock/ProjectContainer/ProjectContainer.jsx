@@ -33,7 +33,7 @@ const ProjectContainer = ({ projects }) => {
         {projects.map((pr, id) => (
           <div key={id} className="project-b">
             <img
-              src={`http://localhost:8000/image/${pr.imageUrl}`}
+              src={`https://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
               alt="rocket"
             />
             <h4>{pr.name}</h4>

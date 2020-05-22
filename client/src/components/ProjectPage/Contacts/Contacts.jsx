@@ -11,7 +11,7 @@ const Contacts = ({ project }) => (
         <div>
           <div>
             <img
-              src={`http://localhost:8000/image/${project.coord.imageUrl}`}
+              src={`https://${process.env.REACT_APP_ROOT}/image/${project.coord.imageUrl}`}
               alt=""
             />
           </div>

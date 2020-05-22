@@ -41,7 +41,10 @@ const Events = ({ project, events }) => {
   };
 
   return (
-    <div className="project-events">
+    <div
+      style={{ display: events.length > 0 ? 'block' : 'none' }}
+      className="project-events"
+    >
       <h1>ближайшие ивенты</h1>
       {nearest.length > 0 && (
         <Slider {...settings}>
@@ -63,7 +66,7 @@ const Events = ({ project, events }) => {
                 </div>
               </div>
               <img
-                src={`http://localhost:8000/image/${ev.imageUrl}`}
+                src={`https://${process.env.REACT_APP_ROOT}/image/${ev.imageUrl}`}
                 alt="rocket"
               />
               <h4>{ev.name}</h4>

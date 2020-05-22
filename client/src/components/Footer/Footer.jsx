@@ -22,7 +22,7 @@ const Footer = () => {
   } = useContext(Context);
 
   useEffect(() => {
-    fetch('http://localhost:8000/checkToken', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/checkToken`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),

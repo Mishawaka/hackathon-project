@@ -24,7 +24,10 @@ const Carousel = ({ images }) => {
         <Slider {...settings}>
           {images.map((pr, id) => (
             <div key={id} className="carousel-img">
-              <img src={`http://localhost:8000/image/${pr}`} alt="rocket" />
+              <img
+                src={`https://${process.env.REACT_APP_ROOT}/image/${pr}`}
+                alt="rocket"
+              />
             </div>
           ))}
         </Slider>

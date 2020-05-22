@@ -12,8 +12,7 @@ const ProfileRightBlock = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(oldPass.length > 7 && newPass.length > 7);
-    fetch('http://localhost:8000/set-password', {
+    fetch('https://${process.env.REACT_APP_ROOT}/set-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -24,7 +23,6 @@ const ProfileRightBlock = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         window.location.reload();
       })
       .catch((err) => console.log(err));

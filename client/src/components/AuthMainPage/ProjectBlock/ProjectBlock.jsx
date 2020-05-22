@@ -6,7 +6,10 @@ import './ProjectBlock.scss';
 import line_text from '../../../img/line3.svg';
 
 const ProjectBlock = ({ projects }) => (
-  <div className="project-block">
+  <div
+    style={{ display: projects.length > 0 ? 'block' : 'none' }}
+    className="project-block"
+  >
     <div className="project-line-top" />
     <div className="title-block">
       <h2>Проекты в вашем городе</h2>

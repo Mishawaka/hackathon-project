@@ -13,6 +13,8 @@ const Event = require('./models/Event');
 require('./config');
 const withAuth = require('./middleware');
 
+const PORT = process.env.PORT || 8000;
+
 const { DB_HOST, DB_USER, DB_PASS, DB_DATABASE, SECRET_KEY } = process.env;
 
 mongoose.connect(
@@ -39,12 +41,6 @@ app.get('/image/:type/:folder/:file', (req, res) => {
   } catch {
     res.json({ found: false });
   }
-  // console.log(req.params);
-  // try {
-  //   res.sendFile(path.join(__dirname, 'uploads', folder, file));
-  // } catch {
-  //   res.json({ found: false });
-  // }
 });
 
 app.post('/checkToken', withAuth, (req, res) => {
@@ -439,4 +435,4 @@ app.post('/api/authenticate', (req, res) => {
   });
 });
 
-app.listen(8000, () => console.log('Listening to 8000 port'));
+app.listen(PORT, () => console.log('Listening to 8000 port'));
