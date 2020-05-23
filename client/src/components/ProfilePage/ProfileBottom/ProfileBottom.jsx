@@ -70,7 +70,7 @@ const sections = {
 };
 
 const ProfileBottom = ({ myProjects, subscribes, events }) => {
-  const [activeSection, setActiveSection] = useState(MY_PROJECTS);
+  const [activeSection, setActiveSection] = useState(SUBSCRIPTIONS);
 
   const viewportWidth = window.innerWidth;
   const viewport = () => {
@@ -103,7 +103,9 @@ const ProfileBottom = ({ myProjects, subscribes, events }) => {
 
   return (
     <div className="profile-bottom">
-      {events.length > 0 && (
+      {(events.length > 0 ||
+        myProjects.length > 0 ||
+        subscribes.length > 0) && (
         <div>
           <div className="profile-btn-block">
             {Object.keys(sections).map((sectionName) => {

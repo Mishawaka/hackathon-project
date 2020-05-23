@@ -66,24 +66,27 @@ const ProjectPage = () => {
   }, [auth, name]);
 
   const subscribe = () => {
-    if (project.coord.email !== localStorage.getItem('email')) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          token: localStorage.getItem('jwt'),
-          name: project.name,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setSubscribed(
-            data.subscribers.includes(localStorage.getItem('email'))
-          );
-          setProject(data);
-          window.location.reload();
+    let email = localStorage.getItem('email');
+    if (project.coord.email !== email) {
+      if (!project.subscribers.includes(email)) {
+        fetch(`https://${process.env.REACT_APP_ROOT}/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: localStorage.getItem('jwt'),
+            name: project.name,
+          }),
         })
-        .catch((err) => console.log(err));
+          .then((res) => res.json())
+          .then((data) => {
+            setSubscribed(
+              data.subscribers.includes(localStorage.getItem('email'))
+            );
+            setProject(data);
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      }
     }
   };
 
