@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { withAlert } from 'react-alert';
 import eye from '../../../img/eye.svg';
 import activeEye from '../../../img/active-eye.svg';
 
 import './ProfileRightBlock.scss';
 
-const ProfileRightBlock = () => {
+const ProfileRightBlock = ({ alert }) => {
   const [oldPass, setOldPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [showOld, setShowOld] = useState(false);
@@ -12,7 +13,7 @@ const ProfileRightBlock = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    fetch('https://${process.env.REACT_APP_ROOT}/set-password', {
+    fetch(`https://${process.env.REACT_APP_ROOT}/set-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -23,7 +24,13 @@ const ProfileRightBlock = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        window.location.reload();
+        if (!data.correct) {
+          alert.show('Старый пароль указан неверно');
+        } else {
+          setOldPass('');
+          setNewPass('');
+          alert.show('Пароль успешно изменен');
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -90,4 +97,4 @@ const ProfileRightBlock = () => {
   );
 };
 
-export default ProfileRightBlock;
+export default withAlert()(ProfileRightBlock);
