@@ -127,12 +127,13 @@ const Header = () => {
           <h4>Присоединиться</h4>
         </button>
         <div className={auth ? 'user-img' : ''}>
-          <img
+          <h4
             style={{ display: auth ? 'none' : 'block' }}
+            className="login-button"
             onClick={() => setAuthModal(true)}
-            src={auth_img}
-            alt="auth"
-          />
+          >
+            войти
+          </h4>
           <Link to="/profile">
             <img
               style={{ display: auth ? 'block' : 'none' }}

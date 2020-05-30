@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { withAlert } from 'react-alert';
 
 import FormPage from '../FormPage/FormPage';
 import eye from '../../../img/eye.svg';
 import activeEye from '../../../img/active-eye.svg';
 import './AuthForm.scss';
 
-const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
+const AuthForm = ({ modal, setModal, setRegisterModal, setAuth, alert }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -50,19 +51,17 @@ const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
       method: 'POST',
       body: JSON.stringify(data),
     })
-      .then((res) => {
-        if (res.status === 401) {
-          return 0;
-        } else if (res.status === 200) {
-          return res.json();
-        }
-      })
+      .then((res) => res.json())
       .then((data) => {
-        localStorage.setItem('jwt', data.jwt);
-        localStorage.setItem('email', data.email);
-        localStorage.setItem('img', data.img);
-        setAuth(true);
-        setModal(false);
+        if (data.error) {
+          alert.show('Неправильные почта или пароль');
+        } else {
+          localStorage.setItem('jwt', data.jwt);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('img', data.img);
+          setAuth(true);
+          setModal(false);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -146,4 +145,4 @@ const AuthForm = ({ modal, setModal, setRegisterModal, setAuth }) => {
   );
 };
 
-export default AuthForm;
+export default withAlert()(AuthForm);

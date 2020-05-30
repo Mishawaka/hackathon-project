@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Modal } from 'react-responsive-modal';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../contexts/Context';
 import { EventContext } from '../../contexts/EventsContext';
@@ -8,13 +9,15 @@ import Description from '../../components/ProjectPage/Description/Description';
 import Contacts from '../../components/ProjectPage/Contacts/Contacts';
 import Events from '../../components/ProjectPage/Events/Events';
 
+import EventForm from '../../components/forms/EventForm/EventForm';
+
 import './ProjectPage.scss';
 
 const ProjectPage = () => {
   const { name } = useParams();
   const [project, setProject] = useState();
   const [subscribed, setSubscribed] = useState();
-  const { auth } = useContext(Context);
+  const { auth, setEventModal, eventModal } = useContext(Context);
   const { events, setEvents } = useContext(EventContext);
   useEffect(() => {
     fetch(`https://${process.env.REACT_APP_ROOT}/get-project`, {
@@ -92,6 +95,18 @@ const ProjectPage = () => {
 
   return (
     <div>
+      <Modal
+        classNames={{ modal: 'modal-class' }}
+        open={eventModal}
+        onClose={() => setEventModal(false)}
+        center
+      >
+        <EventForm
+          curProject={project}
+          modal={eventModal}
+          setModal={setEventModal}
+        />
+      </Modal>
       {project && project.coord && (
         <div className="project-page animated fadeIn slower">
           <Name
@@ -101,6 +116,7 @@ const ProjectPage = () => {
           />
           <Description
             subscribed={subscribed}
+            setModal={setEventModal}
             subscribe={subscribe}
             project={project}
           />

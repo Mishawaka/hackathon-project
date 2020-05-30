@@ -30,7 +30,7 @@ const Events = ({ id, el }) => (
         <p>{el.addr}</p>
       </div>
       <div>
-        <p>{`${el.date.getDay()} ${el.date.toLocaleDateString('ru-RU', {
+        <p>{`${el.date.getDate()} ${el.date.toLocaleDateString('ru-RU', {
           month: 'long',
         })}`}</p>
         <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>

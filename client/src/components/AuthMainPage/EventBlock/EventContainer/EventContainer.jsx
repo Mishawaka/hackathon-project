@@ -38,9 +38,12 @@ const EventContainer = ({ events }) => {
                 <p>{ev.addr}</p>
               </div>
               <div>
-                <p>{`${ev.date.getDay()} ${ev.date.toLocaleDateString('ru-RU', {
-                  month: 'long',
-                })}`}</p>
+                <p>{`${ev.date.getDate()} ${ev.date.toLocaleDateString(
+                  'ru-RU',
+                  {
+                    month: 'long',
+                  }
+                )}`}</p>
                 <p>{ev.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
               </div>
             </div>

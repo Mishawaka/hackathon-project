@@ -9,25 +9,14 @@ import './EventsPage.scss';
 import { ProjectContext } from '../../contexts/ProjectsContext';
 
 const EventsPage = () => {
-  const { events, setEvents, date } = useContext(EventContext);
-  const { auth } = useContext(Context);
+  const { events, setEvents } = useContext(EventContext);
+  const { auth, cities, themes } = useContext(Context);
   const { projects, setProjects } = useContext(ProjectContext);
 
   const checks = events.map((el) => el.project.theme);
   const [changeCity, setChangeCity] = useState('');
-
-  const cities = ['Одесса', 'Киев', 'Львов', 'Харьков', 'Днепр'];
-
-  const themes = [
-    'помощь пожилым людям',
-    'помощь сиротам',
-    'помощь многодетным семьям',
-    'помощь животным',
-    'эко инициативы',
-    'студенческие инициативы',
-    'облагораживание города',
-    'волонтерим и путешествуем',
-  ];
+  const [date, setDate] = useState('');
+  const [filterChecks, setFilterChecks] = useState([]);
 
   useEffect(() => {
     if (events.length === 0) {
@@ -91,8 +80,17 @@ const EventsPage = () => {
           checks={checks}
           cities={cities}
           themes={themes}
+          date={date}
+          setDate={setDate}
+          filterChecks={filterChecks}
+          setFilterChecks={setFilterChecks}
         />
-        <Items changeCity={changeCity} events={events} date={date} />
+        <Items
+          changeCity={changeCity}
+          filterChecks={filterChecks}
+          events={events}
+          date={date}
+        />
       </div>
     </div>
   );

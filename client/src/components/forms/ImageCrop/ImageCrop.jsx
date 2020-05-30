@@ -4,7 +4,7 @@ import randomStr from 'randomstring';
 import 'react-image-crop/dist/ReactCrop.css';
 import { ImageContext } from '../../../contexts/ImageContext';
 
-const ImageCrop = ({ clickRef, nextImage, index, aspect, height }) => {
+const ImageCrop = ({ clickRef, nextImage, index, aspect, height, logo }) => {
   const {
     src,
     setSrc,
@@ -102,6 +102,7 @@ const ImageCrop = ({ clickRef, nextImage, index, aspect, height }) => {
 
   return (
     <div className="App">
+      <h4 className="image-crop-h4">Загрузите {logo ? 'логотип' : 'фото'}</h4>
       <div>
         <input
           ref={clickRef}

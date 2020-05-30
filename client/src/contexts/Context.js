@@ -9,6 +9,17 @@ export const Provider = ({ children }) => {
   const [eventModal, setEventModal] = useState(false);
   const [imagesModal, setImagesModal] = useState(false);
   const [auth, setAuth] = useState(false);
+  const themes = [
+    'помощь пожилым людям',
+    'помощь сиротам',
+    'помощь многодетным семьям',
+    'помощь животным',
+    'эко инициативы',
+    'студенческие инициативы',
+    'облагораживание города',
+    'волонтерим и путешествуем',
+  ];
+  const cities = ['Одесса', 'Киев', 'Львов', 'Харьков', 'Днепр'];
   return (
     <Context.Provider
       value={{
@@ -24,6 +35,8 @@ export const Provider = ({ children }) => {
         setEventModal,
         auth,
         setAuth,
+        themes,
+        cities,
       }}
     >
       {children}

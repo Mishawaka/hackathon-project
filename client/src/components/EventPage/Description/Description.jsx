@@ -9,7 +9,7 @@ const Description = ({ event }) => {
       <div className="flex">
         <div className="text">
           <h1>Об организации</h1>
-          <p>{event.project.descr}</p>
+          <p>{event.descr}</p>
         </div>
         <div className="volunteer-invite">
           <a rel="noopener noreferrer" target="_blank" href={event.regUrl}>

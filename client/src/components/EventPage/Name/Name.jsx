@@ -13,7 +13,7 @@ const Name = ({ event }) => {
             <h3>{event.addr}</h3>
           </div>
           <div>
-            <h3>{`${event.date.getDay()} ${event.date.toLocaleDateString(
+            <h3>{`${event.date.getDate()} ${event.date.toLocaleDateString(
               'ru-RU',
               {
                 month: 'long',

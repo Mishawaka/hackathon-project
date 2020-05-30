@@ -24,7 +24,7 @@ const Name = ({ project, subscribe, subscribed }) => {
         >
           <h4>
             {creator
-              ? 'Вы - создатель'
+              ? 'Вы организатор'
               : subscribed
               ? 'Вы подписаны'
               : 'Подпишись'}

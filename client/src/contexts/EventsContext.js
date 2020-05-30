@@ -8,17 +8,6 @@ export const EventProvider = ({ children }) => {
   const [date, setDate] = useState('');
   const [eventId, setEventId] = useState('');
   const [prForEvent, setPrForEvent] = useState([]);
-  const themes = [
-    'помощь пожилым людям',
-    'помощь сиротам',
-    'помощь многодетным семьям',
-    'помощь животным',
-    'эко инициативы',
-    'студенческие инициативы',
-    'облагораживание города',
-    'волонтерим и путешествуем',
-  ];
-  const cities = ['Одесса', 'Киев', 'Львов', 'Харьков', 'Днепр'];
   return (
     <EventContext.Provider
       value={{
@@ -32,8 +21,6 @@ export const EventProvider = ({ children }) => {
         setEventId,
         prForEvent,
         setPrForEvent,
-        themes,
-        cities,
       }}
     >
       {children}

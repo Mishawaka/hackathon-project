@@ -44,6 +44,12 @@ const ProjectImages = ({ modal, setModal, customRef, setUser }) => {
     <FormPage modal={modal} setModal={setModal}>
       <h1>Изменить фото профиля</h1>
       <div className="form-group">
+        <ImageCrop
+          aspect={1 / 1}
+          height={100}
+          nextImage={nextImage}
+          clickRef={customRef}
+        />
         <div
           className={croppedImageUrl ? 'background' : 'blocked background'}
           onClick={croppedImageUrl ? null : () => customRef.current.click()}
@@ -54,12 +60,6 @@ const ProjectImages = ({ modal, setModal, customRef, setUser }) => {
             alt="plus"
           />
         </div>
-        <ImageCrop
-          aspect={1 / 1}
-          height={100}
-          nextImage={nextImage}
-          clickRef={customRef}
-        />
       </div>
     </FormPage>
   );

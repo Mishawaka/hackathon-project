@@ -13,11 +13,12 @@ const ProjectsPage = ({ history }) => {
     classList.toggle('sort-active');
   };
 
-  const { projects, setProjects, sort, setSort } = useContext(ProjectContext);
-  const { auth } = useContext(Context);
+  const { projects, setProjects } = useContext(ProjectContext);
+  const { auth, themes, cities } = useContext(Context);
   const [changeFind, setChangeFind] = useState('');
   const [changeCity, setChangeCity] = useState('');
   const [filterChecks, setFilterChecks] = useState([]);
+  const [sort, setSort] = useState('create');
 
   useEffect(() => {
     if (projects.length === 0) {
@@ -89,14 +90,10 @@ const ProjectsPage = ({ history }) => {
     }
   }, [projects]);
 
-  const onSortChange = (id) => {
-    setSort(id);
-  };
-
   return (
     <div className="projects-page animated fadeIn">
       <h2>Проекты</h2>
-      <Sort onSortChange={onSortChange} toggleArrow={toggleArrow} />
+      <Sort setSort={setSort} toggleArrow={toggleArrow} />
       <div className="projects-content">
         <Filter
           changeFind={changeFind}
@@ -106,6 +103,8 @@ const ProjectsPage = ({ history }) => {
           filterChecks={filterChecks}
           setFilterChecks={setFilterChecks}
           toggleArrow={toggleArrow}
+          cities={cities}
+          themes={themes}
         />
         <Items
           changeFind={changeFind}

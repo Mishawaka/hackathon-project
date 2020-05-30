@@ -10,7 +10,7 @@ import { Context } from '../../../contexts/Context';
 import plus from '../../../img/plus.svg';
 import './EventForm.scss';
 
-const EventForm = ({ modal, setModal }) => {
+const EventForm = ({ modal, setModal, curProject }) => {
   const { croppedImageUrl, setCroppedImageUrl, file } = useContext(
     ImageContext
   );
@@ -22,18 +22,63 @@ const EventForm = ({ modal, setModal }) => {
     day: '',
     time: '',
     regUrl: '',
-    project: '',
+    project: curProject?.name || '',
     imageUrl: 'events/image.jpg',
   });
   const [showDay, setShowDay] = useState('text');
   const [showTime, setShowTime] = useState('text');
 
-  const { cities, setEventId, prForEvent } = useContext(EventContext);
-  const { setImagesModal } = useContext(Context);
+  const { setEventId, prForEvent, setPrForEvent } = useContext(EventContext);
+  const { projects, setProjects } = useContext(ProjectContext);
+  const { cities } = useContext(Context);
 
   const clickRef = createRef();
 
+  useEffect(() => {
+    if (curProject) {
+      setPrForEvent([curProject]);
+    } else {
+      if (projects.length === 0) {
+        fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: localStorage.getItem('jwt') }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log('event created successfully');
+            setProjects(data);
+            let arr = data
+              .filter((el) => el.coord.email === localStorage.getItem('email'))
+              .map((el) => ({
+                id: el._id,
+                value: el.name,
+              }));
+            setPrForEvent(arr);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        let arr = projects
+          .filter((el) => el.coord.email === localStorage.getItem('email'))
+          .map((el) => ({
+            id: el._id,
+            value: el.name,
+          }));
+        setPrForEvent(arr);
+      }
+    }
+  }, []);
+
   const fields = [
+    { name: 'name', label: 'Название', value: form.name },
+    {
+      name: 'city',
+      label: 'Город',
+      value: form.city,
+      tag: 'select',
+      parent: cities,
+    },
+    { name: 'addr', label: 'Адрес', value: form.addr },
     {
       name: 'day',
       label: 'Дата проведения',
@@ -46,19 +91,10 @@ const EventForm = ({ modal, setModal }) => {
       value: form.time,
       type: showTime,
     },
-    { name: 'name', label: 'Название', value: form.name },
-    { name: 'descr', label: 'Описание', value: form.descr },
-    {
-      name: 'city',
-      label: 'Город',
-      value: form.city,
-      tag: 'select',
-      parent: cities,
-    },
-    { name: 'addr', label: 'Адрес', value: form.addr },
+    { name: 'descr', label: 'Описание', value: form.descr, tag: 'textarea' },
     {
       name: 'regUrl',
-      label: 'Ссылка на регистрацию волонтеров',
+      label: 'Ссылка на регистрацию',
       value: form.regUrl,
     },
     {
@@ -132,6 +168,12 @@ const EventForm = ({ modal, setModal }) => {
       <h1>Создание ивента</h1>
       <h3>Заполните поля</h3>
       <div className="form-group">
+        <ImageCrop
+          logo={true}
+          aspect={1 / 1}
+          height={100}
+          clickRef={clickRef}
+        />
         <div
           className={croppedImageUrl ? 'background' : 'blocked background'}
           onClick={croppedImageUrl ? null : () => clickRef.current.click()}
@@ -147,11 +189,16 @@ const EventForm = ({ modal, setModal }) => {
             alt="plus"
           />
         </div>
-        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       {fields.map((el, id) =>
         el.tag === 'select' ? (
-          <div key={id} className="form-group">
+          <div
+            style={{
+              display: curProject && el.name === 'project' ? 'none' : 'block',
+            }}
+            key={id}
+            className="form-group"
+          >
             <select
               name={el.name}
               onChange={({ target }) => {
@@ -174,6 +221,32 @@ const EventForm = ({ modal, setModal }) => {
                 </option>
               ))}
             </select>
+          </div>
+        ) : el.tag === 'textarea' ? (
+          <div key={id} className="form-group">
+            <textarea
+              cols="30"
+              rows="10"
+              onChange={({ target }) =>
+                setForm({
+                  ...form,
+                  [target.name]: target.value,
+                })
+              }
+              value={el.value}
+              name={el.name}
+              className="event-textarea"
+            ></textarea>
+            <label
+              htmlFor={el.name}
+              className={
+                el.value === ''
+                  ? 'form-control-placeholder-off'
+                  : 'form-control-placeholder-on'
+              }
+            >
+              {el.label}
+            </label>
           </div>
         ) : (
           <div key={id} className="form-group">

@@ -408,7 +408,7 @@ app.post('/api/authenticate', (req, res) => {
         error: 'Internal error please try again',
       });
     } else if (!user) {
-      res.status(401).json({
+      res.json({
         error: 'Incorrect email or password',
       });
     } else {
@@ -418,7 +418,7 @@ app.post('/api/authenticate', (req, res) => {
             error: 'Internal error please try again',
           });
         } else if (!same) {
-          res.status(401).json({
+          res.json({
             error: 'Incorrect email or password',
           });
         } else {

@@ -102,6 +102,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
       <h1>Регистрация</h1>
       <h3>Заполните поля</h3>
       <div className="form-group">
+        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
         <div
           className={croppedImageUrl ? 'background' : 'blocked background'}
           onClick={croppedImageUrl ? null : () => clickRef.current.click()}
@@ -117,7 +118,6 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
             alt="plus"
           />
         </div>
-        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       <div className="form-group">
         <input

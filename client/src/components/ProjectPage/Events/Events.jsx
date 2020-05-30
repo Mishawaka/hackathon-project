@@ -56,7 +56,7 @@ const Events = ({ project, events }) => {
                   <p>{ev.addr}</p>
                 </div>
                 <div>
-                  <p>{`${ev.date.getDay()} ${ev.date.toLocaleDateString(
+                  <p>{`${ev.date.getDate()} ${ev.date.toLocaleDateString(
                     'ru-RU',
                     {
                       month: 'long',

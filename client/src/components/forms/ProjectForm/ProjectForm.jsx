@@ -113,6 +113,12 @@ const ProjectForm = ({ modal, setModal }) => {
       <h1>Регистрация проекта</h1>
       <h3>Заполните поля</h3>
       <div className="form-group">
+        <ImageCrop
+          logo={true}
+          aspect={1 / 1}
+          height={100}
+          clickRef={clickRef}
+        />
         <div
           className={croppedImageUrl ? 'background' : 'blocked background'}
           onClick={croppedImageUrl ? null : () => clickRef.current.click()}
@@ -128,7 +134,6 @@ const ProjectForm = ({ modal, setModal }) => {
             alt="plus"
           />
         </div>
-        <ImageCrop aspect={1 / 1} height={100} clickRef={clickRef} />
       </div>
       {fields.map((el, id) =>
         el.type === 'select' ? (

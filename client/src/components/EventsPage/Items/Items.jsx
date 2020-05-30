@@ -1,37 +1,36 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import arrRight from '../../../img/arrow-right.svg';
-import { EventContext } from '../../../contexts/EventsContext';
 
 import './Items.scss';
 
-const Items = ({ events, date, changeCity }) => {
-  const { filterChecks } = useContext(EventContext);
+const Items = ({ events, date, changeCity, filterChecks }) => {
   const [event, setEvent] = useState([]);
 
   useEffect(() => {
     setEvent(events);
     let evs = [];
-    if (changeCity.length !== 0) {
-      evs = events.filter((el) => el.city == changeCity);
+    if (date !== '') {
+      evs = events.filter((el) => {
+        return el.date.toLocaleDateString() == date.toLocaleDateString();
+      });
       setEvent(evs);
+    } else {
+      evs = [...events];
+    }
+    if (changeCity.length !== 0) {
+      let arr = evs.filter((el) => el.city == changeCity);
+      setEvent(arr);
     }
     if (filterChecks.length !== 0) {
+      console.log(filterChecks);
       let arr = evs.filter((el) =>
         filterChecks.includes(el.project.theme.toLowerCase())
       );
-      setEvent(arr);
-    }
-  }, [events, filterChecks, changeCity]);
 
-  useEffect(() => {
-    if (date !== '') {
-      const arr = events.filter((el) => {
-        return el.date.toLocaleDateString() == date.toLocaleDateString();
-      });
       setEvent(arr);
     }
-  }, [date, filterChecks]);
+  }, [events, date, filterChecks, changeCity]);
 
   return (
     <div className="events-items">
@@ -44,9 +43,12 @@ const Items = ({ events, date, changeCity }) => {
                 <p>{el.addr}</p>
               </div>
               <div>
-                <p>{`${el.date.getDay()} ${el.date.toLocaleDateString('ru-RU', {
-                  month: 'long',
-                })}`}</p>
+                <p>{`${el.date.getDate()} ${el.date.toLocaleDateString(
+                  'ru-RU',
+                  {
+                    month: 'long',
+                  }
+                )}`}</p>
                 <p>{el.date.toLocaleTimeString('ru-RU').substring(0, 5)}</p>
               </div>
             </div>

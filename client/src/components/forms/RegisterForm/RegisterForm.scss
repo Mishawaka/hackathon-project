@@ -66,6 +66,14 @@
   padding-left: 1rem;
 }
 
+.event-textarea {
+  border: 1px solid #a4a4a4;
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 70%;
+  padding: 1rem;
+}
+
 .form-control-placeholder-off,
 .form-control-placeholder-on {
   position: absolute;
@@ -87,6 +95,7 @@
 }
 
 .form-control:focus + .form-control-placeholder-off,
+.event-textarea:focus + .form-control-placeholder-off,
 .form-control-placeholder-on {
   font-size: 60%;
   transform: translate3d(0, -40%, 0);

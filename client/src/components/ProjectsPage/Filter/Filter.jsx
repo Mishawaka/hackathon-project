@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { ProjectContext } from '../../../contexts/ProjectsContext';
+import React from 'react';
 
 import './Filter.scss';
 
@@ -10,9 +9,9 @@ const Filter = ({
   setChangeCity,
   filterChecks,
   setFilterChecks,
+  cities,
+  themes,
 }) => {
-  const { themes, cities } = useContext(ProjectContext);
-
   const onChange = ({ checked, value }) => {
     if (checked) {
       setFilterChecks([...filterChecks, value]);

@@ -13,6 +13,9 @@ const options = {
   offset: '100px 30px',
   // you can also just use 'scale'
   transition: transitions.SCALE,
+  containerStyle: {
+    zIndex: 10000,
+  },
 };
 
 const Root = () => (

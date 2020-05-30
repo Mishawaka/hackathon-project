@@ -3,7 +3,7 @@ import Carousel from './Carousel';
 
 import './Description.scss';
 
-const Description = ({ project, subscribe, subscribed }) => {
+const Description = ({ project, subscribe, subscribed, setModal }) => {
   const creator = project.coord.email === localStorage.getItem('email');
   return (
     <div className="project-description">
@@ -14,12 +14,12 @@ const Description = ({ project, subscribe, subscribed }) => {
         </div>
         <div className="volunteer-invite">
           <button
-            onClick={creator ? null : subscribe}
-            className={creator || subscribed ? 'disabled-gradient' : ''}
+            onClick={creator ? () => setModal(true) : subscribe}
+            className={subscribed ? 'disabled-gradient' : ''}
           >
             <h4>
               {creator
-                ? 'Вы - создатель'
+                ? 'новый ивент'
                 : subscribed
                 ? 'Вы подписаны'
                 : 'Подпишись'}

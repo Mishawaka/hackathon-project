@@ -2,10 +2,10 @@ import React from 'react';
 
 import './Sort.scss';
 
-const Sort = ({ onSortChange }) => (
+const Sort = ({ setSort }) => (
   <div className="projects-sort">
     <select
-      onChange={({ target }) => onSortChange(target.value)}
+      onChange={({ target }) => setSort(target.value)}
       name="sort-projects"
     >
       <option selected value="create">
