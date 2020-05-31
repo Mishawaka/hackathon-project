@@ -39,7 +39,7 @@ const EventForm = ({ modal, setModal, curProject }) => {
       setPrForEvent([curProject]);
     } else {
       if (projects.length === 0) {
-        fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
+        fetch(`http://${process.env.REACT_APP_ROOT}/get-all-projects`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -123,7 +123,7 @@ const EventForm = ({ modal, setModal, curProject }) => {
         name: file.name,
         eventId: id,
       });
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-event-image`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-event-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
@@ -137,7 +137,7 @@ const EventForm = ({ modal, setModal, curProject }) => {
   const createEvent = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-event`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-event`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, token: localStorage.getItem('jwt') }),

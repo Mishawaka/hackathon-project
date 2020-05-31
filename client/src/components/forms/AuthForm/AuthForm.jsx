@@ -46,7 +46,7 @@ const AuthForm = ({ modal, setModal, setRegisterModal, setAuth, alert }) => {
       return null;
     }
 
-    fetch(`https://${process.env.REACT_APP_ROOT}/api/authenticate`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/api/authenticate`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify(data),

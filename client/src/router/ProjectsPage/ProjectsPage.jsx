@@ -22,7 +22,7 @@ const ProjectsPage = ({ history }) => {
 
   useEffect(() => {
     if (projects.length === 0) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/get-all-projects`, {
         method: 'POST',
         mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +45,7 @@ const ProjectsPage = ({ history }) => {
 
   useEffect(() => {
     if (projects.length !== 0) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/get-last-events`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/get-last-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),

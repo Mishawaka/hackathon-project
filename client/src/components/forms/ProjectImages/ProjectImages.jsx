@@ -14,7 +14,7 @@ const ProjectImages = ({ modal, setModal }) => {
 
   const nextImage = (file) => {
     blobToBase64(file, (base64) => {
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-project-images`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-project-images`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: base64, name: file.name, projectId }),
@@ -48,7 +48,7 @@ const ProjectImages = ({ modal, setModal }) => {
   // const sendImages = () => {
   //   for (let i of imageArr) {
   //     blobToBase64(i, (base64) => {
-  //       fetch('https://localhost:8000/save-project-images', {
+  //       fetch('http://localhost:8000/save-project-images', {
   //         method: 'POST',
   //         headers: { 'Content-Type': 'application/json' },
   //         body: JSON.stringify({ image: base64, name: i.name, projectId }),

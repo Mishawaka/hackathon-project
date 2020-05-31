@@ -13,7 +13,7 @@ const Contacts = ({ event }) => {
           <div>
             <div>
               <img
-                src={`https://${process.env.REACT_APP_ROOT}/image/${event.project.coord.imageUrl}`}
+                src={`http://${process.env.REACT_APP_ROOT}/image/${event.project.coord.imageUrl}`}
                 alt=""
               />
             </div>

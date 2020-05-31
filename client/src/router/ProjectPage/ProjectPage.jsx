@@ -20,7 +20,7 @@ const ProjectPage = () => {
   const { auth, setEventModal, eventModal } = useContext(Context);
   const { events, setEvents } = useContext(EventContext);
   useEffect(() => {
-    fetch(`https://${process.env.REACT_APP_ROOT}/get-project`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/get-project`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
@@ -46,7 +46,7 @@ const ProjectPage = () => {
 
   useEffect(() => {
     if (events.length === 0) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt'), name }),
@@ -72,7 +72,7 @@ const ProjectPage = () => {
     let email = localStorage.getItem('email');
     if (project.coord.email !== email) {
       if (!project.subscribers.includes(email)) {
-        fetch(`https://${process.env.REACT_APP_ROOT}/subscribe`, {
+        fetch(`http://${process.env.REACT_APP_ROOT}/subscribe`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

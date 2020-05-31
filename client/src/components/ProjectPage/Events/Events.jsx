@@ -66,7 +66,7 @@ const Events = ({ project, events }) => {
                 </div>
               </div>
               <img
-                src={`https://${process.env.REACT_APP_ROOT}/image/${ev.imageUrl}`}
+                src={`http://${process.env.REACT_APP_ROOT}/image/${ev.imageUrl}`}
                 alt="rocket"
               />
               <h4>{ev.name}</h4>

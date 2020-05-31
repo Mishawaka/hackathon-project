@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const ref = createRef();
 
   useEffect(() => {
-    fetch(`https://${process.env.REACT_APP_ROOT}/get-user-info`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/get-user-info`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -41,7 +41,7 @@ const ProfilePage = () => {
   }, [auth]);
 
   useEffect(() => {
-    fetch(`https://${process.env.REACT_APP_ROOT}/get-all-projects`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/get-all-projects`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: localStorage.getItem('jwt') }),
@@ -77,7 +77,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (subscribes.length > 0) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/get-all-events`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/get-all-events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: localStorage.getItem('jwt') }),

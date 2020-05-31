@@ -44,7 +44,7 @@ const Items = ({ projects, changeFind, changeCity, filterChecks, sort }) => {
         proj.map((pr, id) => (
           <div key={id} className="project-item">
             <img
-              src={`https://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
+              src={`http://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
               alt="rocket"
             />
             <h4>{pr.name}</h4>

@@ -8,7 +8,7 @@ import { Slider } from '../../Slider';
 const Projects = ({ id, pr }) => (
   <div key={id} className="project-item">
     <img
-      src={`https://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
+      src={`http://${process.env.REACT_APP_ROOT}/image/${pr.imageUrl}`}
       alt="rocket"
     />
     <h4>{pr.name}</h4>
@@ -37,7 +37,7 @@ const Events = ({ id, el }) => (
       </div>
     </div>
     <img
-      src={`https://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
+      src={`http://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
       alt="rocket"
     />
     <h4>{el.name}</h4>

@@ -76,7 +76,7 @@ const ProjectForm = ({ modal, setModal }) => {
         name: file.name,
         projectId: id,
       });
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-project-image`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-project-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
@@ -90,7 +90,7 @@ const ProjectForm = ({ modal, setModal }) => {
   const createProject = () => {
     const checked = fields.filter((e) => e.value.length === 0);
     if (checked.length === 0 && croppedImageUrl) {
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-project`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-project`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, token: localStorage.getItem('jwt') }),

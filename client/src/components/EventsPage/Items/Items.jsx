@@ -53,7 +53,7 @@ const Items = ({ events, date, changeCity, filterChecks }) => {
               </div>
             </div>
             <img
-              src={`https://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
+              src={`http://${process.env.REACT_APP_ROOT}/image/${el.imageUrl}`}
               alt="rocket"
             />
             <h4>{el.name}</h4>

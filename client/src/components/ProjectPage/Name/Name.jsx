@@ -11,7 +11,7 @@ const Name = ({ project, subscribe, subscribed }) => {
       <div className="name">
         <div className="image">
           <img
-            src={`https://${process.env.REACT_APP_ROOT}/image/${project.imageUrl}`}
+            src={`http://${process.env.REACT_APP_ROOT}/image/${project.imageUrl}`}
             alt=""
           />
         </div>

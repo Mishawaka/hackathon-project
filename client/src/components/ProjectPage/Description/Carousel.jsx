@@ -25,7 +25,7 @@ const Carousel = ({ images }) => {
           {images.map((pr, id) => (
             <div key={id} className="carousel-img">
               <img
-                src={`https://${process.env.REACT_APP_ROOT}/image/${pr}`}
+                src={`http://${process.env.REACT_APP_ROOT}/image/${pr}`}
                 alt="rocket"
               />
             </div>

@@ -54,7 +54,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
         name: file.name,
         userId: id,
       });
-      fetch(`https://${process.env.REACT_APP_ROOT}/save-user-image`, {
+      fetch(`http://${process.env.REACT_APP_ROOT}/save-user-image`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body,
@@ -76,7 +76,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
       phone,
       password,
     };
-    fetch(`https://${process.env.REACT_APP_ROOT}/api/register`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/api/register`, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({ ...obj, imageUrl: 'users/.jpg' }),

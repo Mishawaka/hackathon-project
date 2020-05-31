@@ -13,7 +13,7 @@ const ProfileRightBlock = ({ alert }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    fetch(`https://${process.env.REACT_APP_ROOT}/set-password`, {
+    fetch(`http://${process.env.REACT_APP_ROOT}/set-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
