@@ -3,12 +3,11 @@ import { Context } from '../../contexts/Context';
 import { Modal } from 'react-responsive-modal';
 import RegisterForm from '../forms/RegisterForm/RegisterForm';
 import AuthPage from '../forms/AuthForm/AuthForm';
-import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { Link as ScrollLink } from 'react-scroll';
 
 import 'react-responsive-modal/styles.css';
 import './Header.scss';
 import logo_img from '../../img/Subtract.svg';
-import auth_img from '../../img/Auth.svg';
 import user_img from '../../img/person-1.svg';
 import { Link } from 'react-router-dom';
 
@@ -30,7 +29,7 @@ const Header = () => {
     })
       .then((res) => (res.status === 200 ? setAuth(true) : setAuth(false)))
       .catch((err) => console.log(err));
-  }, [auth]);
+  }, [auth, setAuth]);
 
   return (
     <div name="header" className="header">

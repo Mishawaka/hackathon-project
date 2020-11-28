@@ -9,7 +9,6 @@ const ProjectImages = ({ modal, setModal }) => {
   const ref = createRef();
   const { croppedImageUrl, setFile } = useContext(ImageContext);
   const { projectId } = useContext(ProjectContext);
-  const [imageArr, setImageArr] = useState([]);
   const [index, setIndex] = useState(1);
 
   const nextImage = (file) => {

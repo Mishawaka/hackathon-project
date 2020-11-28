@@ -1,5 +1,5 @@
 import React, { useState, useContext, createRef } from 'react';
-import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 import { RegisterContext } from '../../../contexts/RegisterContext';
 import { ImageContext } from '../../../contexts/ImageContext';
 import ImageCrop from '../ImageCrop/ImageCrop';
@@ -18,7 +18,7 @@ const RegisterForm = ({ modal, setModal, setAuthModal }) => {
   const [showPass, setShowPass] = useState(false);
   const [blocked, setBlocked] = useState(true);
   const { email, setEmail } = useContext(RegisterContext);
-  const { croppedImageUrl, setCroppedImageUrl, file, setFile } = useContext(
+  const { croppedImageUrl, file, setFile } = useContext(
     ImageContext
   );
   const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

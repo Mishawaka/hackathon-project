@@ -9,7 +9,7 @@ import './Add.scss';
 
 const Add = ({ toggleArrow }) => {
   const { eventModal, setEventModal } = useContext(Context);
-  const { events, prForEvent, setPrForEvent } = useContext(EventContext);
+  const { prForEvent, setPrForEvent } = useContext(EventContext);
   const { projects } = useContext(ProjectContext);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Add = ({ toggleArrow }) => {
         value: el.name,
       }));
     setPrForEvent(arr);
-  }, [projects]);
+  }, [projects, setPrForEvent]);
   return (
     <div>
       {prForEvent.length > 0 && (

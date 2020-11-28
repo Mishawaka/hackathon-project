@@ -28,7 +28,7 @@ const ProjectForm = ({ modal, setModal }) => {
     imageUrl: 'projects/image.jpg',
   });
 
-  const { themes, cities, projectId, setProjectId } = useContext(
+  const { themes, cities, setProjectId } = useContext(
     ProjectContext
   );
   const { setImagesModal } = useContext(Context);

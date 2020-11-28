@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Modal } from 'react-responsive-modal';
 import { Context } from '../../contexts/Context';
 import ProjectForm from '../forms/ProjectForm/ProjectForm';
@@ -29,7 +29,7 @@ const Footer = () => {
     })
       .then((res) => (res.status === 200 ? setAuth(true) : setAuth(false)))
       .catch((err) => console.log(err));
-  }, [auth]);
+  }, [auth, setAuth]);
 
   return (
     <div className="footer">
